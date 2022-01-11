@@ -188,22 +188,22 @@ class MainController extends Controller
 
         // return User::limit(10)->get();
 
-        // $xmlString = file_get_contents(public_path('database/Votes.xml'));
-        // $xmlObject = simplexml_load_string($xmlString);
+        $xmlString = file_get_contents(public_path('database/Votes.xml'));
+        $xmlObject = simplexml_load_string($xmlString);
 
-        // foreach ($xmlObject as $row) {
-        //     $vote = Vote::where('id', $row['Id'])->first();
-        //     if (!$vote) {
-        //         // dd($row);
-        //         $vote = new Vote();
-        //         $vote->id = $row['Id'];
-        //         $vote->user_id = $row['UserId'];
-        //         $vote->post_id = $row['PostId'];
-        //         $vote->vote_type_id = $row['VoteTypeId'];
-        //         $vote->bounty_amount = $row['BountyAmount'];
-        //         $vote->save();
-        //     }
-        // }
+        foreach ($xmlObject as $row) {
+            $vote = Vote::where('id', $row['Id'])->first();
+            if (!$vote) {
+                // dd($row);
+                $vote = new Vote();
+                $vote->id = $row['Id'];
+                $vote->user_id = $row['UserId'];
+                $vote->post_id = $row['PostId'];
+                $vote->vote_type_id = $row['VoteTypeId'];
+                $vote->bounty_amount = $row['BountyAmount'];
+                $vote->save();
+            }
+        }
 
         return Vote::limit(10)->get();
     }
