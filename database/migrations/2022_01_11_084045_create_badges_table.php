@@ -19,7 +19,7 @@ class CreateBadgesTable extends Migration
             $table->bigInteger('user_id');
             $table->integer('class');
             $table->string('name', 64);
-            $table->integer('tag_based');
+            $table->boolean('tag_based');
             $table->timestamp('date');
 
             $table->timestamps();

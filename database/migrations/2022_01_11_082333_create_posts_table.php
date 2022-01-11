@@ -24,10 +24,10 @@ class CreatePostsTable extends Migration
 
             $table->integer('score');
 
-            $table->bigInteger('parent_id');
-            $table->integer('view_count');
-            $table->integer('answer_count')->default(0);
-            $table->integer('comment_count')->default(0);
+            $table->bigInteger('parent_id')->nullable();
+            $table->integer('view_count')->nullable()->default(0);
+            $table->integer('answer_count')->nullable()->default(0);
+            $table->integer('comment_count')->nullable()->default(0);
             $table->string('owner_display_name', 64)->nullable();
             $table->string('last_editor_display_name', 64)->nullable();
             $table->string('title', 512)->nullable();
@@ -36,12 +36,12 @@ class CreatePostsTable extends Migration
 
             $table->longText('body')->nullable();
 
-            $table->integer('favorite_count');
+            $table->integer('favorite_count')->nullable()->default(0);
 
-            $table->timestamp('community_owned_date');
-            $table->timestamp('closed_date');
-            $table->timestamp('last_edit_date');
-            $table->timestamp('last_activity_date');
+            $table->timestamp('community_owned_date')->nullable();
+            $table->timestamp('closed_date')->nullable();
+            $table->timestamp('last_edit_date')->nullable();
+            $table->timestamp('last_activity_date')->nullable();
 
             $table->timestamps();
         });
