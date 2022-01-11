@@ -8,7 +8,10 @@ use App\Models\Post;
 use App\Models\PostHistory;
 use App\Models\PostLink;
 use App\Models\Tag;
+use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MainController extends Controller
 {
@@ -154,5 +157,54 @@ class MainController extends Controller
         // }
 
         // return Post::limit(10)->get();
+
+        // $xmlString = file_get_contents(public_path('database/Users.xml'));
+        // $xmlObject = simplexml_load_string($xmlString);
+
+        // foreach ($xmlObject as $row) {
+        //     $user = User::where('id', $row['Id'])->first();
+        //     if (!$user) {
+        //         // dd($row);
+        //         if ($row['Id'] > 0) {
+        //             $user = new User();
+        //             $user->id = $row['Id'];
+        //             $user->email = Str::random(10) . '@gmail.com';
+        //             $user->password = bcrypt('password3');
+        //             $user->account_id = $row['AccountId'];
+        //             $user->reputation = $row['Reputation'];
+        //             $user->views = $row['Views'];
+        //             $user->down_votes = $row['DownVotes'];
+        //             $user->up_votes = $row['UpVotes'];
+        //             $user->display_name = $row['DisplayName'];
+        //             $user->location = $row['Location'];
+        //             $user->profile_image_url = $row['ProfileImageUrl'];
+        //             $user->website_url = $row['WebsiteUrl'];
+        //             $user->about_me = $row['AboutMe'];
+        //             $user->last_access_date = $row['LastAccessDate'];
+        //             $user->save();
+        //         }
+        //     }
+        // }
+
+        // return User::limit(10)->get();
+
+        // $xmlString = file_get_contents(public_path('database/Votes.xml'));
+        // $xmlObject = simplexml_load_string($xmlString);
+
+        // foreach ($xmlObject as $row) {
+        //     $vote = Vote::where('id', $row['Id'])->first();
+        //     if (!$vote) {
+        //         // dd($row);
+        //         $vote = new Vote();
+        //         $vote->id = $row['Id'];
+        //         $vote->user_id = $row['UserId'];
+        //         $vote->post_id = $row['PostId'];
+        //         $vote->vote_type_id = $row['VoteTypeId'];
+        //         $vote->bounty_amount = $row['BountyAmount'];
+        //         $vote->save();
+        //     }
+        // }
+
+        return Vote::limit(10)->get();
     }
 }
