@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->longText('about_me')->nullable();
 
 
-            $table->timestamp('last_access_date');
+            $table->timestamp('last_access_date')->nullable();
 
             $table->timestamps();
         });
