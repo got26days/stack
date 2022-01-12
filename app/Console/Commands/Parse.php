@@ -51,10 +51,10 @@ class Parse extends Command
         $table = $this->argument('table');
 
         if ($table == 'tags') {
-            $xmlString = file_get_contents(public_path('database/Tags.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
 
-            foreach ($xmlObject as $row) {
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Tags.xml"));
+
+            while ($row = $streamer->getNode()) {
 
                 $tag = Tag::where('id', $row['Id'])->first();
                 if (!$tag) {
@@ -68,10 +68,9 @@ class Parse extends Command
         }
 
         if ($table == 'badges') {
-            $xmlString = file_get_contents(public_path('database/Badges.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Badges.xml"));
 
-            foreach ($xmlObject as $row) {
+            while ($row = $streamer->getNode()) {
 
                 $badge = Badge::where('id', $row['Id'])->first();
                 if (!$badge) {
@@ -93,10 +92,10 @@ class Parse extends Command
 
 
         if ($table == 'comments') {
-            $xmlString = file_get_contents(public_path('database/Comments.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
 
-            foreach ($xmlObject as $row) {
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Comments.xml"));
+
+            while ($row = $streamer->getNode()) {
 
                 $comment = Comment::where(
                     'id',
@@ -116,7 +115,7 @@ class Parse extends Command
             }
         }
         if ($table == 'postHistory') {
-            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostHistory.xml"));
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Posts.xml"));
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
@@ -137,10 +136,9 @@ class Parse extends Command
         }
 
         if ($table == 'postLinks') {
-            $xmlString = file_get_contents(public_path('database/PostLinks.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostLinks.xml"));
 
-            foreach ($xmlObject as $row) {
+            while ($row = $streamer->getNode()) {
                 $postLink = PostLink::where('id', $row['Id'])->first();
                 if (!$postLink) {
                     // dd($row);
@@ -155,10 +153,9 @@ class Parse extends Command
         }
 
         if ($table == 'posts') {
-            $xmlString = file_get_contents(public_path('database/Posts.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Posts.xml"));
 
-            foreach ($xmlObject as $row) {
+            while ($row = $streamer->getNode()) {
                 $post = Post::where('id', $row['Id'])->first();
                 if (!$post) {
                     $post = new Post();
@@ -191,10 +188,9 @@ class Parse extends Command
 
 
         if ($table == 'users') {
-            $xmlString = file_get_contents(public_path('database/Users.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Users.xml"));
 
-            foreach ($xmlObject as $row) {
+            while ($row = $streamer->getNode()) {
                 $user = User::where('id', $row['Id'])->first();
                 if (!$user) {
                     // dd($row);
@@ -221,10 +217,9 @@ class Parse extends Command
         }
 
         if ($table == 'votes') {
-            $xmlString = file_get_contents(public_path('database/Votes.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Votes.xml"));
 
-            foreach ($xmlObject as $row) {
+            while ($row = $streamer->getNode()) {
                 $vote = Vote::where('id', $row['Id'])->first();
                 if (!$vote) {
                     // dd($row);
