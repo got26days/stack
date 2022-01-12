@@ -46,7 +46,8 @@ class Parse extends Command
      */
     public function handle()
     {
-        ini_set('memory_limit', -1);
+        set_time_limit(0);
+        ini_set('memory_limit', '200000000M');
         $table = $this->argument('table');
 
         if ($table == 'tags') {
