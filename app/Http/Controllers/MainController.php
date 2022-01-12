@@ -35,6 +35,6 @@ class MainController extends Controller
             }
         }
 
-        return Vote::limit(10)->get();
+        return Tag::limit(10)->get();
     }
 }
