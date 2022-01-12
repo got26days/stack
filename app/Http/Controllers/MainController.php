@@ -17,6 +17,24 @@ class MainController extends Controller
 {
     public function index()
     {
+
+        $xmlString = file_get_contents(public_path('database/Tags.xml'));
+        $xmlObject = simplexml_load_string($xmlString);
+
+        $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser("database/Tags.xml");
+
+        while ($row = $streamer->getNode()) {
+            $row = simplexml_load_string($row);
+            $tag = Tag::where('id', $row['Id'])->first();
+            if (!$tag) {
+                $tag = new Tag();
+                $tag->id = $row['Id'];
+                $tag->tag_name = $row['TagName'];
+                $tag->count = $row['Count'];
+                $tag->save();
+            }
+        }
+
         return Vote::limit(10)->get();
     }
 }

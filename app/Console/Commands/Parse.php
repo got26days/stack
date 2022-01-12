@@ -116,10 +116,10 @@ class Parse extends Command
             }
         }
         if ($table == 'postHistory') {
-            $xmlString = file_get_contents(public_path('database/PostHistory.xml'));
-            $xmlObject = simplexml_load_string($xmlString);
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser("database/PostHistory.xml");
 
-            foreach ($xmlObject as $row) {
+            while ($row = $streamer->getNode()) {
+                $row = simplexml_load_string($row);
                 $postHistory = PostHistory::where('id', $row['Id'])->first();
                 if (!$postHistory) {
                     $postHistory = new PostHistory();
