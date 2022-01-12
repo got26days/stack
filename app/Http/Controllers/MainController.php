@@ -18,7 +18,7 @@ class MainController extends Controller
     public function index()
     {
 
-        $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser("database/Tags.xml");
+        $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser("/database/Tags.xml");
 
         while ($row = $streamer->getNode()) {
             $row = simplexml_load_string($row);
