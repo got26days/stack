@@ -116,7 +116,7 @@ class Parse extends Command
             }
         }
         if ($table == 'postHistory') {
-            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser("database/PostHistory.xml");
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostHistory.xml"));
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
