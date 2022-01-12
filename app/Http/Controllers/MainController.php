@@ -18,20 +18,6 @@ class MainController extends Controller
     public function index()
     {
 
-        $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path('database/Tags.xml'));
-
-        while ($row = $streamer->getNode()) {
-            $row = simplexml_load_string($row);
-            $tag = Tag::where('id', $row['Id'])->first();
-            if (!$tag) {
-                $tag = new Tag();
-                $tag->id = $row['Id'];
-                $tag->tag_name = $row['TagName'];
-                $tag->count = $row['Count'];
-                $tag->save();
-            }
-        }
-
-        return Tag::limit(10)->get();
+        return PostHistory::limit(10)->get();
     }
 }
