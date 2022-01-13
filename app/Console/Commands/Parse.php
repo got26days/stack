@@ -127,6 +127,8 @@ class Parse extends Command
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
+
+                dd($row);
                 try {
                     $row = simplexml_load_string($row);
 
@@ -156,9 +158,12 @@ class Parse extends Command
             $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostLinks.xml"));
 
             while ($row = $streamer->getNode()) {
-
                 try {
                     $row = simplexml_load_string($row);
+
+                    if ($row['Id'] <= 1882290402) {
+                        continue;
+                    }
 
                     $postLink = new PostLink();
                     $postLink->id = $row['Id'];
