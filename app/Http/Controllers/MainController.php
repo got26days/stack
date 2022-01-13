@@ -18,6 +18,6 @@ class MainController extends Controller
     public function index()
     {
 
-        return PostHistory::latest()->first();
+        return PostHistory::first();
     }
 }
