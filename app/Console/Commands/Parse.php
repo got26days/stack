@@ -81,7 +81,6 @@ class Parse extends Command
             while ($row = $streamer->getNode()) {
 
                 $row = simplexml_load_string($row);
-                dd($row);
 
                 $badge = Badge::where('id', $row['Id'])->first();
                 if (!$badge) {
@@ -96,8 +95,6 @@ class Parse extends Command
                         $badge->tag_based = 1;
                     }
                     $badge->date = $row['Date'];
-                    $badge->created_at = $row['CreatedDate'];
-                    $badge->updated_at = $row['CreatedDate'];
                     $badge->save();
                 }
             }
