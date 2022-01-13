@@ -147,15 +147,20 @@ class Parse extends Command
             $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostLinks.xml"));
 
             while ($row = $streamer->getNode()) {
-                $postLink = PostLink::where('id', $row['Id'])->first();
-                if (!$postLink) {
-                    // dd($row);
+
+                try {
+                    $row = simplexml_load_string($row);
+
                     $postLink = new PostLink();
                     $postLink->id = $row['Id'];
                     $postLink->related_post_id = $row['RelatedPostId'];
                     $postLink->post_id = $row['PostId'];
                     $postLink->link_type_id = $row['LinkTypeId'];
                     $postLink->save();
+
+                    $this->info($postLink->id);
+                } catch (Exception $e) {
+                    Log::info($e);
                 }
             }
         }
