@@ -80,10 +80,14 @@ class Parse extends Command
 
             while ($row = $streamer->getNode()) {
 
-                $row = simplexml_load_string($row);
+                try {
+                    $row = simplexml_load_string($row);
 
-                $badge = Badge::where('id', $row['Id'])->first();
-                if (!$badge) {
+                    // if ($row['Id'] <= 1882290402) {
+                    //     continue;
+                    // }
+
+               
                     $badge = new Badge();
                     $badge->id = $row['Id'];
                     $badge->user_id = $row['UserId'];
@@ -96,8 +100,10 @@ class Parse extends Command
                     }
                     $badge->date = $row['Date'];
                     $badge->save();
+                
+                } catch (Exception $e) {
+                    Log::info($e);
                 }
-            }
         }
 
 
