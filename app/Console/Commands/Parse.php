@@ -127,8 +127,13 @@ class Parse extends Command
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
-                $postHistory = PostHistory::where('id', $row['Id'])->first();
-                if (!$postHistory) {
+                try {
+                    $row = simplexml_load_string($row);
+
+                    if ($row['Id'] <= 17209927) {
+                        continue;
+                    }
+
                     $postHistory = new PostHistory();
                     $postHistory->id = $row['Id'];
                     $postHistory->post_id = $row['PostId'];
@@ -139,6 +144,10 @@ class Parse extends Command
                     $postHistory->text = $row['Text'];
                     $postHistory->comment = $row['Comment'];
                     $postHistory->save();
+
+                    $this->info($postHistory->id);
+                } catch (Exception $e) {
+                    Log::info($e);
                 }
             }
         }
