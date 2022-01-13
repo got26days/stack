@@ -19,12 +19,7 @@ class MainController extends Controller
     public function index()
     {
 
-        $productId = DB::table('post_histories')->insertGetId(
-            [
-                'post_id' => 1,
-                'post_history_type_id' => 1
-            ]
-        );
+        $productId = PostLink::latest('id')->first();
 
         return $productId;
     }
