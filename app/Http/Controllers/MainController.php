@@ -11,13 +11,13 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class MainController extends Controller
 {
     public function index()
     {
-
-        return Tag::latest()->first();
+        return DB::table('post_histories')->lastInsertId();
     }
 }
