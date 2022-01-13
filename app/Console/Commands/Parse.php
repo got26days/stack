@@ -100,6 +100,8 @@ class Parse extends Command
                     }
                     $badge->date = $row['Date'];
                     $badge->save();
+
+                    $this->info($badge->id);
                 } catch (Exception $e) {
                     Log::info($e);
                 }
