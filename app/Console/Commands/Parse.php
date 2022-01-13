@@ -55,6 +55,16 @@ class Parse extends Command
             $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Tags.xml"));
 
             while ($row = $streamer->getNode()) {
+                dd($row);
+                // try {
+                //     $tag = new Tag();
+                //     $tag->id = $row['Id'];
+                //     $tag->tag_name = $row['TagName'];
+                //     $tag->count = $row['Count'];
+                //     $tag->save();
+                // } catch (Exception $e) {
+                //     echo 'Выброшено исключение: ',  $e->getMessage(), "\n";
+                // }
 
                 $tag = Tag::where('id', $row['Id'])->first();
                 if (!$tag) {
