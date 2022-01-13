@@ -67,6 +67,8 @@ class Parse extends Command
                     $tag->excerpt_post_id = $row['ExcerptPostIckd'];
                     $tag->wiki_post_id = $row[' WikiPostId'];
                     $tag->save();
+
+                    $this->info($tag->id);
                 } catch (Exception $e) {
                     Log::info($e);
                 }
