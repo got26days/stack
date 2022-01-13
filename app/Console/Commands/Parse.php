@@ -71,6 +71,8 @@ class Parse extends Command
                     $tag->id = $row['Id'];
                     $tag->tag_name = $row['TagName'];
                     $tag->count = $row['Count'];
+                    $tag->excerpt_post_id = $row['ExcerptPostIckd'];
+                    $tag->wiki_post_id = $row[' WikiPostId'];
                     $tag->save();
                 }
             }
