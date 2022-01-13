@@ -55,7 +55,6 @@ class Parse extends Command
             $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Tags.xml"));
 
             while ($row = $streamer->getNode()) {
-                dd($row);
                 // try {
                 //     $tag = new Tag();
                 //     $tag->id = $row['Id'];
