@@ -10,7 +10,9 @@ use App\Models\PostLink;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vote;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Parse extends Command
@@ -55,18 +57,9 @@ class Parse extends Command
             $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Tags.xml"));
 
             while ($row = $streamer->getNode()) {
-                // try {
-                //     $tag = new Tag();
-                //     $tag->id = $row['Id'];
-                //     $tag->tag_name = $row['TagName'];
-                //     $tag->count = $row['Count'];
-                //     $tag->save();
-                // } catch (Exception $e) {
-                //     echo 'Выброшено исключение: ',  $e->getMessage(), "\n";
-                // }
+                try {
+                    $row = simplexml_load_string($row);
 
-                $tag = Tag::where('id', $row['Id'])->first();
-                if (!$tag) {
                     $tag = new Tag();
                     $tag->id = $row['Id'];
                     $tag->tag_name = $row['TagName'];
@@ -74,6 +67,8 @@ class Parse extends Command
                     $tag->excerpt_post_id = $row['ExcerptPostIckd'];
                     $tag->wiki_post_id = $row[' WikiPostId'];
                     $tag->save();
+                } catch (Exception $e) {
+                    Log::info($e);
                 }
             }
         }
