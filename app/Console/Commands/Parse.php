@@ -257,8 +257,14 @@ class Parse extends Command
 
                 while ($row = $streamer->getNode()) {
                     $vote = Vote::where('id', $row['Id'])->first();
-                    if (!$vote) {
-                        // dd($row);
+
+                    try {
+                        $row = simplexml_load_string($row);
+                        dd($row);
+                        // if ($row['Id'] <= 1952759353) {
+                        //     continue;
+                        // }
+
                         $vote = new Vote();
                         $vote->id = $row['Id'];
                         $vote->user_id = $row['UserId'];
@@ -266,6 +272,8 @@ class Parse extends Command
                         $vote->vote_type_id = $row['VoteTypeId'];
                         $vote->bounty_amount = $row['BountyAmount'];
                         $vote->save();
+                    } catch (Exception $e) {
+                        Log::info($e);
                     }
                 }
             }
