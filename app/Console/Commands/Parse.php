@@ -83,9 +83,9 @@ class Parse extends Command
                 try {
                     $row = simplexml_load_string($row);
 
-                    // if ($row['Id'] <= 1882290402) {
-                    //     continue;
-                    // }
+                    if ($row['Id'] <= 18360283) {
+                        continue;
+                    }
 
 
                     $badge = new Badge();
