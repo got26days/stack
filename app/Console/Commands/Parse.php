@@ -83,7 +83,7 @@ class Parse extends Command
                 try {
                     $row = simplexml_load_string($row);
 
-                    if ($row['Id'] <= 1952759353) {
+                    if ($row['Id'] <= 37995355) {
                         continue;
                     }
 
@@ -103,7 +103,7 @@ class Parse extends Command
 
                     $this->info($badge->id);
                 } catch (Exception $e) {
-                    Log::info($e);
+                    // Log::info($e);
                 }
             }
 
