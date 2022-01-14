@@ -18,9 +18,9 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-        $model = 'App\Model\PostLink';
+        $model = 'App\Models\PostLink';
         if ($request['model']) {
-            $model = "App\Model\\" . $request['model'];
+            $model = "App\Models\\" . $request['model'];
         }
 
         $productId = $model::latest('id')->first();
