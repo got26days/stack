@@ -83,7 +83,7 @@ class Parse extends Command
                 try {
                     $row = simplexml_load_string($row);
 
-                    if ($row['Id'] <= 37995355) {
+                    if ($row['Id'] <= 42701986) {
                         continue;
                     }
 
