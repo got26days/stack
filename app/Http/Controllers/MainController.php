@@ -16,10 +16,14 @@ use Illuminate\Support\Str;
 
 class MainController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $model = 'App\Model\PostLink';
+        if ($request['model']) {
+            $model = "App\Model\\" . $request['model'];
+        }
 
-        $productId = PostLink::latest('id')->first();
+        $productId = $model::latest('id')->first();
 
         return $productId;
     }
