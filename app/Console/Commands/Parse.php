@@ -113,9 +113,9 @@ class Parse extends Command
                 $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Comments.xml"));
 
                 while ($row = $streamer->getNode()) {
+                    $row = simplexml_load_string($row);
                     $this->info($row);
                     dd($row);
-                    $row = simplexml_load_string($row);
 
 
 
