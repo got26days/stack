@@ -256,7 +256,6 @@ class Parse extends Command
         }
 
         if ($table == 'badges') {
-            dd(32);
             $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Badges.xml"));
 
             while ($row = $streamer->getNode()) {
