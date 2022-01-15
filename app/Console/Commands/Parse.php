@@ -114,7 +114,7 @@ class Parse extends Command
 
                 while ($row = $streamer->getNode()) {
                     $row = simplexml_load_string($row);
-                    dd($row);
+                    return $row;
 
 
                     $comment = Comment::where(
