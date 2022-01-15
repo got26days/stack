@@ -108,7 +108,7 @@ class Parse extends Command
             }
 
 
-            if ($table == 'comments') {
+            if ($table == 'comment') {
 
                 $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Comments.xml"));
 
