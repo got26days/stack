@@ -16,10 +16,11 @@ class CreateBadgesTable extends Migration
         Schema::create('badges', function (Blueprint $table) {
             $table->id();
 
+
             $table->bigInteger('user_id');
             $table->integer('class');
             $table->string('name', 64);
-            $table->boolean('tag_based');
+            $table->string('tag_based');
             $table->timestamp('date')->nullable();
 
             $table->timestamps();

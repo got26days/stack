@@ -59,7 +59,7 @@ class Parse extends Command
             while ($row = $streamer->getNode()) {
                 try {
                     $row = simplexml_load_string($row);
-
+                    dd($row);
                     $tag = new Tag();
                     $tag->id = $row['Id'];
                     $tag->tag_name = $row['TagName'];
@@ -82,8 +82,8 @@ class Parse extends Command
 
                 try {
                     $row = simplexml_load_string($row);
-
-                    if ($row['Id'] <= 42701986) {
+                    dd($row);
+                    if ($row['Id'] <= 43325448) {
                         continue;
                     }
 
@@ -113,6 +113,9 @@ class Parse extends Command
                 $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Comments.xml"));
 
                 while ($row = $streamer->getNode()) {
+                    $row = simplexml_load_string($row);
+                    dd($row);
+
 
                     $comment = Comment::where(
                         'id',
@@ -169,7 +172,7 @@ class Parse extends Command
                 while ($row = $streamer->getNode()) {
                     try {
                         $row = simplexml_load_string($row);
-
+                        dd($row);
                         if ($row['Id'] <= 1882290402) {
                             continue;
                         }
@@ -192,6 +195,8 @@ class Parse extends Command
                 $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Posts.xml"));
 
                 while ($row = $streamer->getNode()) {
+                    $row = simplexml_load_string($row);
+                    dd($row);
                     $post = Post::where('id', $row['Id'])->first();
                     if (!$post) {
                         $post = new Post();
@@ -227,6 +232,8 @@ class Parse extends Command
                 $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Users.xml"));
 
                 while ($row = $streamer->getNode()) {
+                    $row = simplexml_load_string($row);
+                    dd($row);
                     $user = User::where('id', $row['Id'])->first();
                     if (!$user) {
                         // dd($row);
@@ -257,6 +264,7 @@ class Parse extends Command
 
                 while ($row = $streamer->getNode()) {
                     $vote = Vote::where('id', $row['Id'])->first();
+
 
                     try {
                         $row = simplexml_load_string($row);
