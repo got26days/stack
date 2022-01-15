@@ -109,7 +109,7 @@ class Parse extends Command
 
 
             if ($table == 'comment') {
-
+                dd(3434);
                 $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/Comments.xml"));
 
                 while ($row = $streamer->getNode()) {
