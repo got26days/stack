@@ -101,10 +101,17 @@ class Parse extends Command
             }
         }
 
+        if ($table == 'clear') {
+
+            Post::truncate();
+            Comment::truncate();
+            Vote::truncate();
+        }
+
 
 
         if ($table == 'postHistory') {
-            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostsHistory.xml"));
+            $streamer = \Prewk\XmlStringStreamer::createStringWalkerParser(public_path("database/PostHistory.xml"));
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
@@ -141,7 +148,6 @@ class Parse extends Command
             while ($row = $streamer->getNode()) {
                 try {
                     $row = simplexml_load_string($row);
-                    dd($row);
                     if ($row['Id'] <= 1882290402) {
                         continue;
                     }
@@ -165,7 +171,6 @@ class Parse extends Command
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
-                dd($row);
                 $post = Post::where('id', $row['Id'])->first();
                 if (!$post) {
                     $post = new Post();
@@ -202,7 +207,6 @@ class Parse extends Command
 
             while ($row = $streamer->getNode()) {
                 $row = simplexml_load_string($row);
-                dd($row);
                 $user = User::where('id', $row['Id'])->first();
                 if (!$user) {
                     // dd($row);
@@ -237,11 +241,9 @@ class Parse extends Command
 
                 try {
                     $row = simplexml_load_string($row);
-                    dd($row);
                     // if ($row['Id'] <= 1952759353) {
                     //     continue;
                     // }
-
                     $vote = new Vote();
                     $vote->id = $row['Id'];
                     $vote->user_id = $row['UserId'];
@@ -262,7 +264,6 @@ class Parse extends Command
 
                 try {
                     $row = simplexml_load_string($row);
-                    dd($row);
                     if ($row['Id'] <= 43325448) {
                         continue;
                     }
