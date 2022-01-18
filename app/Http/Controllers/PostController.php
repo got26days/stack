@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
@@ -24,7 +25,7 @@ class PostController extends Controller
         // echo Cache::get('item');
 
 
-        $posts = cache()->remember('posts', 60 * 60 * 24, function () use ($request) {
+        $posts =  Redis::set('posts', 60 * 60 * 24, function () use ($request) {
             return Post::latest()->take(10)->get();
         });
 
