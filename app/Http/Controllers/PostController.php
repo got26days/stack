@@ -27,7 +27,7 @@ class PostController extends Controller
         $posts = cache()->remember('posts', 60 * 60 * 24, function () use ($request) {
             return Post::latest()->where('created_at', '>=', now()->subDays(80))->take(10)->get();
         });
-ж
+
         // $posts = Post::query();
 
 
