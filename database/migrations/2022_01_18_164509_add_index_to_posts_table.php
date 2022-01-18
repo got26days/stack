@@ -13,9 +13,9 @@ class AddIndexToPostsTable extends Migration
      */
     public function up()
     {
-        // Schema::table('posts', function (Blueprint $table) {
-        //     $table->index('created_at_index');
-        // });
+        Schema::table('posts', function (Blueprint $table) {
+            $table->index('created_at_index');
+        });
     }
 
     /**
@@ -25,8 +25,8 @@ class AddIndexToPostsTable extends Migration
      */
     public function down()
     {
-        // Schema::table('posts', function (Blueprint $table) {
-        //     $table->dropIndex(['created_at_index']);
-        // });
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropIndex(['created_at_index']);
+        });
     }
 }
