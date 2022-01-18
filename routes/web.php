@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'index']);
+Route::get('/', [PostController::class, 'index']);
 Route::get('/questions', [PostController::class, 'index']);
 
 Auth::routes();
