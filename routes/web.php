@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostLinkController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PostController::class, 'index']);
-Route::get('/questions', [PostController::class, 'index']);
+Route::get('/questions', [PostController::class, 'index'])->name('questions');
+Route::get('/tags', [TagController::class, 'index'])->name('tags');
+Route::get('/users', [UserController::class, 'index'])->name('users');
 
 Auth::routes();
 
