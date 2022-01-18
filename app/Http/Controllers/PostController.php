@@ -18,38 +18,45 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-
+        $all_posts = cache()->remember('all_posts', 60 * 60 * 24, function () {
+            return Post::count();
+        });
         // echo Cache::set('item', 'asdsa');
+
 
         // echo Cache::get('item');
 
+        $tab = 'newest';
 
-        $posts = cache()->remember('posts', 60 * 60 * 24, function () use ($request) {
-            return Post::latest()->take(10)->get();
+        if ($request['tab']) {
+            $tab = $request['tab'];
+        }
+
+
+        $posts = cache()->remember('posts' . $tab, 60 * 60 * 24, function () use ($tab) {
+            $posts = Post::query();
+
+            if ($tab == 'week') {
+                $posts->where('created_at', '>=', now()->subDays(80));
+            }
+
+            if ($tab == 'month') {
+                $posts->where('created_at', '>=', now()->subDays(150));
+            }
+
+            if ($tab == 'hot') {
+                $posts = $posts->orderBy('score', 'DESC');
+            }
+
+            if ($tab == 'newest') {
+                $posts = $posts->latest();
+            }
+
+            return $posts->paginate(20);
         });
 
-        // $posts = Post::query();
 
-
-        // $posts = $posts->limit(100000)->get();
-
-        // if ($request['tab'] == 'week') {
-        //     $posts->where('created_at', '>=', now()->subDays(80));
-        // }
-
-        // if ($request['tab'] == 'month') {
-        //     $posts->where('created_at', '>=', now()->subDays(150));
-        // }
-
-        // if ($request['tab'] == 'hot') {
-        //     $posts = $posts->sortByDesc('score');
-        // } else {
-        //     $posts = $posts->sortBy('created_at');
-        // }
-
-        // $posts = $posts->take(10);
-
-        return view('pages.posts', compact('posts'));
+        return view('pages.posts', compact('posts', 'tab', 'all_posts'));
     }
 
     /**
