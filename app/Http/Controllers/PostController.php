@@ -15,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
+        $posts = Post::latest('created_at')->paginate(15);
+
+        return view('pages.posts', compact('posts'));
     }
 
     /**

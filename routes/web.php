@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostLinkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MainController::class, 'index']);
+Route::get('/questions', [PostController::class, 'index']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

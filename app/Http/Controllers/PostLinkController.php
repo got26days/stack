@@ -15,7 +15,9 @@ class PostLinkController extends Controller
      */
     public function index()
     {
-        //
+        $posts = PostLink::latest('created_at')->paginate(15);
+
+        return view('pages.postLinks', compact('posts'));
     }
 
     /**
