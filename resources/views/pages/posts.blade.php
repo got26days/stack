@@ -36,11 +36,6 @@
 
 			</div>
 
-			<div class="p-2">
-				{{ $posts->links() }}
-			</div>
-
-
 
 
 		</div>

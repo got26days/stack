@@ -23,7 +23,7 @@ class PostController extends Controller
             $posts->where('created_at' <= now()->subDays());
         }
 
-        $posts = $posts->latest('created_at')->simplePaginate(15);
+        $posts = $posts->latest('created_at')->limit(10)->get();
 
         return view('pages.posts', compact('posts'));
     }
