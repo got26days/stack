@@ -7,6 +7,20 @@
 
 			<h1>{{ __('Questions') }}</h1>
 
+			<div class="text-end p-2">
+
+				<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+					<label class="btn btn-outline-primary" for="btnradio1">Hot</label>
+
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+					<label class="btn btn-outline-primary" for="btnradio2">Week</label>
+
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+					<label class="btn btn-outline-primary" for="btnradio3">Month</label>
+				</div>
+			</div>
+
 			<div class="list-group">
 				@foreach ($posts as $post)
 				<a href="#" class="list-group-item list-group-item-action" aria-current="true">

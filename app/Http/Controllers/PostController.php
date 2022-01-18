@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -13,10 +14,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $posts = Post::latest('created_at')->paginate(15);
+        $posts = Post::query();
+
+        if ($request['type'] == 'week') {
+            $posts->where('created_at' <= now()->subDays());
+        }
+
+        $posts = $posts->latest('created_at')->simplePaginate(15);
 
         return view('pages.posts', compact('posts'));
     }
