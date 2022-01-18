@@ -6,12 +6,12 @@
 		<div class="col-md-12">
 
 			<h1>{{ __('Questions') }}</h1>
-			<div class="d-flex w-100 justify-content-between align-items-center">
+			<div class="d-flex w-100 justify-content-between align-items-center py-2">
 
 				<div>
 					{{ $all_posts }} @lang('questions')
 				</div>
-				<div class="text-end p-2">
+				<div class="text-end">
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 						<a href="/questions?tab=newest"
 							class="btn btn-outline-primary @if($tab == 'newest') active @endif">Newest</a>
