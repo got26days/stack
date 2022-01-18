@@ -39,8 +39,9 @@ class CachePosts extends Command
     public function handle()
     {
 
-        $posts = Post::latest()->limit(10)->get();
-
+        $posts = Post::where('title', null)->count();
+        $this->line($posts);
+        return 0;
         foreach ($posts as $post) {
             $this->line($post->created_at);
         }

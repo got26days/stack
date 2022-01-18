@@ -21,10 +21,6 @@ class PostController extends Controller
         $all_posts = cache()->remember('all_posts', 60 * 60 * 24, function () {
             return Post::count();
         });
-        // echo Cache::set('item', 'asdsa');
-
-
-        // echo Cache::get('item');
 
         $tab = 'newest';
 
