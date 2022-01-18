@@ -21,6 +21,11 @@ class PostController extends Controller
 
         $posts = Post::query();
 
+
+
+
+        $posts = $posts->limit(1000)->get();
+
         if ($request['tab'] == 'week') {
             $posts->where('created_at', '>=', now()->subDays(80));
         }
@@ -30,25 +35,12 @@ class PostController extends Controller
         }
 
         if ($request['tab'] == 'hot') {
-            $posts->orderBy('score', 'DESC');
+            $posts = $posts->sortByDesc('score');
         } else {
-            $posts->latest('created_at');
+            $posts = $posts->sortBy('created_at');
         }
 
-
-
-        $posts = $posts->limit(100)->get();
-
-
-
-
-
-        $posts = $posts->all();
-
-        // return $posts;
-        // $posts = DataTables::queryBuilder($posts)->toJson();
-
-        // $posts = $posts->getData()->data;
+        $posts = $posts->take(10);
 
         return view('pages.posts', compact('posts'));
     }
