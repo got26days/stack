@@ -28,7 +28,7 @@
 
 						<h5 class="mb-1">{{ $post->title }}</h5>
 						<p>{{ $post->score }}</p>
-						<small>{{ $post->created_at->format('d.m.Y') }}</small>
+						<small>{{ $post->created_at }}</small>
 					</div>
 				</a>
 				@endforeach

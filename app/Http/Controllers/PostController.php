@@ -22,25 +22,43 @@ class PostController extends Controller
         $posts = Post::query();
 
 
+        // $posts = $posts->limit(1000)->get();
 
+        // if ($request['tab'] == 'week') {
+        //     $posts->where('created_at', '>=', now()->subDays(80));
+        // }
 
-        $posts = $posts->limit(1000)->get();
+        // if ($request['tab'] == 'month') {
+        //     $posts->where('created_at', '>=', now()->subDays(150));
+        // }
+
+        // if ($request['tab'] == 'hot') {
+        //     $posts = $posts->sortByDesc('score');
+        // } else {
+        //     $posts = $posts->sortBy('created_at');
+        // }
+
+        // $posts = $posts->take(10);
+
+        $posts = DB::table('posts');
+
+        if ($request['tab'] == 'hot') {
+            $posts->orderBy('score', 'DESC');
+        }
 
         if ($request['tab'] == 'week') {
-            $posts->where('created_at', '>=', now()->subDays(80));
+            $posts->where('created_at', '<=', now()->subDays(7));
         }
 
         if ($request['tab'] == 'month') {
-            $posts->where('created_at', '>=', now()->subDays(150));
+            $posts->where('created_at', '<=', now()->subDays(30));
         }
 
-        if ($request['tab'] == 'hot') {
-            $posts = $posts->sortByDesc('score');
-        } else {
-            $posts = $posts->sortBy('created_at');
-        }
+        $posts = $posts->latest('created_at')->limit(10);
 
-        $posts = $posts->take(10);
+        $posts = DataTables::queryBuilder($posts)->toJson();
+
+        $posts = $posts->getData()->data;
 
         return view('pages.posts', compact('posts'));
     }
