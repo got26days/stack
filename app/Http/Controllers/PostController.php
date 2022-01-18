@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
 
-        $posts = DB::table('posts');
+        $posts = Post::query();
 
         if ($request['tab'] == 'hot') {
             $posts->orderBy('score', 'DESC');
@@ -33,11 +33,11 @@ class PostController extends Controller
             $posts->where('created_at', '<=', now()->subDays(30));
         }
 
-        $posts = $posts->latest('created_at')->limit(10);
+        $posts = $posts->latest('created_at')->limit(10)->get()->chunk(1000)->all();
+        $posts = $posts[0];
+        // $posts = DataTables::queryBuilder($posts)->toJson();
 
-        $posts = DataTables::queryBuilder($posts)->toJson();
-
-        $posts = $posts->getData()->data;
+        // $posts = $posts->getData()->data;
 
         return view('pages.posts', compact('posts'));
     }
