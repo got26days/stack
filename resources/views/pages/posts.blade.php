@@ -23,14 +23,25 @@
 
 			<div class="list-group">
 				@foreach ($posts as $post)
-				<a href="#" class="list-group-item list-group-item-action" aria-current="true">
+				<div class="list-group-item list-group-item-action">
 					<div class="d-flex w-100 justify-content-between">
 
 						<h5 class="mb-1">{{ $post->title }}</h5>
 						<p>{{ $post->score }}</p>
-						<small>{{ $post->created_at }}</small>
+
 					</div>
-				</a>
+					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
+
+					@if($post->user)
+					<div>
+						<small>@lang('asked'):</small>
+
+						<a href="/users/{{ $post->user->id }}/{{ $post->user->display_name }}">{{
+							$post->user->display_name }}</a>
+
+					</div>
+					@endif
+				</div>
 				@endforeach
 
 			</div>
