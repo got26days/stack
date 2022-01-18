@@ -19,8 +19,16 @@ class PostController extends Controller
 
         $posts = Post::query();
 
-        if ($request['type'] == 'week') {
-            $posts->where('created_at' <= now()->subDays());
+        if ($request['tab'] == 'hot') {
+            $posts->orderBy('score', 'DESC');
+        }
+
+        if ($request['tab'] == 'week') {
+            $posts->where('created_at', '<=', now()->subDays(7));
+        }
+
+        if ($request['tab'] == 'month') {
+            $posts->where('created_at', '<=', now()->subDays(30));
         }
 
         $posts = $posts->latest('created_at')->limit(10)->get();
