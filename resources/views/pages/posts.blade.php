@@ -27,7 +27,7 @@
 					<div class="d-flex w-100 justify-content-between">
 
 						<h5 class="mb-1">{{ $post->title }}</h5>
-						<small>{{ $post->created_at }}</small>
+						<small>{{ $post->created_at->format('d.m.Y') }}</small>
 					</div>
 				</a>
 				@endforeach
