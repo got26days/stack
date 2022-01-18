@@ -25,12 +25,10 @@
 				@foreach ($posts as $post)
 				<a href="#" class="list-group-item list-group-item-action" aria-current="true">
 					<div class="d-flex w-100 justify-content-between">
+
 						<h5 class="mb-1">{{ $post->title }}</h5>
-						<small>{{ $post->created_at->format('d.m.Y') }}</small>
+						<small>{{ $post->created_at }}</small>
 					</div>
-					@if($post->user)
-					<small>asked: {{$post->user->name}}</small>
-					@endif
 				</a>
 				@endforeach
 

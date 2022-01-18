@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
+use DataTables;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -17,7 +19,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
 
-        $posts = Post::query();
+        $posts = DB::table('posts');
 
         if ($request['tab'] == 'hot') {
             $posts->orderBy('score', 'DESC');
@@ -31,7 +33,11 @@ class PostController extends Controller
             $posts->where('created_at', '<=', now()->subDays(30));
         }
 
-        $posts = $posts->latest('created_at')->limit(10)->get();
+        $posts = $posts->latest('created_at')->limit(10);
+
+        $posts = DataTables::queryBuilder($posts)->toJson();
+
+        $posts = $posts->getData()->data;
 
         return view('pages.posts', compact('posts'));
     }
