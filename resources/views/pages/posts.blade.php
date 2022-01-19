@@ -38,9 +38,18 @@
 					<h5 class="mb-1">{{ $post->title }}</h5>
 					<div>
 						type: {{ $post->post_type_id }}
-
-						tags: @json($post->tagsArray)
 					</div>
+					@if(count($post->tagsArray) > 0)
+					<div>
+						<h6>Tags:
+							@foreach ($post->tagsArray as $tag)
+							<span class="badge bg-secondary">{{ $tag }}</span>
+							@endforeach
+
+						</h6>
+					</div>
+					@endif
+
 					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
 					@if($post->user)
 					<div>
