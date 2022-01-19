@@ -39,7 +39,7 @@
 					<div>
 						type: {{ $post->post_type_id }}
 
-						tags: {{$post->tags}}
+						tags: @json($post->tagsArray)
 					</div>
 					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
 					@if($post->user)
