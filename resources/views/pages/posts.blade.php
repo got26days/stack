@@ -29,6 +29,9 @@
 				</div>
 				<div>
 					<h5 class="mb-1">{{ $post->title }}</h5>
+					<div>
+						type: {{ $post->post_type_id }}
+					</div>
 					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
 					@if($post->user)
 					<div>
