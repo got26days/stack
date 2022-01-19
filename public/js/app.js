@@ -5392,7 +5392,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      openFilter: true,
+      openFilter: false,
       selectedTags: [],
       searchInput: "",
       searchTags: [],
@@ -5409,6 +5409,7 @@ __webpack_require__.r(__webpack_exports__);
           id: -1
         });
       });
+      this.openFilter = true;
     }
 
     this.params = window.location.search;

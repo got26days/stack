@@ -66,7 +66,6 @@ class PostController extends Controller
             $selectedTags = $tags['array'];
         }
 
-
         return view('pages.posts', compact('posts', 'tab', 'all_posts', 'tags', 'selectedTags'));
     }
 

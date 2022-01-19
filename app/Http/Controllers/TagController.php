@@ -21,17 +21,20 @@ class TagController extends Controller
 
     public function search(Request $request)
     {
+        $tags = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
+            $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
+                ->where('tag_name', '!=', null);
 
-        $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
-            ->where('tag_name', '!=', null);
-
-        if ($request['tags_selected']) {
-            foreach ($request['tags_selected'] as $tag_selected) {
-                $tags->where('tag_name', '!=', $tag_selected);
+            if ($request['tags_selected']) {
+                foreach ($request['tags_selected'] as $tag_selected) {
+                    $tags->where('tag_name', '!=', $tag_selected);
+                }
             }
-        }
 
-        $tags = $tags->orderBy('count', 'DESC')->limit(5)->get();
+            $tags = $tags->orderBy('count', 'DESC')->limit(5)->get();
+
+            return $tags;
+        });
 
         return $tags;
     }

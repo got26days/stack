@@ -72,7 +72,7 @@ export default {
     components: { "tags-input": VoerroTagsInput },
     data() {
         return {
-            openFilter: true,
+            openFilter: false,
             selectedTags: [],
             searchInput: "",
             searchTags: [],
@@ -87,6 +87,7 @@ export default {
                     id: -1,
                 });
             });
+            this.openFilter = true;
         }
         this.params = window.location.search;
     },
