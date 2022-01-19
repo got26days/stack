@@ -24,7 +24,6 @@
 	</div>
 
 	<div class="py-2">
-		@json($tags['array'])
 		<vue-posts-filter :selected-back-tags="{{ json_encode($selectedTags, true) }}"></vue-posts-filter>
 	</div>
 
