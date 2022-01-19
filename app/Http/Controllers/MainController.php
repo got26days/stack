@@ -27,4 +27,9 @@ class MainController extends Controller
 
         return $productId;
     }
+
+    public function test()
+    {
+        return Tag::get();
+    }
 }

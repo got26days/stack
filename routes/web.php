@@ -18,8 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', [MainController::class, 'test']);
+
 Route::get('/', [PostController::class, 'index']);
 Route::get('/questions', [PostController::class, 'index'])->name('questions');
+Route::get('/questions/tagged/{tags}', [PostController::class, 'tagged'])->name('tagged_questions');
 Route::get('/tags', [TagController::class, 'index'])->name('tags');
 Route::get('/users', [UserController::class, 'index'])->name('users');
 

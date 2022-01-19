@@ -39,7 +39,7 @@ class CachePosts extends Command
     public function handle()
     {
 
-        $posts = Post::where('title', null)->count();
+        $posts = Post::where('title', '!=', null)->count();
         $this->line($posts);
         return 0;
         foreach ($posts as $post) {
