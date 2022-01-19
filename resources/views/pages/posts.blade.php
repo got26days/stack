@@ -13,6 +13,9 @@
 				<a href="/questions?tab=newest"
 					class="btn btn-outline-primary @if($tab == 'newest') active @endif">Newest</a>
 				<a href="/questions?tab=hot" class="btn btn-outline-primary @if($tab == 'hot') active @endif">Hot</a>
+				<a href="/questions?tab=active"
+					class="btn btn-outline-primary @if($tab == 'active') active @endif">Active</a>
+
 				<a href="/questions?tab=week" class="btn btn-outline-primary @if($tab == 'week') active @endif">Week</a>
 				<a href="/questions?tab=month"
 					class="btn btn-outline-primary @if($tab == 'month') active @endif">Month</a>
