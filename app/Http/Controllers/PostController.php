@@ -17,8 +17,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $tags = [])
+    public function index(Request $request, $tags = null)
     {
+
         $all_posts = cache()->remember('all_posts', 60 * 60 * 24, function () {
             return Post::count();
         });
@@ -29,14 +30,8 @@ class PostController extends Controller
             $tab = $request['tab'];
         }
 
-        $page = 1;
-
-        if ($request['page']) {
-            $page = $request['page'];
-        }
-
-        $posts = cache()->remember('posts' . $tab . $page, 60 * 60 * 24, function () use ($tab) {
-            $posts = Post::query();
+        $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
+            $posts = Post::where('post_type_id', 1);
 
             if ($tab == 'week') {
                 $posts->where('created_at', '>=', now()->subDays(80));
@@ -50,6 +45,11 @@ class PostController extends Controller
                 $posts = $posts->orderBy('score', 'DESC');
             }
 
+
+            if ($tags) {
+                $posts = $posts->where('tags', 'LIKE', "%{$tags['names']}%");
+            }
+
             if ($tab == 'newest') {
                 $posts = $posts->latest();
             }
@@ -61,37 +61,40 @@ class PostController extends Controller
             return $posts->paginate(20);
         });
 
+        $selectedTags = [];
+        if ($tags) {
+            $selectedTags = $tags['array'];
+        }
 
-        return view('pages.posts', compact('posts', 'tab', 'all_posts'));
+
+        return view('pages.posts', compact('posts', 'tab', 'all_posts', 'tags', 'selectedTags'));
     }
 
     public function tagged(Request $request, $tags)
     {
-        $pieces = explode(" ", $tags);
+        $old_pieces = explode(" ", $tags);
 
-        $tag_ids = [];
-        $tag_name = [];
-
-        // foreach ($pieces as $piece) {
-        //     $tag = Tag::where('tag_name', $piece)->first();
-        //     if ($tag) {
-        //         $tag_ids[] = $tag->id;
-        //         $tag_name[] = '<' . $tag->tag_name . '>';
-        //     }
-        // }
-
-        if (count($tag_ids) < 1) {
+        if (count($old_pieces) < 1) {
             abort(404);
         }
 
+        $pieces = $old_pieces;
 
-        $tags = implode(' ', $tag_ids);
-        $tag_name = implode($tag_name);
-        // $tags = cache()->remember('tags_' . $tags, 60 * 60 * 24, function () use ($tag_ids) {
-        //     return Tag::whereIn('id', array_values($tag_ids))->get();
-        // });
+        sort($pieces);
 
-        $this->index($request, $tags);
+        $tag_names = [];
+
+        foreach ($pieces as $piece) {
+            $tag_names[] = '<' . $piece . '>';
+        }
+
+        $tags = [
+            'names' => implode($tag_names),
+            'array' => $old_pieces
+        ];
+
+
+        return $this->index($request, $tags);
     }
 
     /**

@@ -25,8 +25,10 @@ class TagController extends Controller
         $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
             ->where('tag_name', '!=', null);
 
-        if ($request['ids']) {
-            $tags->whereNotIn('id', $request['ids']);
+        if ($request['tags_selected']) {
+            foreach ($request['tags_selected'] as $tag_selected) {
+                $tags->where('tag_name', '!=', $tag_selected);
+            }
         }
 
         $tags = $tags->orderBy('count', 'DESC')->limit(5)->get();

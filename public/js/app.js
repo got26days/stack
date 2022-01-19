@@ -5386,6 +5386,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["selectedBackTags"],
   components: {
     "tags-input": _voerro_vue_tagsinput__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -5399,6 +5400,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    if (this.selectedBackTags.length > 0) {
+      this.selectedBackTags.forEach(function (elem) {
+        _this.selectedTags.push({
+          value: elem,
+          id: -1
+        });
+      });
+    }
+
     this.params = window.location.search;
   },
   watch: {
@@ -5420,19 +5432,19 @@ __webpack_require__.r(__webpack_exports__);
       this.openFilter = !this.openFilter;
     },
     debounceInput: _.debounce(function () {
-      var _this = this;
+      var _this2 = this;
 
       var idsArray = this.selectedTags.map(function (elem) {
-        return elem.id;
+        return elem.value;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default().get("/tags/search", {
         params: {
           tag: this.searchInput,
-          ids: idsArray
+          tags_selected: idsArray
         }
       }).then(function (res) {
         console.log(res.data);
-        _this.searchTags = res.data;
+        _this2.searchTags = res.data;
       })["catch"](function (err) {
         console.log(err);
       });

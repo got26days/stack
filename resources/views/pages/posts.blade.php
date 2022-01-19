@@ -24,7 +24,8 @@
 	</div>
 
 	<div class="py-2">
-		<vue-posts-filter></vue-posts-filter>
+		@json($tags['array'])
+		<vue-posts-filter :selected-back-tags="{{ json_encode($selectedTags, true) }}"></vue-posts-filter>
 	</div>
 
 	<div class="list-group">
@@ -39,7 +40,7 @@
 					<div>
 						type: {{ $post->post_type_id }}
 
-
+						tags: {{$post->tags}}
 					</div>
 					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
 					@if($post->user)

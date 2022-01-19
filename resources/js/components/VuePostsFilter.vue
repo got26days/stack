@@ -68,6 +68,7 @@ import VoerroTagsInput from "@voerro/vue-tagsinput";
 import axios from "axios";
 
 export default {
+    props: ["selectedBackTags"],
     components: { "tags-input": VoerroTagsInput },
     data() {
         return {
@@ -79,6 +80,14 @@ export default {
         };
     },
     mounted() {
+        if (this.selectedBackTags.length > 0) {
+            this.selectedBackTags.forEach((elem) => {
+                this.selectedTags.push({
+                    value: elem,
+                    id: -1,
+                });
+            });
+        }
         this.params = window.location.search;
     },
     watch: {
@@ -102,13 +111,13 @@ export default {
         },
         debounceInput: _.debounce(function () {
             let idsArray = this.selectedTags.map((elem) => {
-                return elem.id;
+                return elem.value;
             });
             axios
                 .get("/tags/search", {
                     params: {
                         tag: this.searchInput,
-                        ids: idsArray,
+                        tags_selected: idsArray,
                     },
                 })
                 .then((res) => {
