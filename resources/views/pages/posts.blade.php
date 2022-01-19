@@ -23,6 +23,10 @@
 		</div>
 	</div>
 
+	<div class="py-2">
+		<vue-posts-filter></vue-posts-filter>
+	</div>
+
 	<div class="list-group">
 		@foreach ($posts as $post)
 		<div class="list-group-item list-group-item-action">
@@ -34,6 +38,8 @@
 					<h5 class="mb-1">{{ $post->title }}</h5>
 					<div>
 						type: {{ $post->post_type_id }}
+
+
 					</div>
 					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
 					@if($post->user)

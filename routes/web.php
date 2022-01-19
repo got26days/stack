@@ -24,6 +24,7 @@ Route::get('/', [PostController::class, 'index']);
 Route::get('/questions', [PostController::class, 'index'])->name('questions');
 Route::get('/questions/tagged/{tags}', [PostController::class, 'tagged'])->name('tagged_questions');
 Route::get('/tags', [TagController::class, 'index'])->name('tags');
+Route::get('/tags/search', [TagController::class, 'search'])->name('tags.search');
 Route::get('/users', [UserController::class, 'index'])->name('users');
 
 Auth::routes();

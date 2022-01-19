@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
@@ -16,6 +17,21 @@ class TagController extends Controller
     public function index()
     {
         return view('pages.tags');
+    }
+
+    public function search(Request $request)
+    {
+
+        $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
+            ->where('tag_name', '!=', null);
+
+        if ($request['ids']) {
+            $tags->whereNotIn('id', $request['ids']);
+        }
+
+        $tags = $tags->orderBy('count', 'DESC')->limit(5)->get();
+
+        return $tags;
     }
 
     /**

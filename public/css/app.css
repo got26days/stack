@@ -11286,3 +11286,42 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.tags-input input {
+  border: 0px !important;
+  background: transparent;
+  outline: 0px !important;
+}
+
+.tagsSelector .typeahead-badges {
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+}
+.tagsSelector .typeahead-badges .tags-input-badge {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.tagsSelector .typeahead-badges .tags-input-badge:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+.tagsSelector .typeahead-badges .tags-input-badge:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.tagsSelector .tags-input-badge-selected-default {
+  border-radius: 3px;
+  background-color: #0d6efd;
+  padding: 3px;
+  color: white;
+  margin: 3px;
+}
+.tagsSelector .tags-input-remove {
+  color: white;
+  text-decoration: none !important;
+}

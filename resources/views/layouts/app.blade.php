@@ -19,6 +19,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="/js/app.js"></script>
 </head>
 
 <body>
@@ -79,7 +81,9 @@
             </div>
         </nav>
 
+
         <main class="py-4">
+
             <div class="container">
                 <div class="row">
                     <div class="col-2">
