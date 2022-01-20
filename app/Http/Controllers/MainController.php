@@ -18,14 +18,14 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-
         return 'test';
     }
 
     public function test()
     {
         $posts = Post::where('post_type_id', 1)
-            ->whereRaw("MATCH(tags) AGAINST('<android>')")
+            // ->whereRaw("MATCH(tags) AGAINST('<android>')")
+            ->whereRaw("tags REGEXP '[[:<:]]php[[:>:]]'")
             ->latest()->paginate(20);
 
         return $posts;
