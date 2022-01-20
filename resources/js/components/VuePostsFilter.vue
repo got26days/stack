@@ -81,12 +81,7 @@ export default {
     },
     mounted() {
         if (this.selectedBackTags.length > 0) {
-            this.selectedBackTags.forEach((elem) => {
-                this.selectedTags.push({
-                    value: elem,
-                    id: -1,
-                });
-            });
+            this.selectedTags = this.selectedBackTags;
             this.openFilter = true;
         }
         this.params = window.location.search;

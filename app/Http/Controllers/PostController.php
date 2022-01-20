@@ -17,7 +17,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $tags = null)
+    public function index(Request $request, $tags = [])
     {
 
         $tab = 'newest';
@@ -41,9 +41,12 @@ class PostController extends Controller
                 $posts = $posts->orderBy('score', 'DESC');
             }
 
-
-            if ($tags) {
-                $posts = $posts->where('tags', 'LIKE', "%{$tags['names']}%");
+            if (count($tags) > 0) {
+                foreach ($tags as $tag) {
+                    $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
+                        $q->where('tag_id', $tag->id);
+                    });
+                }
             }
 
             if ($tab == 'newest') {
@@ -57,32 +60,29 @@ class PostController extends Controller
             return $posts->paginate(20);
         });
 
-        $selectedTags = [];
-        if ($tags) {
-            $selectedTags = $tags['array'];
-        }
 
-        return view('pages.posts', compact('posts', 'tab', 'tags', 'selectedTags'));
+        return view('pages.posts', compact('posts', 'tab', 'tags'));
     }
 
     public function tagged(Request $request, $tags)
     {
-        $old_pieces = explode(" ", $tags);
+        $pieces = explode(" ", $tags);
 
-        if (count($old_pieces) < 1) {
+        if (count($pieces) < 1) {
             abort(404);
         }
 
-        $pieces = $old_pieces;
+        $tags = [];
 
-        sort($pieces);
+        foreach ($pieces as $tag_name) {
+            $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
+                return Tag::where('tag_name', $tag_name)->first();
+            });
 
-
-        $tags = [
-            'names' => implode($tag_names),
-            'array' => $old_pieces
-        ];
-
+            if ($tag) {
+                $tags[] = $tag;
+            }
+        }
 
         return $this->index($request, $tags);
     }

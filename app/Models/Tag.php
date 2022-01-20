@@ -9,6 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'created_at' => "datetime:d.m.Y",
+    ];
+
     protected $appends = ['value'];
 
     public function getValueAttribute()

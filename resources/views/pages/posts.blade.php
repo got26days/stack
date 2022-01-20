@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="py-2">
-		<vue-posts-filter :selected-back-tags="{{ json_encode($selectedTags, true) }}"></vue-posts-filter>
+		<vue-posts-filter :selected-back-tags="{{ json_encode($tags, true) }}"></vue-posts-filter>
 	</div>
 
 	<div class="list-group">
@@ -39,7 +39,7 @@
 					<div>
 						type: {{ $post->post_type_id }}
 					</div>
-					@if(count($post->tagsArray) > 0)
+					@if(count($post->tagsRelationship) > 0)
 					<div>
 						<h6>Tags:
 							@foreach ($post->tagsRelationship as $tag)

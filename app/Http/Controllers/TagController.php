@@ -14,9 +14,18 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.tags');
+
+        $tab = 'Popular';
+
+        if ($request['tab']) {
+            $tab = $request['tab'];
+        }
+
+        $tags = Tag::paginate(30);
+
+        return view('pages.tags', compact('tags', 'tab'));
     }
 
     public function search(Request $request)
