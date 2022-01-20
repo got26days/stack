@@ -24,10 +24,9 @@ class MainController extends Controller
 
     public function test()
     {
-        dd(3);
-        $posts = Post::latest()->paginate(20);
-        // ->where('tags', '<php>')
-        // ->latest()->paginate(20);
+        $posts = Post::where('post_type_id', 1)
+            ->where('tags', '<php>')
+            ->latest()->paginate(20);
 
         return $posts;
     }
