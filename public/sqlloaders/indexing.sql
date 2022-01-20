@@ -8,4 +8,8 @@ CREATE INDEX closed_date_index ON posts (closed_date);
 
 CREATE INDEX post_type_id_index on posts(post_type_id);
 
--- CREATE INDEX id_index ON users (id);
+
+use admin_1;
+select * from posts where tags like %php% LIMIT 10
+
+SELECT * FROM posts WHERE `tags` LIKE '%php%' LIMIT 0, 10
