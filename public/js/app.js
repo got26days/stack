@@ -5543,18 +5543,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["tags", "tab"],
   data: function data() {
     return {
       currentTab: "Popular",
-      showTags: []
+      showTags: [],
+      search: "",
+      searchTags: []
     };
+  },
+  watch: {
+    search: function search(newVal) {
+      if (newVal == "" || newVal == null) {
+        document.getElementById("tags-pagination").style.display = "block";
+        return;
+      }
+
+      document.getElementById("tags-pagination").style.display = "none";
+      this.debounceTags();
+    }
   },
   mounted: function mounted() {
     this.showTags = this.tags.data;
     this.currentTab = this.tab;
     console.log("Component mounted.");
+  },
+  methods: {
+    debounceTags: _.debounce(function () {
+      var _this = this;
+
+      axios.get("/tags/search", {
+        params: {
+          tag: this.search
+        }
+      }).then(function (res) {
+        console.log(res.data);
+        _this.searchTags = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }, 500)
   }
 });
 
@@ -29917,7 +29976,29 @@ var render = function () {
           "d-flex w-100 justify-content-between align-items-center py-2",
       },
       [
-        _c("div"),
+        _c("div", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Search..." },
+            domProps: { value: _vm.search },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              },
+            },
+          }),
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "text-end" }, [
           _c(
@@ -29966,39 +30047,87 @@ var render = function () {
     ),
     _vm._v(" "),
     _c("div", [
-      _c(
-        "div",
-        { staticClass: "row" },
-        _vm._l(_vm.showTags, function (tag) {
-          return _c(
+      _vm.search == ""
+        ? _c(
             "div",
-            { key: "tag" + tag.id, staticClass: "col-sm-12 col-md-6 col-lg-3" },
-            [
-              _c("div", { staticClass: "card text-center my-2" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { href: "/questions/tagged/" + tag.tag_name },
-                    },
-                    [_vm._v(_vm._s(tag.tag_name))]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-footer text-muted" }, [
-                  _vm._v(
-                    "\n                        created " +
-                      _vm._s(tag.created_at) +
-                      "\n                    "
-                  ),
-                ]),
-              ]),
-            ]
+            { staticClass: "row" },
+            _vm._l(_vm.showTags, function (tag) {
+              return _c(
+                "div",
+                {
+                  key: "tag" + tag.id,
+                  staticClass: "col-sm-12 col-md-6 col-lg-3",
+                },
+                [
+                  _c("div", { staticClass: "card text-center my-2" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("p", [_vm._v(_vm._s(tag.count) + " questions")]),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { href: "/questions/tagged/" + tag.tag_name },
+                        },
+                        [_vm._v(_vm._s(tag.tag_name))]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-footer text-muted" }, [
+                      _vm._v(
+                        "\n                        created " +
+                          _vm._s(tag.created_at) +
+                          "\n                    "
+                      ),
+                    ]),
+                  ]),
+                ]
+              )
+            }),
+            0
           )
-        }),
-        0
-      ),
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.search != ""
+        ? _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.searchTags, function (tag) {
+              return _c(
+                "div",
+                {
+                  key: "searchtag" + tag.id,
+                  staticClass: "col-sm-12 col-md-6 col-lg-3",
+                },
+                [
+                  _c("div", { staticClass: "card text-center my-2" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("p", [_vm._v(_vm._s(tag.count) + " questions")]),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { href: "/questions/tagged/" + tag.tag_name },
+                        },
+                        [_vm._v(_vm._s(tag.tag_name))]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-footer text-muted" }, [
+                      _vm._v(
+                        "\n                        created " +
+                          _vm._s(tag.created_at) +
+                          "\n                    "
+                      ),
+                    ]),
+                  ]),
+                ]
+              )
+            }),
+            0
+          )
+        : _vm._e(),
     ]),
   ])
 }

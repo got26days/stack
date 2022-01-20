@@ -66,7 +66,7 @@
 	</div>
 
 	<div class="pt-2">
-		{{ $posts->links() }}
+		{{ $posts->withQueryString()->links() }}
 	</div>
 </div>
 @endsection

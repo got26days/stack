@@ -17,13 +17,39 @@ class TagController extends Controller
     public function index(Request $request)
     {
 
-        $tab = 'Popular';
+        $tab = 'popular';
 
         if ($request['tab']) {
             $tab = $request['tab'];
         }
 
-        $tags = Tag::paginate(30);
+        $tags = cache()->remember(
+            request()->getRequestUri(),
+            60 * 60 * 24,
+            function () use ($tab) {
+                $tags = Tag::withCount('posts');
+
+                if ($tab == 'popular') {
+                    $tags = $tags->orderBy('posts_count', 'DESC');
+                }
+
+                if (
+                    $tab == 'name'
+                ) {
+                    $tags = $tags->orderBy('tag_name');
+                }
+
+                if (
+                    $tab == 'new'
+                ) {
+                    $tags = $tags->latest();
+                }
+
+                $tags = $tags->paginate(20);
+
+                return $tags;
+            }
+        );
 
         return view('pages.tags', compact('tags', 'tab'));
     }
