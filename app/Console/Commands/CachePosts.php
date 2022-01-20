@@ -40,26 +40,28 @@ class CachePosts extends Command
     public function handle()
     {
 
-        $posts = Post::where('post_type_id', 1)->get();
-        foreach ($posts as $post) {
+        $posts = Post::where('post_type_id', 1)->chunk(100, function ($posts) {
+            foreach ($posts as $post) {
 
-            if (count($post->tagsArray) > 0) {
+                if (count($post->tagsArray) > 0) {
 
-                foreach ($post->tagsArray as $tag_name) {
+                    foreach ($post->tagsArray as $tag_name) {
 
-                    $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
-                        return Tag::where('tag_name', $tag_name)->first();
-                    });
+                        $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
+                            return Tag::where('tag_name', $tag_name)->first();
+                        });
 
 
-                    if ($tag) {
-                        $post->tagsRelationship()->attach($tag->id);
+                        if ($tag) {
+                            $post->tagsRelationship()->attach($tag->id);
+                        }
                     }
                 }
-            }
 
-            $this->line($post->id);
-        }
+                $this->line($post->id);
+            }
+        });
+
 
         return 0;
     }
