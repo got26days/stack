@@ -20,10 +20,6 @@ class PostController extends Controller
     public function index(Request $request, $tags = null)
     {
 
-        $all_posts = cache()->remember('all_posts', 60 * 60 * 24, function () {
-            return Post::count();
-        });
-
         $tab = 'newest';
 
         if ($request['tab']) {
@@ -66,7 +62,7 @@ class PostController extends Controller
             $selectedTags = $tags['array'];
         }
 
-        return view('pages.posts', compact('posts', 'tab', 'all_posts', 'tags', 'selectedTags'));
+        return view('pages.posts', compact('posts', 'tab', 'tags', 'selectedTags'));
     }
 
     public function tagged(Request $request, $tags)
