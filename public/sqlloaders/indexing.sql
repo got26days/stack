@@ -10,6 +10,4 @@ CREATE INDEX post_type_id_index on posts(post_type_id);
 
 
 use admin_1;
-select * from posts where tags like %php% LIMIT 10
-
 SELECT * FROM posts WHERE `tags` LIKE '%php%' LIMIT 0, 10
