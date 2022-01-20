@@ -18,18 +18,16 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-        $model = 'App\Models\PostLink';
-        if ($request['model']) {
-            $model = "App\Models\\" . $request['model'];
-        }
 
-        $productId = $model::latest('id')->first();
-
-        return $productId;
+        return 'test';
     }
 
     public function test()
     {
-        return Tag::get();
+        $posts = Post::where('post_type_id', 1)
+            ->where('tags', 'LIKE', "%php%")
+            ->latest()->limit(10)->get();
+
+        return $posts;
     }
 }
