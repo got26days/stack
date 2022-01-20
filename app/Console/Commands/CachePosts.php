@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Console\Command;
 
 class CachePosts extends Command
@@ -39,11 +40,25 @@ class CachePosts extends Command
     public function handle()
     {
 
-        $posts = Post::where('title', '!=', null)->count();
-        $this->line($posts);
-        return 0;
+        $posts = Post::where('post_type_id', 1)->get();
         foreach ($posts as $post) {
-            $this->line($post->created_at);
+
+            if (count($post->tagsArray) > 0) {
+
+                foreach ($post->tagsArray as $tag_name) {
+
+                    $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
+                        return Tag::where('tag_name', $tag_name)->first();
+                    });
+
+
+                    if ($tag) {
+                        $post->tagsRelationship()->attach($tag->id);
+                    }
+                }
+            }
+
+            $this->line($post->id);
         }
 
         return 0;

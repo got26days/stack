@@ -24,8 +24,8 @@ class MainController extends Controller
     public function test()
     {
         $posts = Post::where('post_type_id', 1)
+            ->with('tagsRelationship')
             // ->whereRaw("MATCH(tags) AGAINST('<android>')")
-            ->whereRaw("tags regexp '\\\\b(php)\\\\b'")
             ->latest()->paginate(20);
 
         return $posts;
