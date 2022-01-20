@@ -26,7 +26,7 @@ class MainController extends Controller
     {
         $posts = Post::where('post_type_id', 1)
             ->where('tags', 'LIKE', "%php%")
-            ->latest()->limit(10)->get();
+            ->latest()->paginate(20);
 
         return $posts;
     }
