@@ -99,6 +99,8 @@ export default {
     },
     watch: {
         search: function (newVal) {
+            this.searchTags = [];
+
             if (newVal == "" || newVal == null) {
                 document.getElementById("tags-pagination").style.display =
                     "block";

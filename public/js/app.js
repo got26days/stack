@@ -5585,6 +5585,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     search: function search(newVal) {
+      this.searchTags = [];
+
       if (newVal == "" || newVal == null) {
         document.getElementById("tags-pagination").style.display = "block";
         return;
