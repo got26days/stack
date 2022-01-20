@@ -24,9 +24,9 @@ class MainController extends Controller
 
     public function test()
     {
-        $posts = Post::latest()->paginate(20);
-        // ->where('tags', 'LIKE', "%php%")
-        // ->latest()->paginate(20);
+        $posts = Post::where('post_type_id', 1)
+            // ->where('tags', 'LIKE', "%php%")
+            ->latest()->paginate(20);
 
         return $posts;
     }
