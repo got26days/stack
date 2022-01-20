@@ -42,8 +42,8 @@
 					@if(count($post->tagsArray) > 0)
 					<div>
 						<h6>Tags:
-							@foreach ($post->tagsArray as $tag)
-							<span class="badge bg-secondary">{{ $tag }}</span>
+							@foreach ($post->tagsRelationship as $tag)
+							<span class="badge bg-secondary">{{ $tag->tag_name }}</span>
 							@endforeach
 
 						</h6>

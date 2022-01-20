@@ -77,11 +77,6 @@ class PostController extends Controller
 
         sort($pieces);
 
-        $tag_names = [];
-
-        foreach ($pieces as $piece) {
-            $tag_names[] = '<' . $piece . '>';
-        }
 
         $tags = [
             'names' => implode($tag_names),
