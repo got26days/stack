@@ -40,7 +40,7 @@ class CachePosts extends Command
     public function handle()
     {
 
-        $posts = Post::where('id', '>=', 30021938)
+        $posts = Post::where('id', '>=', 48751571)
             ->where('post_type_id', 1)->chunk(30000, function ($posts) {
                 foreach ($posts as $post) {
 
