@@ -39,7 +39,16 @@
 					<div>
 						type: {{ $post->post_type_id }}
 					</div>
+					@if(count($post->tagsRelationship) > 0)
+					<div>
+						<h6>Tags:
+							@foreach ($post->tagsRelationship as $tag)
+							<span class="badge bg-secondary">{{ $tag->tag_name }}</span>
+							@endforeach
 
+						</h6>
+					</div>
+					@endif
 
 					<small>{{ $post->created_at->format('d.m.Y H:i') }}</small>
 					@if($post->user)

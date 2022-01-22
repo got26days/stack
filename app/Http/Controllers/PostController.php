@@ -26,8 +26,6 @@ class PostController extends Controller
             $tab = $request['tab'];
         }
 
-        dd($tags);
-
 
         $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
             $posts = Post::where('post_type_id', 1);
@@ -45,8 +43,6 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-
-                $post_tag = DB::table('post_tag')->whereIn('tag_id',)->get();
 
                 foreach ($tags as $tag) {
                     $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
