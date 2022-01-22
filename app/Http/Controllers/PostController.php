@@ -26,6 +26,7 @@ class PostController extends Controller
             $tab = $request['tab'];
         }
 
+
         $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
             $posts = Post::where('post_type_id', 1);
 
