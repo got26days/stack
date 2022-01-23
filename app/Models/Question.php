@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Question extends Model
 {
     use HasFactory;
 
@@ -34,8 +34,8 @@ class Post extends Model
         return $tagsArray;
     }
 
-    // public function tagsRelationship()
-    // {
-    //     return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
-    // }
+    public function tagsRelationship()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
+    }
 }
