@@ -59,70 +59,70 @@ class CachePosts extends Command
 
         // return 0;
 
-        Post::where('id', '<=', 38906610)->where('post_type_id', 1)->chunk(
-            30000,
-            function ($posts) {
-                foreach ($posts as $post) {
-                    $post->delete();
-                }
-
-
-                $this->line('d');
-            }
-        );
-
-        // $posts = Post::where('id', '>=', 1)
-        //     ->where('post_type_id', 1)->chunk(30000, function ($posts) {
+        // Post::where('id', '<=', 38906610)->where('post_type_id', 1)->chunk(
+        //     30000,
+        //     function ($posts) {
         //         foreach ($posts as $post) {
-
-        //             // $new = $post->replicate();
-        //             $q = new Question();
-        //             $q->owner_user_id = $post->owner_user_id;
-        //             $q->last_editor_user_id = $post->last_editor_user_id;
-        //             $q->accepted_answer_id = $post->accepted_answer_id;
-        //             $q->score = $post->score;
-        //             $q->parent_id = $post->parent_id;
-        //             $q->view_count = $post->view_count;
-        //             $q->answer_count = $post->answer_count;
-        //             $q->comment_count = $post->comment_count;
-        //             $q->owner_display_name = $post->owner_display_name;
-        //             $q->last_editor_display_name = $post->last_editor_display_name;
-        //             $q->title = $post->title;
-        //             $q->tags = $post->tags;
-        //             $q->content_license = $post->content_license;
-        //             $q->body = $post->body;
-        //             $q->favorite_count = $post->favorite_count;
-        //             $q->community_owned_date = $post->community_owned_date;
-        //             $q->closed_date = $post->closed_date;
-        //             $q->last_edit_date = $post->last_edit_date;
-        //             $q->last_activity_date = $post->last_activity_date;
-        //             $q->created_at = $post->created_at;
-        //             $q->id = $post->id;
-        //             $q->updated_at = $post->updated_at;
-        //             $q->save();
-
-
-
-        //             // if (count($post->tagsArray) > 0) {
-
-        //             //     foreach ($post->tagsArray as $tag_name) {
-
-        //             //         $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
-        //             //             return Tag::where('tag_name', $tag_name)->first();
-        //             //         });
-
-
-        //             //         if ($tag) {
-        //             //             $post->tagsRelationship()->attach($tag->id);
-        //             //         }
-        //             //     }
-        //             // }
-
-        //             $this->line($post->id);
-
         //             $post->delete();
         //         }
-        //     });
+
+
+        //         $this->line('d');
+        //     }
+        // );
+
+        $posts = Post::where('id', '>=', 38906610)
+            ->where('post_type_id', 1)->chunk(30000, function ($posts) {
+                foreach ($posts as $post) {
+
+                    // $new = $post->replicate();
+                    $q = new Question();
+                    $q->owner_user_id = $post->owner_user_id;
+                    $q->last_editor_user_id = $post->last_editor_user_id;
+                    $q->accepted_answer_id = $post->accepted_answer_id;
+                    $q->score = $post->score;
+                    $q->parent_id = $post->parent_id;
+                    $q->view_count = $post->view_count;
+                    $q->answer_count = $post->answer_count;
+                    $q->comment_count = $post->comment_count;
+                    $q->owner_display_name = $post->owner_display_name;
+                    $q->last_editor_display_name = $post->last_editor_display_name;
+                    $q->title = $post->title;
+                    $q->tags = $post->tags;
+                    $q->content_license = $post->content_license;
+                    $q->body = $post->body;
+                    $q->favorite_count = $post->favorite_count;
+                    $q->community_owned_date = $post->community_owned_date;
+                    $q->closed_date = $post->closed_date;
+                    $q->last_edit_date = $post->last_edit_date;
+                    $q->last_activity_date = $post->last_activity_date;
+                    $q->created_at = $post->created_at;
+                    $q->id = $post->id;
+                    $q->updated_at = $post->updated_at;
+                    $q->save();
+
+
+
+                    // if (count($post->tagsArray) > 0) {
+
+                    //     foreach ($post->tagsArray as $tag_name) {
+
+                    //         $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
+                    //             return Tag::where('tag_name', $tag_name)->first();
+                    //         });
+
+
+                    //         if ($tag) {
+                    //             $post->tagsRelationship()->attach($tag->id);
+                    //         }
+                    //     }
+                    // }
+
+                    $this->line($post->id);
+
+                    $post->delete();
+                }
+            });
 
 
         return 0;
