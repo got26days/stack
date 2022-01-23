@@ -27,7 +27,7 @@ class TagController extends Controller
             request()->getRequestUri(),
             60 * 60 * 24,
             function () use ($tab) {
-                $tags = Tag::withCount('posts');
+                $tags = Tag::query();
 
                 if ($tab == 'popular') {
                     $tags = $tags->orderBy('posts_count', 'DESC');
