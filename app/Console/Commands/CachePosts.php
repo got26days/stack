@@ -71,7 +71,7 @@ class CachePosts extends Command
         //     }
         // );
 
-        $posts = Post::where('id', '>=', 38906610)
+        $posts = Post::where('id', '>', 41031770)
             ->where('post_type_id', 1)->chunk(30000, function ($posts) {
                 foreach ($posts as $post) {
 
