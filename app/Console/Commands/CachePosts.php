@@ -62,7 +62,10 @@ class CachePosts extends Command
         Post::where('id', '<=', 38906610)->where('post_type_id', 1)->chunk(
             30000,
             function ($posts) {
-                $posts->delete();
+                foreach ($posts as $post) {
+                    $post->delete();
+                }
+
 
                 $this->line('d');
             }
