@@ -44,20 +44,29 @@ class CachePosts extends Command
     public function handle()
     {
 
-        $post_tag = PostTag::query()->chunk(
+        // $post_tag = PostTag::query()->chunk(
+        //     30000,
+        //     function ($post_tag) {
+        //         foreach ($post_tag as $tag) {
+        //             $pt = Post::where('id', $tag->post_id)->latest()->first();
+        //             if (!$pt) {
+        //                 $tag->delete();
+        //                 $this->line($tag->id);
+        //             }
+        //         }
+        //     }
+        // );
+
+        // return 0;
+
+        Post::where('id', '<=', 38906610)->where('post_type_id', 1)->chunk(
             30000,
-            function ($post_tag) {
-                foreach ($post_tag as $tag) {
-                    $pt = Post::where('id', $tag->post_id)->latest()->first();
-                    if (!$pt) {
-                        $tag->delete();
-                        $this->line($tag->id);
-                    }
-                }
+            function ($posts) {
+                $posts->delete();
+
+                $this->line('d');
             }
         );
-
-        return 0;
 
         // $posts = Post::where('id', '>=', 1)
         //     ->where('post_type_id', 1)->chunk(30000, function ($posts) {
@@ -113,6 +122,6 @@ class CachePosts extends Command
         //     });
 
 
-        // return 0;
+        return 0;
     }
 }
