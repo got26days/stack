@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Question;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use DataTables;
@@ -28,7 +29,7 @@ class PostController extends Controller
 
 
         $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
-            $posts = Post::where('post_type_id', 1);
+            $posts = Question::query();
 
             if ($tab == 'week') {
                 $posts->where('created_at', '>=', now()->subDays(80));

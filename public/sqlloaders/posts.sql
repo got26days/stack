@@ -1,4 +1,4 @@
-LOAD XML LOCAL INFILE '/var/www/html/public/database/Posts.xml' 
+LOAD XML LOCAL INFILE 'C://Users/notepc/Sites/stack/public/database/Posts.xml' 
 INTO TABLE posts
  ROWS IDENTIFIED BY '<row>'
  (

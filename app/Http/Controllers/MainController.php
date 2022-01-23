@@ -13,6 +13,8 @@ use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class MainController extends Controller
 {
@@ -23,6 +25,18 @@ class MainController extends Controller
 
     public function test()
     {
+
+
+        Schema::table('post_tag', function (Blueprint $table) {
+            // $table->dropIndex(['created_at_index']);
+            $table->dropForeign(['post_id']);
+            $table->dropForeign(['tag_id']);
+        });
+
+        return 'success';
+
+        $table->dropForeign(['currency_id']);
+
         $posts = Post::where('post_type_id', 1)
             ->with('tagsRelationship')
             // ->whereRaw("MATCH(tags) AGAINST('<android>')")
