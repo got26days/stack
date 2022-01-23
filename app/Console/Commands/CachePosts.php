@@ -118,10 +118,12 @@ class CachePosts extends Command
                     //     }
                     // }
 
-                    $this->line($post->id);
+
 
                     $post->delete();
                 }
+
+                $this->line($posts[0]->id);
             });
 
 
