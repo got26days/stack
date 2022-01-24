@@ -28,42 +28,42 @@ class PostController extends Controller
         }
 
 
-        $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
-            $posts = Question::query();
+        // $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
+        $posts = Question::query();
 
-            if ($tab == 'week') {
-                $posts->where('created_at', '>=', now()->subDays(80));
+        if ($tab == 'week') {
+            $posts->where('created_at', '>=', now()->subDays(80));
+        }
+
+        if ($tab == 'month') {
+            $posts->where('created_at', '>=', now()->subDays(150));
+        }
+
+        if ($tab == 'hot') {
+            $posts = $posts->orderBy('score', 'DESC');
+        }
+
+        if (count($tags) > 0) {
+
+            foreach ($tags as $tag) {
+                $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
+                    $q->where('tag_id', $tag->id);
+                });
+
+                // $posts = $posts->where("tags", "LIKE", '%<' . $tag->tag_name . '>%');
             }
+        }
 
-            if ($tab == 'month') {
-                $posts->where('created_at', '>=', now()->subDays(150));
-            }
+        if ($tab == 'newest') {
+            $posts = $posts->latest();
+        }
 
-            if ($tab == 'hot') {
-                $posts = $posts->orderBy('score', 'DESC');
-            }
+        if ($tab == 'active') {
+            $posts = $posts->where('closed_date', null)->latest();
+        }
 
-            if (count($tags) > 0) {
-
-                foreach ($tags as $tag) {
-                    $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
-                        $q->where('tag_id', $tag->id);
-                    });
-
-                    // $posts = $posts->where("tags", "LIKE", '%<' . $tag->tag_name . '>%');
-                }
-            }
-
-            if ($tab == 'newest') {
-                $posts = $posts->latest();
-            }
-
-            if ($tab == 'active') {
-                $posts = $posts->where('closed_date', null)->latest();
-            }
-
-            return $posts->limit(40)->get();
-        });
+        // return $posts->limit(40)->get();
+        // });
 
 
         return view('pages.posts', compact('posts', 'tab', 'tags'));
