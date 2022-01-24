@@ -50,8 +50,6 @@ class PostController extends Controller
                 $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
                     $q->where('tag_id', $tag->id);
                 });
-
-                // $posts = $posts->where("tags", "LIKE", '%<' . $tag->tag_name . '>%');
             }
 
             // $count = count($tags);
@@ -65,7 +63,6 @@ class PostController extends Controller
             // $postTag = array_count_values($postTag);
 
             // foreach ($postTag as $k => $pt) {
-
             //     if ($pt >= $count) {
             //         $ids[] = $k;
             //     }
@@ -80,25 +77,6 @@ class PostController extends Controller
             //         }
             //     }
             // });
-
-            // $postTag = PostTag::query();
-            // foreach ($tags as $t) {
-            //     $postTag = $postTag->where('tag_id', $t->id);
-            // }
-
-            // $postTag = $postTag->get();
-
-
-            // $posts =  $posts->whereIn('id', $postTag);
-
-
-            // foreach ($tags as $tag) {
-            // $posts->whereHas('tagsRelationship', function ($q) use ($tagIds) {
-            //     $q->whereIn('tag_id', $tagIds);
-            // });
-
-            // $posts = $posts->where("tags", "LIKE", '%<' . $tag->tag_name . '>%');
-            // }
         }
 
         if ($tab == 'newest') {

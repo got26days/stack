@@ -25,7 +25,7 @@ class MainController extends Controller
 
     public function test()
     {
-        return 'test';
+        return phpinfo();
 
         // Schema::table('post_tag', function (Blueprint $table) {
         //     // $table->dropIndex(['created_at_index']);
