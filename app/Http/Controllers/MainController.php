@@ -25,23 +25,23 @@ class MainController extends Controller
 
     public function test()
     {
+        return 'test';
 
+        // Schema::table('post_tag', function (Blueprint $table) {
+        //     // $table->dropIndex(['created_at_index']);
+        //     $table->dropForeign(['post_id']);
+        //     $table->dropForeign(['tag_id']);
+        // });
 
-        Schema::table('post_tag', function (Blueprint $table) {
-            // $table->dropIndex(['created_at_index']);
-            $table->dropForeign(['post_id']);
-            $table->dropForeign(['tag_id']);
-        });
+        // return 'success';
 
-        return 'success';
+        // $table->dropForeign(['currency_id']);
 
-        $table->dropForeign(['currency_id']);
+        // $posts = Post::where('post_type_id', 1)
+        //     ->with('tagsRelationship')
+        //     // ->whereRaw("MATCH(tags) AGAINST('<android>')")
+        //     ->latest()->paginate(20);
 
-        $posts = Post::where('post_type_id', 1)
-            ->with('tagsRelationship')
-            // ->whereRaw("MATCH(tags) AGAINST('<android>')")
-            ->latest()->paginate(20);
-
-        return $posts;
+        // return $posts;
     }
 }
