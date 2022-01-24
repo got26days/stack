@@ -56,13 +56,30 @@ class TagController extends Controller
 
     public function search(Request $request)
     {
-        $tags = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
+        $tag = null;
+        if ($request['tags_selected']) {
+            $ts = $request['tags_selected'][0];
+            $tag = cache()->remember('tag_name' . $ts, 60 * 60 * 24, function () use ($ts) {
+                return Tag::where('tag_name', $ts)->first();
+            });
+        }
+
+        $tags = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request, $tag) {
             $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
                 ->where('tag_name', '!=', null);
 
             if ($request['tags_selected']) {
-                foreach ($request['tags_selected'] as $tag_selected) {
+                foreach ($request['tags_selected'] as $key => $tag_selected) {
                     $tags->where('tag_name', '!=', $tag_selected);
+                }
+
+                if ($tag) {
+                    $tags->whereHas(
+                        'posts',
+                        function ($q) use ($tag) {
+                            $q->where('tag_id', $tag->id);
+                        }
+                    );
                 }
             }
 
