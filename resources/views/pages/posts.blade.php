@@ -6,7 +6,7 @@
 	<div class="d-flex w-100 justify-content-between align-items-center py-2">
 
 		<div>
-			{{ $posts->total() }} @lang('questions')
+			@lang('questions')
 		</div>
 		<div class="text-end">
 			<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -62,9 +62,6 @@
 		@endforeach
 	</div>
 
-	<div class="pt-2">
-		{{ $posts->withQueryString()->links() }}
-	</div>
 
 </div>
 @endsection
