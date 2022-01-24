@@ -6,7 +6,7 @@
 	<div class="d-flex w-100 justify-content-between align-items-center py-2">
 
 		<div>
-			@lang('questions')
+			{{ $posts->total() }} @lang('questions')
 		</div>
 		<div class="text-end">
 			<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -36,9 +36,6 @@
 				</div>
 				<div>
 					<h5 class="mb-1">{{ $post->title }}</h5>
-					<div>
-						type: {{ $post->post_type_id }}
-					</div>
 					@if(count($post->tagsRelationship) > 0)
 					<div>
 						<h6>Tags:
@@ -63,6 +60,10 @@
 			</div>
 		</div>
 		@endforeach
+	</div>
+
+	<div class="pt-2">
+		{{ $posts->withQueryString()->links() }}
 	</div>
 
 </div>
