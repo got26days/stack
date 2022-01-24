@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\PostTag;
 use App\Models\Question;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -45,13 +46,50 @@ class PostController extends Controller
 
         if (count($tags) > 0) {
 
-            foreach ($tags as $tag) {
-                $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
-                    $q->where('tag_id', $tag->id);
-                });
+            $count = count($tags);
 
-                // $posts = $posts->where("tags", "LIKE", '%<' . $tag->tag_name . '>%');
+            $tagIds = array_column($tags, 'id');
+
+            $postTag = PostTag::whereIn('tag_id', $tagIds)->pluck('post_id')->toArray();
+
+            $ids = [];
+
+            $postTag = array_count_values($postTag);
+
+            foreach ($postTag as $k => $pt) {
+
+                if ($pt >= $count) {
+                    $ids[] = $k;
+                }
             }
+
+            $posts = $posts->where(function ($query) use ($ids) {
+                foreach ($ids as $s => $i) {
+                    if ($s == 0) {
+                        $query->where('id', $i);
+                    } else {
+                        $query->orWhere('id',  $i);
+                    }
+                }
+            });
+            // $postTag = PostTag::query();
+            // foreach ($tags as $t) {
+            //     $postTag = $postTag->where('tag_id', $t->id);
+            // }
+
+            // $postTag = $postTag->get();
+
+
+            // $posts =  $posts->whereIn('id', $postTag);
+
+
+            // foreach ($tags as $tag) {
+            // $posts->whereHas('tagsRelationship', function ($q) use ($tagIds) {
+            //     $q->whereIn('tag_id', $tagIds);
+            // });
+
+            // $posts = $posts->where("tags", "LIKE", '%<' . $tag->tag_name . '>%');
+            // }
         }
 
         if ($tab == 'newest') {
