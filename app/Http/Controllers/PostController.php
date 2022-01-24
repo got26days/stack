@@ -58,7 +58,7 @@ class PostController extends Controller
 
             foreach ($postTag as $k => $pt) {
 
-                if ($pt >= 2) {
+                if ($pt >= $count) {
                     $ids[] = $k;
                 }
             }
