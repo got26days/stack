@@ -64,6 +64,8 @@ class TagController extends Controller
             });
         }
 
+        return $tag;
+
         $tags = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request, $tag) {
             $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
                 ->where('tag_name', '!=', null);
