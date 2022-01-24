@@ -19,4 +19,24 @@ class Question extends Model
     {
         return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
     }
+
+    protected $appends = ['tagsArray'];
+
+    public function getTagsArrayAttribute()
+    {
+
+        $tagsArray = [];
+
+
+        if ($this->tags) {
+            $array = explode('>', $this->tags);
+
+            foreach ($array as $item) {
+                if ($item != '') {
+                    $tagsArray[] = str_replace("<", "", $item);
+                }
+            }
+        }
+        return $tagsArray;
+    }
 }

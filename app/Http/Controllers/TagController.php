@@ -74,17 +74,20 @@ class TagController extends Controller
             foreach ($request['tags_selected'] as $key => $tag_selected) {
                 $tags->where('tag_name', '!=', $tag_selected);
             }
-
-            if ($tag) {
-                $tags->whereHas('posts', function ($q) use ($tag) {
-                    $q->where('tag_id', $tag->id);
-                });
-            }
         }
+        if ($tag) {
+
+            // dd($tag->posts->pluck('id')->toArray());
+            $arid = $tag->posts->pluck('id')->toArray();
+            $tags->whereHas('posts', function ($q) use ($arid) {
+                $q->whereIn('post_id', $arid);
+            });
+        }
+
 
         $tags = $tags->orderBy('count', 'DESC')->limit(5)->get();
 
-        return $tags;
+        // return $tags;
         // });
 
         return $tags;
