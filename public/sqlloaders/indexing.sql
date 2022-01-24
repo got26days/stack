@@ -1,10 +1,15 @@
 use stack;
-CREATE INDEX created_at_index ON posts (created_at);
+CREATE INDEX created_at_index ON questions (created_at);
+CREATE INDEX closed_date_index ON questions (closed_date);
+CREATE INDEX score_index ON questions (score);
+CREATE INDEX title_index ON questions (title);
 
-CREATE INDEX score_index ON posts (score);
-CREATE INDEX title_index ON posts (title);
-CREATE INDEX tags_index ON posts (tags);
-CREATE INDEX closed_date_index ON posts (closed_date);
+
+
+CREATE INDEX tags_index ON questions (tags);
+
+
+
 
 CREATE INDEX post_type_id_index on posts(post_type_id);
 

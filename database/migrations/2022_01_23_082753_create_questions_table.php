@@ -43,7 +43,9 @@ class CreateQuestionsTable extends Migration
             $table->timestamp('last_activity_date')->nullable();
 
 
-            $table->index(['created_at', 'score', 'closed_date']);
+            $table->index('created_at');
+            $table->index('score');
+            $table->index('closed_date');
 
             $table->timestamps();
         });
