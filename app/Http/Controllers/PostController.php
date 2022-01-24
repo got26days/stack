@@ -65,6 +65,8 @@ class PostController extends Controller
         // return $posts->limit(40)->get();
         // });
 
+        $posts = $posts->limit(40)->get();
+
 
         return view('pages.posts', compact('posts', 'tab', 'tags'));
     }
