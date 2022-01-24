@@ -46,11 +46,22 @@ class PostController extends Controller
 
         if (count($tags) > 0) {
 
-            foreach ($tags as $tag) {
-                $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
-                    $q->where('tag_id', $tag->id);
-                });
-            }
+            $posts = $posts->where(function ($query) use ($tags) {
+                foreach ($tags as $tag) {
+                    // $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
+                    //     $q->where('tag_id', $tag->id);
+                    // });
+                    $n = '<' . $tag->tag_name . '>';
+
+                    $query->whereRaw('INSTR(tags,"' . $n . '")');
+                }
+            });
+
+            // foreach ($tags as $tag) {
+            //     // $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
+            //     //     $q->where('tag_id', $tag->id);
+            //     // });
+            // }
 
             // if (count($tags) <= 2) {
 
