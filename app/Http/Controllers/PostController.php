@@ -62,6 +62,8 @@ class PostController extends Controller
                     }
                 }
 
+                return $postTag;
+
                 $posts = $posts->where(function ($query) use ($postTag) {
                     foreach ($postTag  as $s => $i) {
                         if ($s == 0) {
