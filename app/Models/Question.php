@@ -17,7 +17,7 @@ class Question extends Model
 
     public function tagsRelationship()
     {
-        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id')->take(600000);
+        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id')->take(10000000);
     }
 
     protected $appends = ['tagsArray'];
