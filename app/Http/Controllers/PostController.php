@@ -29,87 +29,39 @@ class PostController extends Controller
         }
 
 
-        // $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
-        $posts = Question::query();
+        $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
+            $posts = Question::query();
 
-        if ($tab == 'week') {
-            $posts->where('created_at', '>=', now()->subDays(80));
-        }
-
-        if ($tab == 'month') {
-            $posts->where('created_at', '>=', now()->subDays(150));
-        }
-
-        if ($tab == 'hot') {
-            $posts = $posts->orderBy('score', 'DESC');
-        }
-
-        if (count($tags) > 0) {
-
-            // $posts = $posts->where(function ($query) use ($tags) {
-            //     foreach ($tags as $tag) {
-            //         // $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
-            //         //     $q->where('tag_id', $tag->id);
-            //         // });
-            //         $n = '<' . $tag->tag_name . '>';
-
-            //         // $query->whereRaw('INSTR(tags,"' . $n . '")');
-
-
-            //     }
-            // });
-
-            // foreach ($tags as $tag) {
-
-            //     $n = '%<' . $tag->tag_name . '>%';
-            //     $posts = $posts->where('tags', 'like', $n);
-            //     // $posts = $posts->whereRaw("REGEXP '[[:<:]]" . $tag->tag_name . "[[:>:]]'");
-            // }
-
-            foreach ($tags as $tag) {
-                $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
-                    $q->where('tag_id', $tag->id);
-                });
+            if ($tab == 'week') {
+                $posts->where('created_at', '>=', now()->subDays(80));
             }
 
-            // if (count($tags) <= 2) {
+            if ($tab == 'month') {
+                $posts->where('created_at', '>=', now()->subDays(150));
+            }
 
-            // } else {
-            //     $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-            //     foreach ($tags as $key => $tag) {
-            //         if ($key > 0) {
-            //             $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
+            if ($tab == 'hot') {
+                $posts = $posts->orderBy('score', 'DESC');
+            }
 
-            //             $postTag = array_intersect($postTag, $pt);
-            //         }
-            //     }
+            if (count($tags) > 0) {
+                foreach ($tags as $tag) {
+                    $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
+                        $q->where('tag_id', $tag->id);
+                    });
+                }
+            }
 
-            //     return $postTag;
+            if ($tab == 'newest') {
+                $posts = $posts->latest();
+            }
 
-            //     $posts = $posts->where(function ($query) use ($postTag) {
-            //         foreach ($postTag  as $s => $i) {
-            //             if ($s == 0) {
-            //                 $query->where('id', $i);
-            //             } else {
-            //                 $query->orWhere('id',  $i);
-            //             }
-            //         }
-            //     });
-            // }
-        }
+            if ($tab == 'active') {
+                $posts = $posts->where('closed_date', null)->latest();
+            }
 
-        if ($tab == 'newest') {
-            $posts = $posts->latest();
-        }
-
-        if ($tab == 'active') {
-            $posts = $posts->where('closed_date', null)->latest();
-        }
-
-        // return $posts->limit(40)->get();
-        // });
-
-        $posts = $posts->paginate(20);
+            return $posts->paginate(20);
+        });
 
 
         return view('pages.posts', compact('posts', 'tab', 'tags'));
