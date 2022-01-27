@@ -30,8 +30,7 @@ class TagController extends Controller
                 $tags = Tag::query();
 
                 if ($tab == 'popular') {
-
-                    $tags = $tags->withCount('posts')->orderBy('posts_count', 'DESC');
+                    $tags = $tags->orderBy('count', 'DESC');
                 }
 
                 if (
