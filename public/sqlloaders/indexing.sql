@@ -18,3 +18,7 @@ ALTER TABLE table ADD FULLTEXT INDEX index_table_on_tags (tags);
 
 use admin_1;
 SELECT * FROM posts WHERE `tags` LIKE '%php%' LIMIT 0, 10
+
+
+ALTER TABLE questions
+ADD FULLTEXT(tags);
