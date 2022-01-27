@@ -22,3 +22,7 @@ SELECT * FROM posts WHERE `tags` LIKE '%php%' LIMIT 0, 10
 
 ALTER TABLE questions
 ADD FULLTEXT(tags);
+
+
+CREATE INDEX post_id_index ON post_tag (post_id);
+CREATE INDEX tag_id_index ON post_tag (tag_id);
