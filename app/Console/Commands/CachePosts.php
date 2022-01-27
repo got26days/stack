@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Post;
 use App\Models\PostTag;
+use App\Models\PostTagSecond;
 use App\Models\Question;
 use App\Models\Tag;
 use Illuminate\Console\Command;
@@ -71,26 +72,41 @@ class CachePosts extends Command
         //     }
         // );
 
-        $posts = Question::where('id', '>=', 60033170)->chunk(30000, function ($posts) {
-            foreach ($posts as $post) {
+        // $posts = Question::where('id', '>=', 60033170)->chunk(30000, function ($posts) {
+        //     foreach ($posts as $post) {
 
-                if (count($post->tagsArray) > 0) {
-                    foreach ($post->tagsArray as $tag_name) {
+        //         if (count($post->tagsArray) > 0) {
+        //             foreach ($post->tagsArray as $tag_name) {
 
-                        $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
-                            return Tag::where('tag_name', $tag_name)->first();
-                        });
+        //                 $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
+        //                     return Tag::where('tag_name', $tag_name)->first();
+        //                 });
 
 
-                        if ($tag) {
-                            $post->tagsRelationship()->attach($tag->id);
-                        }
-                    }
+        //                 if ($tag) {
+        //                     $post->tagsRelationship()->attach($tag->id);
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     $this->line($posts[0]->id);
+        // });
+
+        $pts = PostTag::where('id', '<=', 15000000)->chunk(
+            30000,
+            function ($posts) {
+                $this->line($posts[0]->id);
+                foreach ($posts as $post) {
+                    $ptsec = new PostTagSecond();
+                    $ptsec->post_id = $post->post_id;
+                    $ptsec->tag_id = $post->tag_id;
+                    $ptsec->save();
+
+                    $post->delete();
                 }
             }
-
-            $this->line($posts[0]->id);
-        });
+        );
 
 
         return 0;
