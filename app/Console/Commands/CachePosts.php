@@ -71,7 +71,7 @@ class CachePosts extends Command
         //     }
         // );
 
-        $posts = Question::where('id', '>', 0)->chunk(30000, function ($posts) {
+        $posts = Question::where('id', '>=', 60033170)->chunk(30000, function ($posts) {
             foreach ($posts as $post) {
 
                 if (count($post->tagsArray) > 0) {
