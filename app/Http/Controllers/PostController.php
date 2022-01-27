@@ -60,7 +60,7 @@ class PostController extends Controller
                 $posts = $posts->where('closed_date', null)->latest();
             }
 
-            return $posts->paginate(20);
+            return $posts->take(8000000)->paginate(20);
         });
 
 
