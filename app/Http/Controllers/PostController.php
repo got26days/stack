@@ -48,6 +48,8 @@ class PostController extends Controller
                 foreach ($tags as $tag) {
                     $posts->whereHas('tagsRelationship', function ($q) use ($tag) {
                         $q->where('tag_id', $tag->id);
+                    })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                        $q->where('tag_id', $tag->id);
                     });
                 }
             }
