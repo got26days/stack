@@ -12,6 +12,10 @@ class Tag extends Model
 
     protected $dateFormat = 'd.m.Y';
 
+    protected $casts = [
+        'created_at' => 'datetime:M d Y',
+    ];
+
     protected $appends = ['value'];
 
     public function getValueAttribute()
