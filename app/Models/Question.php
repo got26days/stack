@@ -22,7 +22,7 @@ class Question extends Model
 
     public function tagsRelationshipSecond()
     {
-        return $this->belongsToMany(Tag::class, 'post_tag_second', 'post_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'post_tag_seconds', 'post_id', 'tag_id');
     }
 
     protected $appends = ['tagsArray'];
