@@ -49,8 +49,6 @@ class PostController extends Controller
                     $posts->where(function ($query) use ($tag) {
                         $query->whereHas('tagsRelationship', function ($q) use ($tag) {
                             $q->where('tag_id', $tag->id);
-                        })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                            $q->where('tag_id', $tag->id);
                         });
                     });
                 }
