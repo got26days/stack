@@ -13,7 +13,7 @@ class Tag extends Model
     protected $dateFormat = 'd.m.Y';
 
     protected $casts = [
-        'created_at' => 'datetime:M d Y',
+        'created_at' => 'datetime:d.m.Y',
     ];
 
     protected $appends = ['value'];
