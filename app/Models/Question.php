@@ -17,7 +17,12 @@ class Question extends Model
 
     public function tagsRelationship()
     {
-        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id')->take(1000000);
+        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
+    }
+
+    public function tagsRelationshipSecond()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag_second', 'post_id', 'tag_id');
     }
 
     protected $appends = ['tagsArray'];
