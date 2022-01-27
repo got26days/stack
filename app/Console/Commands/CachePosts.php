@@ -93,7 +93,7 @@ class CachePosts extends Command
         //     $this->line($posts[0]->id);
         // });
 
-        $pts = PostTag::where('id', '<=', 15000000)->chunk(
+        $pts = PostTag::where('id', '>', 15000000)->where('id', '<=', 25000000)->chunk(
             30000,
             function ($posts) {
                 $this->line($posts[0]->id);
