@@ -46,17 +46,10 @@
 		</p>
 	</div>
 
-	<hr>
 
-	<div>
+	<div style="padding-left: 30px;">
 		@foreach ($question->comments as $comment)
-		<div style="border: 1px solid purple; margin-left:30px;">
-			{!! $comment->text !!}
-			<p>created: {{ $comment->created_at->format('d.m.Y') }}</p>
-			@if($comment->user)
-			{{ $comment->user->display_name }}
-			@endif
-		</div>
+		@include('layouts.comment', ['comment' => $comment])
 		@endforeach
 	</div>
 
@@ -64,26 +57,12 @@
 
 	<div>
 		@foreach ($question->posts as $post)
-		<div style="border: 1px solid red;">
-			<h4 style="color: black; font-weight: bold;">{{ $post->score }}</h4>
-			{!! $post->body !!}
-			<p>created: {{ $post->created_at->format('d.m.Y') }}</p>
-			@if($post->user)
-			{{ $post->user->display_name }}
-			@endif
-		</div>
+		@include('layouts.post', ['post' => $post])
+
 
 		<div style="padding-left: 30px;">
 			@foreach ($post->comments as $comment)
-			<div style="border: 1px solid green;">
-				{!! $comment->text !!}
-				<p>created: {{ $comment->created_at->format('d.m.Y') }}</p>
-				<div>
-					@if($comment->user)
-					{{ $comment->user->display_name }}
-					@endif
-				</div>
-			</div>
+			@include('layouts.comment', ['comment' => $comment])
 			@endforeach
 		</div>
 
