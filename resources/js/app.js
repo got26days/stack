@@ -34,6 +34,7 @@ Vue.component(
 );
 
 Vue.component("vue-tags", require("./components/VueTags.vue").default);
+Vue.component("vue-users", require("./components/VueUsers.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

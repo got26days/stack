@@ -35,7 +35,8 @@
 					<span class="badge bg-success">{{ $post->score }}</span>
 				</div>
 				<div>
-					<h5 class="mb-1">{{ $post->title }}</h5>
+					<a class="mb-1" href="/questions/{{ $post->id }}/{{ $post->slug }}">{{ $post->title
+						}}</a>
 					@if(count($post->tagsArray) > 0)
 					<div>
 						<h6>Tags:

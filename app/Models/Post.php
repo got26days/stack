@@ -16,6 +16,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'owner_user_id', 'id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
+    }
+
     public function getTagsArrayAttribute()
     {
 
