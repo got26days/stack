@@ -72,7 +72,7 @@ class PostController extends Controller
 
                             $pt = array_merge($pt, $pts);
 
-                            $pt[] = $postTag = array_intersect($postTag, $pt);
+                            $postTag = array_intersect($postTag, $pt);
                         }
                     }
 
@@ -104,13 +104,13 @@ class PostController extends Controller
         return view('pages.posts', compact('posts', 'tab', 'tags'));
     }
 
-    public function tagged(Request $request, $tags)
+    public function tagged(Request $request, $tags = null)
     {
-        $pieces = explode(" ", $tags);
-
-        if (count($pieces) < 1) {
-            abort(404);
+        if ($tags == null) {
+            return $this->index($request);
         }
+
+        $pieces = explode(" ", $tags);
 
         $tags = [];
 
