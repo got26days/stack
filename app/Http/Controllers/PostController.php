@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\PostTag;
+use App\Models\PostTagSecond;
 use App\Models\Question;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class PostController extends Controller
         }
 
         if (count($tags) > 0) {
-            ini_set('memory_limit', '8192M');
+
             if (count($tags) <= 1) {
 
                 foreach ($tags as $tag) {
@@ -69,7 +70,7 @@ class PostController extends Controller
                     // $posts = $posts->where('tags', 'like', $n);
                 }
             } else {
-
+                ini_set('memory_limit', '8192M');
 
                 $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                 foreach ($tags as $key => $tag) {
@@ -79,6 +80,18 @@ class PostController extends Controller
                         $postTag = array_intersect($postTag, $pt);
                     }
                 }
+
+                $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                foreach ($tags as $key => $tag) {
+                    if ($key > 0) {
+                        $pt = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
+
+                        $postTagSecond = array_intersect($postTagSecond, $pt);
+                    }
+                }
+
+                $postTag = array_intersect($postTag, $postTagSecond);
+
 
                 $posts = $posts->where(function ($query) use ($postTag) {
                     foreach ($postTag  as $s => $i) {
