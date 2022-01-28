@@ -69,6 +69,8 @@ class PostController extends Controller
                     // $posts = $posts->where('tags', 'like', $n);
                 }
             } else {
+                ini_set('memory_limit', '8192M');
+
                 $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                 foreach ($tags as $key => $tag) {
                     if ($key > 0) {
