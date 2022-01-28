@@ -46,7 +46,7 @@ class PostController extends Controller
 
         if (count($tags) > 0) {
 
-            if (count($tags) <= 3) {
+            if (count($tags) <= 2) {
 
                 foreach ($tags as $tag) {
                     // $posts->where(function ($query) use ($tag) {
