@@ -80,20 +80,24 @@ class PostController extends Controller
                     }
                 }
 
-                $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                $posts = $posts->where(function ($query) use ($postTag) {
+                    foreach ($postTag  as $s => $i) {
+                        if ($s == 0) {
+                            $query->where('id', $i);
+                        } else {
+                            $query->orWhere('id',  $i);
+                        }
+                    }
+                });
+
+                $postTag = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                 foreach ($tags as $key => $tag) {
                     if ($key > 0) {
                         $pt = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
 
-                        $postTagSecond = array_intersect($postTagSecond, $pt);
+                        $postTag = array_intersect($postTag, $pt);
                     }
                 }
-
-                if (count($postTagSecond) > 0 and count($postTag) > 0) {
-                    $postTag = array_intersect($postTag, $postTagSecond);
-                }
-
-
 
                 $posts = $posts->where(function ($query) use ($postTag) {
                     foreach ($postTag  as $s => $i) {
