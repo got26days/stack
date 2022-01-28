@@ -62,5 +62,8 @@
 		@endforeach
 	</div>
 
+	<div class="pt-2">
+		<a href="{{ $posts->withQueryString()->nextPageUrl() }}">next page</a>
+	</div>
 </div>
 @endsection
