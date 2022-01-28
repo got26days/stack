@@ -90,15 +90,7 @@ class PostController extends Controller
                 }
 
 
-
-                if (count($postTag) == 0) {
-                    $postTag = $postTagSecond;
-                }
-
-
-                if (count($postTagSecond) > 0) {
-                    $postTag = array_intersect($postTag, $postTagSecond);
-                }
+                $postTag = array_intersect($postTag, $postTagSecond);
 
                 return $postTag;
 
