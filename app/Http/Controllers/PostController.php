@@ -29,52 +29,52 @@ class PostController extends Controller
         }
 
 
-        $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
-            $posts = Question::query();
+        // $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
+        $posts = Question::query();
 
-            if ($tab == 'week') {
-                $posts->where('created_at', '>=', now()->subDays(80));
-            }
+        if ($tab == 'week') {
+            $posts->where('created_at', '>=', now()->subDays(80));
+        }
 
-            if ($tab == 'month') {
-                $posts->where('created_at', '>=', now()->subDays(150));
-            }
+        if ($tab == 'month') {
+            $posts->where('created_at', '>=', now()->subDays(150));
+        }
 
-            if ($tab == 'hot') {
-                $posts = $posts->orderBy('score', 'DESC');
-            }
+        if ($tab == 'hot') {
+            $posts = $posts->orderBy('score', 'DESC');
+        }
 
-            if (count($tags) > 0) {
-                foreach ($tags as $tag) {
-                    // $posts->where(function ($query) use ($tag) {
-                    //     $query->whereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                    //         $q->where('tag_id', $tag->id);
-                    //     });
-                    // });
+        if (count($tags) > 0) {
+            foreach ($tags as $tag) {
+                // $posts->where(function ($query) use ($tag) {
+                //     $query->whereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                //         $q->where('tag_id', $tag->id);
+                //     });
+                // });
 
-                    $posts->where(function ($query) use ($tag) {
-                        $query->whereHas('tagsRelationship', function ($q) use ($tag) {
-                            $q->where('tag_id', $tag->id);
-                        })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                            $q->where('tag_id', $tag->id);
-                        });
+                $posts->where(function ($query) use ($tag) {
+                    $query->whereHas('tagsRelationship', function ($q) use ($tag) {
+                        $q->where('tag_id', $tag->id);
+                    })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                        $q->where('tag_id', $tag->id);
                     });
+                });
 
-                    // $n = '%<' . $tag->tag_name . '>%';
-                    // $posts = $posts->where('tags', 'like', $n);
-                }
+                // $n = '%<' . $tag->tag_name . '>%';
+                // $posts = $posts->where('tags', 'like', $n);
             }
+        }
 
-            if ($tab == 'newest') {
-                $posts = $posts->latest();
-            }
+        if ($tab == 'newest') {
+            $posts = $posts->latest();
+        }
 
-            if ($tab == 'active') {
-                $posts = $posts->where('closed_date', null)->latest();
-            }
+        if ($tab == 'active') {
+            $posts = $posts->where('closed_date', null)->latest();
+        }
 
-            return $posts->take(6000000)->paginate(20);
-        });
+        $posts = $posts->paginate(20);
+        // });
 
 
         return view('pages.posts', compact('posts', 'tab', 'tags'));
