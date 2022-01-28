@@ -43,6 +43,12 @@ class UserController extends Controller
             }
         );
 
+        foreach ($users as $user) {
+            if ($user->created_at) {
+                $user->created_at = $user->created_at->format('d.m.Y');
+            }
+        }
+
         return view('pages.users', compact('users', 'tab'));
     }
 
@@ -58,6 +64,12 @@ class UserController extends Controller
 
             return $users;
         });
+
+        foreach ($users as $user) {
+            if ($user->created_at) {
+                $user->created_at = $user->created_at->format('d.m.Y');
+            }
+        }
 
         return $users;
     }
