@@ -88,6 +88,12 @@ class PostController extends Controller
                         $postTagSecond = array_intersect($postTagSecond, $pt);
                     }
                 }
+
+                if (count($postTag) == 0) {
+                    $postTag = $postTagSecond;
+                }
+
+
                 if (count($postTagSecond) > 0) {
                     $postTag = array_intersect($postTag, $postTagSecond);
                 }
