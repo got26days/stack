@@ -57,7 +57,6 @@ class PostController extends Controller
                     // });
 
 
-
                     $posts->where(function ($query) use ($tag) {
                         $query->whereHas('tagsRelationship', function ($q) use ($tag) {
                             $q->where('tag_id', $tag->id);
@@ -89,8 +88,11 @@ class PostController extends Controller
                         $postTagSecond = array_intersect($postTagSecond, $pt);
                     }
                 }
+                if (count($postTagSecond) > 0) {
+                    $postTag = array_intersect($postTag, $postTagSecond);
+                }
 
-                $postTag = array_intersect($postTag, $postTagSecond);
+
 
 
                 $posts = $posts->where(function ($query) use ($postTag) {
