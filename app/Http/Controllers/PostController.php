@@ -45,7 +45,7 @@ class PostController extends Controller
         }
 
         if (count($tags) > 0) {
-
+            ini_set('memory_limit', '8192M');
             if (count($tags) <= 2) {
 
                 foreach ($tags as $tag) {
@@ -69,7 +69,7 @@ class PostController extends Controller
                     // $posts = $posts->where('tags', 'like', $n);
                 }
             } else {
-                ini_set('memory_limit', '8192M');
+
 
                 $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                 foreach ($tags as $key => $tag) {
@@ -100,7 +100,8 @@ class PostController extends Controller
             $posts = $posts->where('closed_date', null)->latest();
         }
 
-        $posts =   $posts->limit(20)->get();
+        $posts =
+            $posts->cursorPaginate(20);
         // });
 
 
