@@ -61,6 +61,8 @@
 		</div>
 		@endforeach
 	</div>
-
+	<div class="pt-2">
+		{{ $posts->withQueryString()->links() }}
+	</div>
 </div>
 @endsection
