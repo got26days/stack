@@ -72,7 +72,7 @@ class PostController extends Controller
 
                             $pt = array_merge($pt, $pts);
 
-                            $pt[] = $postTag = array_intersect($postTag, $pt);
+                            $postTag = array_intersect($postTag, $pt);
                         }
                     }
 
