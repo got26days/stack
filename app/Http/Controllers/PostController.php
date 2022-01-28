@@ -30,84 +30,75 @@ class PostController extends Controller
         }
 
 
-        // $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
-        $posts = Question::query();
+        $posts = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($tab, $tags) {
+            $posts = Question::query();
 
-        if ($tab == 'week') {
-            $posts->where('created_at', '>=', now()->subDays(80));
-        }
+            if ($tab == 'week') {
+                $posts->where('created_at', '>=', now()->subDays(80));
+            }
 
-        if ($tab == 'month') {
-            $posts->where('created_at', '>=', now()->subDays(150));
-        }
+            if ($tab == 'month') {
+                $posts->where('created_at', '>=', now()->subDays(150));
+            }
 
-        if ($tab == 'hot') {
-            $posts = $posts->orderBy('score', 'DESC');
-        }
+            if ($tab == 'hot') {
+                $posts = $posts->orderBy('score', 'DESC');
+            }
 
-        if (count($tags) > 0) {
+            if (count($tags) > 0) {
 
-            if (count($tags) <= 1) {
+                if (count($tags) <= 1) {
 
-                foreach ($tags as $tag) {
-                    // $posts->where(function ($query) use ($tag) {
-                    //     $query->whereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                    //         $q->where('tag_id', $tag->id);
-                    //     });
-                    // });
+                    foreach ($tags as $tag) {
 
-
-                    $posts->where(function ($query) use ($tag) {
-                        $query->whereHas('tagsRelationship', function ($q) use ($tag) {
-                            $q->where('tag_id', $tag->id);
-                        })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                            $q->where('tag_id', $tag->id);
+                        $posts->where(function ($query) use ($tag) {
+                            $query->whereHas('tagsRelationship', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag->id);
+                            })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag->id);
+                            });
                         });
-                    });
-
-                    // $n = '%<' . $tag->tag_name . '>%';
-                    // $posts = $posts->where('tags', 'like', $n);
-                }
-            } else {
-                ini_set('memory_limit', '8192M');
-
-                $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-                $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-                $postTag = array_merge($postTag, $postTagSecond);
-                foreach ($tags as $key => $tag) {
-                    if ($key > 0) {
-                        $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
-                        $pts = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
-
-                        $pt = array_merge($pt, $pts);
-
-                        $pt[] = $postTag = array_intersect($postTag, $pt);
                     }
-                }
+                } else {
+                    ini_set('memory_limit', '8192M');
 
+                    $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                    $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                    $postTag = array_merge($postTag, $postTagSecond);
+                    foreach ($tags as $key => $tag) {
+                        if ($key > 0) {
+                            $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
+                            $pts = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
 
-                $posts = $posts->where(function ($query) use ($postTag) {
-                    foreach ($postTag  as $s => $i) {
-                        if ($s == 0) {
-                            $query->where('id', $i);
-                        } else {
-                            $query->orWhere('id',  $i);
+                            $pt = array_merge($pt, $pts);
+
+                            $pt[] = $postTag = array_intersect($postTag, $pt);
                         }
                     }
-                });
+
+
+                    $posts = $posts->where(function ($query) use ($postTag) {
+                        foreach ($postTag  as $s => $i) {
+                            if ($s == 0) {
+                                $query->where('id', $i);
+                            } else {
+                                $query->orWhere('id',  $i);
+                            }
+                        }
+                    });
+                }
             }
-        }
 
-        if ($tab == 'newest') {
-            $posts = $posts->latest();
-        }
+            if ($tab == 'newest') {
+                $posts = $posts->latest();
+            }
 
-        if ($tab == 'active') {
-            $posts = $posts->where('closed_date', null)->latest();
-        }
+            if ($tab == 'active') {
+                $posts = $posts->where('closed_date', null)->latest();
+            }
 
-        $posts = $posts->paginate(20);
-        // });
+            return $posts->paginate(20);
+        });
 
 
         return view('pages.posts', compact('posts', 'tab', 'tags'));
