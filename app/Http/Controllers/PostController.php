@@ -45,23 +45,48 @@ class PostController extends Controller
         }
 
         if (count($tags) > 0) {
-            foreach ($tags as $tag) {
-                // $posts->where(function ($query) use ($tag) {
-                //     $query->whereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                //         $q->where('tag_id', $tag->id);
-                //     });
-                // });
 
-                $posts->where(function ($query) use ($tag) {
-                    $query->whereHas('tagsRelationship', function ($q) use ($tag) {
-                        $q->where('tag_id', $tag->id);
-                    })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                        $q->where('tag_id', $tag->id);
+            if (count($tags) <= 3) {
+
+                foreach ($tags as $tag) {
+                    // $posts->where(function ($query) use ($tag) {
+                    //     $query->whereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                    //         $q->where('tag_id', $tag->id);
+                    //     });
+                    // });
+
+
+
+                    $posts->where(function ($query) use ($tag) {
+                        $query->whereHas('tagsRelationship', function ($q) use ($tag) {
+                            $q->where('tag_id', $tag->id);
+                        })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                            $q->where('tag_id', $tag->id);
+                        });
                     });
-                });
 
-                // $n = '%<' . $tag->tag_name . '>%';
-                // $posts = $posts->where('tags', 'like', $n);
+                    // $n = '%<' . $tag->tag_name . '>%';
+                    // $posts = $posts->where('tags', 'like', $n);
+                }
+            } else {
+                $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                foreach ($tags as $key => $tag) {
+                    if ($key > 0) {
+                        $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
+
+                        $postTag = array_intersect($postTag, $pt);
+                    }
+                }
+
+                $posts = $posts->where(function ($query) use ($postTag) {
+                    foreach ($postTag  as $s => $i) {
+                        if ($s == 0) {
+                            $query->where('id', $i);
+                        } else {
+                            $query->orWhere('id',  $i);
+                        }
+                    }
+                });
             }
         }
 
