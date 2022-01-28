@@ -89,10 +89,10 @@ class PostController extends Controller
                     }
                 }
 
+                if (count($postTagSecond) > 0 and count($postTag) > 0) {
+                    $postTag = array_intersect($postTag, $postTagSecond);
+                }
 
-                $postTag = array_intersect($postTag, $postTagSecond);
-
-                return $postTag;
 
 
                 $posts = $posts->where(function ($query) use ($postTag) {
