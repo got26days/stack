@@ -73,7 +73,7 @@ class PostController extends Controller
                 $posts = $posts->where('closed_date', null)->latest();
             }
 
-            return  $posts->limit(20)->get();
+            return  $posts->simplePaginate(20);
         });
 
 
