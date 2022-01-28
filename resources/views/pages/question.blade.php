@@ -27,8 +27,6 @@
 	</div>
 	@endif
 
-
-
 	@if(count($question->tagsArray) > 0)
 	<div>
 		<h6>Tags:
@@ -39,13 +37,11 @@
 		</h6>
 	</div>
 	@endif
-
 	<div>
 		<p>
 			{!! $question->body !!}
 		</p>
 	</div>
-
 
 	<div style="padding-left: 30px;">
 		@foreach ($question->comments as $comment)
@@ -57,8 +53,7 @@
 
 	<div>
 		@foreach ($question->posts as $post)
-		@include('layouts.post', ['post' => $post])
-
+		@include('layouts.post', ['post' => $post, 'accepted_answer_id'=> $question->accepted_answer_id])
 
 		<div style="padding-left: 30px;">
 			@foreach ($post->comments as $comment)
