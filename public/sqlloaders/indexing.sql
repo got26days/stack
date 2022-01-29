@@ -26,3 +26,8 @@ ADD FULLTEXT(tags);
 
 CREATE INDEX post_id_index ON post_tag (post_id);
 CREATE INDEX tag_id_index ON post_tag (tag_id);
+
+
+CREATE INDEX parent_id_index on posts(parent_id);
+CREATE INDEX created_at_index on posts(created_at);
+CREATE INDEX score_index on posts(score);

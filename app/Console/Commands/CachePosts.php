@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Answer;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\PostTagSecond;
@@ -93,20 +94,47 @@ class CachePosts extends Command
         //     $this->line($posts[0]->id);
         // });
 
-        $pts = PostTag::where('id', '>', 25000000)->where('id', '<=', 31000000)->chunk(
-            30000,
-            function ($posts) {
-                $this->line($posts[0]->id);
-                foreach ($posts as $post) {
-                    $ptsec = new PostTagSecond();
-                    $ptsec->post_id = $post->post_id;
-                    $ptsec->tag_id = $post->tag_id;
-                    $ptsec->save();
+        $pts = Post::where('id', '>', 0)
+            ->where('parent_id', '!=', null)
+            ->where('post_type_id', 2)
+            ->chunk(
+                30000,
+                function ($posts) {
+                    $this->line($posts[0]->id);
+                    foreach ($posts as $post) {
 
-                    $post->delete();
+                        $q = new Answer();
+
+                        $q->post_type_id = $post->post_type_id;
+                        $q->owner_user_id = $post->owner_user_id;
+                        $q->last_editor_user_id = $post->last_editor_user_id;
+                        $q->accepted_answer_id = $post->accepted_answer_id;
+                        $q->score = $post->score;
+                        $q->parent_id = $post->parent_id;
+                        $q->view_count = $post->view_count;
+                        $q->answer_count = $post->answer_count;
+                        $q->comment_count = $post->comment_count;
+                        $q->owner_display_name = $post->owner_display_name;
+                        $q->last_editor_display_name = $post->last_editor_display_name;
+                        $q->title = $post->title;
+                        $q->tags = $post->tags;
+                        $q->content_license = $post->content_license;
+                        $q->body = $post->body;
+                        $q->favorite_count = $post->favorite_count;
+                        $q->community_owned_date = $post->community_owned_date;
+                        $q->closed_date = $post->closed_date;
+                        $q->last_edit_date = $post->last_edit_date;
+                        $q->last_activity_date = $post->last_activity_date;
+                        $q->created_at = $post->created_at;
+                        $q->id = $post->id;
+                        $q->updated_at = $post->updated_at;
+                        $q->save();
+
+
+                        $post->delete();
+                    }
                 }
-            }
-        );
+            );
 
 
         return 0;
