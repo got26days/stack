@@ -66,13 +66,13 @@ class PostController extends Controller
 
                     $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                     $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-                    $postTag = array_merge($postTag, $postTagSecond);
+                    $postTag = array_unique(array_merge($postTag, $postTagSecond));
                     foreach ($tags as $key => $tag) {
                         if ($key > 0) {
                             $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
                             $pts = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
 
-                            $pt = array_merge($pt, $pts);
+                            $pt = array_unique(array_merge($pt, $pts));
 
                             $postTag = array_intersect($postTag, $pt);
                         }
