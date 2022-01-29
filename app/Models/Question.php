@@ -29,11 +29,6 @@ class Question extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id')->orderBy('created_at');
     }
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class, 'parent_id', 'id')->orderBy('score', 'DESC');
-    }
-
 
     public function tagsRelationship()
     {
