@@ -48,7 +48,7 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-                ini_set('memory_limit', '10000M');
+                ini_set('memory_limit', '8000M');
 
                 $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                 $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
