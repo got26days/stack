@@ -31,3 +31,20 @@ CREATE INDEX tag_id_index ON post_tag (tag_id);
 CREATE INDEX parent_id_index on posts(parent_id);
 CREATE INDEX created_at_index on posts(created_at);
 CREATE INDEX score_index on posts(score);
+
+
+ALTER TABLE comments MODIFY id INTEGER(4);
+
+CREATE INDEX post_id_index ON comments (post_id);
+
+ALTER TABLE questions MODIFY id INTEGER(4);
+
+ALTER TABLE questions MODIFY owner_user_id INTEGER(4);
+ALTER TABLE questions MODIFY last_editor_user_id INTEGER(4);
+ALTER TABLE questions MODIFY accepted_answer_id INTEGER(4);
+ALTER TABLE questions MODIFY score INTEGER(4);
+ALTER TABLE questions MODIFY parent_id INTEGER(4);
+ALTER TABLE questions MODIFY view_count INTEGER(4);
+ALTER TABLE questions MODIFY answer_count INTEGER(4);
+ALTER TABLE questions MODIFY comment_count INTEGER(4);
+ALTER TABLE questions MODIFY favorite_count INTEGER(4);
