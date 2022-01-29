@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Answer;
 use App\Models\PostTag;
 use App\Models\PostTagSecond;
 use App\Models\Question;
@@ -148,7 +149,7 @@ class PostController extends Controller
             $tab = $request['tab'];
         }
 
-        $answers = Post::where('parent_id', $question->id);
+        $answers = Answer::where('parent_id', $question->id);
 
         if ($tab == 'active') {
             $answers->orderBy('created_at', 'DESC');
