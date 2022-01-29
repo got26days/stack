@@ -94,7 +94,7 @@ class CachePosts extends Command
         //     $this->line($posts[0]->id);
         // });
 
-        $pts = Post::where('id', '>', 11874375)
+        $pts = Post::where('id', '>', 27429642)
             ->where('parent_id', '!=', null)
             ->where('post_type_id', 2)
             ->chunk(
