@@ -160,9 +160,36 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show(Question $question, Request $request)
     {
-        return view('pages.question', compact('question'));
+
+        $tab = 'active';
+
+        if ($request['tab']) {
+            $tab = $request['tab'];
+        }
+
+        $answers = Post::where('parent_id', $question->id);
+
+        if ($tab == 'active') {
+            $answers->orderBy('created_at', 'DESC');
+        }
+
+        if ($tab == 'oldest') {
+            $answers->orderBy('created_at');
+        }
+
+        if ($tab == 'votes') {
+            $answers->orderBy('score', 'DESC');
+        }
+
+        $answers = $answers->paginate(5);
+
+
+        $question->slug = Str::slug($question->title, '-');
+
+
+        return view('pages.question', compact('question', 'answers', 'tab'));
     }
 
     /**

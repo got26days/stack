@@ -51,8 +51,25 @@
 
 	<hr>
 
+	<div class="d-flex w-100 justify-content-between align-items-center py-2">
+
+		<div>
+			{{ $answers->total() }} @lang('answers')
+		</div>
+		<div class="text-end">
+			<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+				<a href="/questions/{{ $question->id }}/{{ $question->slug }}?tab=active"
+					class="btn btn-outline-primary @if($tab == 'active') active @endif">Active</a>
+				<a href="/questions/{{ $question->id }}/{{ $question->slug }}?tab=oldest"
+					class="btn btn-outline-primary @if($tab == 'oldest') active @endif">Oldest</a>
+				<a href="/questions/{{ $question->id }}/{{ $question->slug }}?tab=votes"
+					class="btn btn-outline-primary @if($tab == 'votes') active @endif">Votes</a>
+			</div>
+		</div>
+	</div>
+
 	<div>
-		@foreach ($question->posts as $post)
+		@foreach ($answers as $post)
 		@include('layouts.post', ['post' => $post, 'accepted_answer_id'=> $question->accepted_answer_id])
 
 		<div style="padding-left: 30px;">
@@ -62,6 +79,10 @@
 		</div>
 
 		@endforeach
+
+		<div class="pt-2">
+			{{ $answers->withQueryString()->links() }}
+		</div>
 	</div>
 
 </div>

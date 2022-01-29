@@ -73,4 +73,10 @@ class UserController extends Controller
 
         return $users;
     }
+
+    public function show(User $user)
+    {
+
+        return view('pages.user', compact('user'));
+    }
 }

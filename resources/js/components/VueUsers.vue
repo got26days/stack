@@ -47,7 +47,15 @@
                 >
                     <div class="card text-center my-2">
                         <div class="card-body">
-                            <p>{{ user.display_name }}</p>
+                            <a
+                                :href="
+                                    '/users/' +
+                                    user.id +
+                                    '/' +
+                                    user.display_name
+                                "
+                                >{{ user.display_name }}</a
+                            >
                             <div v-if="user.profile_image_url">
                                 <img
                                     class="avatar-img"
@@ -74,7 +82,15 @@
                 >
                     <div class="card text-center my-2">
                         <div class="card-body">
-                            <p>{{ user.display_name }}</p>
+                            <a
+                                :href="
+                                    '/users/' +
+                                    user.id +
+                                    '/' +
+                                    user.display_name
+                                "
+                                >{{ user.display_name }}</a
+                            >
                             <div v-if="user.profile_image_url">
                                 <img
                                     class="avatar-img"

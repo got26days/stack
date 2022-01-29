@@ -5731,6 +5731,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["users", "tab"],
   data: function data() {
@@ -30480,7 +30496,15 @@ var render = function () {
                 [
                   _c("div", { staticClass: "card text-center my-2" }, [
                     _c("div", { staticClass: "card-body" }, [
-                      _c("p", [_vm._v(_vm._s(user.display_name))]),
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "/users/" + user.id + "/" + user.display_name,
+                          },
+                        },
+                        [_vm._v(_vm._s(user.display_name))]
+                      ),
                       _vm._v(" "),
                       user.profile_image_url
                         ? _c("div", [
@@ -30530,7 +30554,15 @@ var render = function () {
                 [
                   _c("div", { staticClass: "card text-center my-2" }, [
                     _c("div", { staticClass: "card-body" }, [
-                      _c("p", [_vm._v(_vm._s(user.display_name))]),
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "/users/" + user.id + "/" + user.display_name,
+                          },
+                        },
+                        [_vm._v(_vm._s(user.display_name))]
+                      ),
                       _vm._v(" "),
                       user.profile_image_url
                         ? _c("div", [

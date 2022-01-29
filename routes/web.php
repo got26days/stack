@@ -26,6 +26,7 @@ Route::get('/questions/tagged/{tags?}', [PostController::class, 'tagged'])->name
 Route::get('/tags', [TagController::class, 'index'])->name('tags');
 Route::get('/tags/search', [TagController::class, 'search'])->name('tags.search');
 Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/users/{user}/{name}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
 Route::get('/cpu', [MainController::class, 'total_ram_cpu_usage'])->name('cpu');
 
