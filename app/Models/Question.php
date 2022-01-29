@@ -9,9 +9,29 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $dateFormat = 'd.m.Y';
+
+    protected $casts = [
+        'created_at' => 'datetime:d.m.Y',
+        'closed_date' => 'datetime',
+        'last_edit_date' => 'datetime',
+        'last_activity_date' => 'datetime',
+        'community_owned_date' => 'datetime',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'owner_user_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id')->orderBy('created_at');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'parent_id', 'id')->orderBy('score', 'DESC');
     }
 
 

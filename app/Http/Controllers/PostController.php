@@ -12,6 +12,7 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -100,12 +101,17 @@ class PostController extends Controller
             return $posts->paginate(20);
         });
 
+        foreach ($posts as $post) {
+            $post->slug = Str::slug($post->title, '-');
+        }
+
 
         return view('pages.posts', compact('posts', 'tab', 'tags'));
     }
 
     public function tagged(Request $request, $tags = null)
     {
+
         if ($tags == null) {
             return $this->index($request);
         }
@@ -154,9 +160,36 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Question $question, Request $request)
     {
-        //
+
+        $tab = 'active';
+
+        if ($request['tab']) {
+            $tab = $request['tab'];
+        }
+
+        $answers = Post::where('parent_id', $question->id);
+
+        if ($tab == 'active') {
+            $answers->orderBy('created_at', 'DESC');
+        }
+
+        if ($tab == 'oldest') {
+            $answers->orderBy('created_at');
+        }
+
+        if ($tab == 'votes') {
+            $answers->orderBy('score', 'DESC');
+        }
+
+        $answers = $answers->paginate(5);
+
+
+        $question->slug = Str::slug($question->title, '-');
+
+
+        return view('pages.question', compact('question', 'answers', 'tab'));
     }
 
     /**

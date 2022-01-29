@@ -19,7 +19,6 @@ class CreatePostTagSecondsTable extends Migration
             $table->integer('tag_id');
             $table->index('post_id');
             $table->index('tag_id');
-            $table->timestamps();
         });
     }
 

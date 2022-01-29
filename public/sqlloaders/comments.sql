@@ -1,5 +1,5 @@
 USE stack;
-LOAD XML LOCAL INFILE '/var/www/html/public/database/Comments.xml' 
+LOAD XML LOCAL INFILE 'C://Users/notepc/Sites/stack/public/database/Comments.xml' 
 INTO TABLE comments
  ROWS IDENTIFIED BY '<row>'
  (
