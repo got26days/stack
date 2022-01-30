@@ -96,14 +96,14 @@ class CachePosts extends Command
         // });
 
         $pts = AnotherPost::where('post_type_id', 1)
+            ->where('id', '!=', 237725)
             ->chunkById(
                 10000,
                 function ($posts) {
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
 
-                        $a = Question::where('id', $post->id)
-                            ->where('id', '!=', 237725)->first();
+                        $a = Question::where('id', $post->id)->first();
                         if (!$a) {
                             $q = new Question();
                             // $q->post_type_id = $post->post_type_id;
