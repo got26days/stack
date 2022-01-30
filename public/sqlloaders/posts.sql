@@ -1,5 +1,5 @@
 LOAD XML LOCAL INFILE 'C://Users/notepc/Sites/stack/public/database/Posts.xml' 
-INTO TABLE posts
+INTO TABLE another_posts
  ROWS IDENTIFIED BY '<row>'
  (
 	@`Id`,
