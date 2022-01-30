@@ -98,6 +98,7 @@ class CachePosts extends Command
         $pts = AnotherPost::where('post_type_id', 1)
             ->where('id', '!=', 237725)
             ->where('id', '!=', 237731)
+            ->where('id', '!=', 237733)
             ->chunkById(
                 10000,
                 function ($posts) {
