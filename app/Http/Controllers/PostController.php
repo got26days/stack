@@ -48,9 +48,13 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-                if (count($tags) <= 3) {
 
-                    foreach ($tags as $tag) {
+                $searchTags = $tags;
+                usort($searchTags, fn ($a, $b) => -strcmp($a->count, $b->count));
+
+                if (count($searchTags) <= 1) {
+
+                    foreach ($searchTags as $tag) {
 
                         $posts->where(function ($query) use ($tag) {
                             $query->whereHas('tagsRelationship', function ($q) use ($tag) {
@@ -63,10 +67,10 @@ class PostController extends Controller
                 } else {
                     ini_set('memory_limit', '12000M');
 
-                    $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-                    $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                    $postTag = PostTag::where('tag_id', $searchTags[0]->id)->pluck('post_id')->toArray();
+                    $postTagSecond = PostTagSecond::where('tag_id', $searchTags[0]->id)->pluck('post_id')->toArray();
                     $postTag = array_unique(array_merge($postTag, $postTagSecond));
-                    foreach ($tags as $key => $tag) {
+                    foreach ($searchTags as $key => $tag) {
                         if ($key > 0) {
                             $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
                             $pts = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
@@ -129,6 +133,7 @@ class PostController extends Controller
                 $tags[] = $tag;
             }
         }
+
 
         return $this->index($request, $tags);
     }

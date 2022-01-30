@@ -113,7 +113,7 @@ class CachePosts extends Command
         //         }
         //     );
 
-        $pts = AnotherPost::where('post_type_id', 1)
+        $pts = Post::where('post_type_id', 1)
             // ->where('id', '!=', 237725)
             // ->where('id', '!=', 237731)
             // ->where('id', '!=', 237733)
@@ -129,34 +129,34 @@ class CachePosts extends Command
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
 
-                        $a = Question::where('id', $post->id)->first();
-                        if (!$a) {
-                            $q = new Question();
-                            // $q->post_type_id = $post->post_type_id;
-                            $q->owner_user_id = $post->owner_user_id;
-                            $q->last_editor_user_id = $post->last_editor_user_id;
-                            $q->accepted_answer_id = $post->accepted_answer_id;
-                            $q->score = $post->score;
-                            $q->parent_id = $post->parent_id;
-                            $q->view_count = $post->view_count;
-                            $q->answer_count = $post->answer_count;
-                            $q->comment_count = $post->comment_count;
-                            $q->owner_display_name = $post->owner_display_name;
-                            $q->last_editor_display_name = $post->last_editor_display_name;
-                            $q->title = $post->title;
-                            $q->tags = $post->tags;
-                            $q->content_license = $post->content_license;
-                            $q->body = $post->body;
-                            $q->favorite_count = $post->favorite_count;
-                            $q->community_owned_date = $post->community_owned_date;
-                            $q->closed_date = $post->closed_date;
-                            $q->last_edit_date = $post->last_edit_date;
-                            $q->last_activity_date = $post->last_activity_date;
-                            $q->created_at = $post->created_at;
-                            $q->id = $post->id;
-                            $q->updated_at = $post->updated_at;
-                            $q->save();
-                        }
+                        // $a = Question::where('id', $post->id)->first();
+                        // if (!$a) {
+                        //     $q = new Question();
+                        //     // $q->post_type_id = $post->post_type_id;
+                        //     $q->owner_user_id = $post->owner_user_id;
+                        //     $q->last_editor_user_id = $post->last_editor_user_id;
+                        //     $q->accepted_answer_id = $post->accepted_answer_id;
+                        //     $q->score = $post->score;
+                        //     $q->parent_id = $post->parent_id;
+                        //     $q->view_count = $post->view_count;
+                        //     $q->answer_count = $post->answer_count;
+                        //     $q->comment_count = $post->comment_count;
+                        //     $q->owner_display_name = $post->owner_display_name;
+                        //     $q->last_editor_display_name = $post->last_editor_display_name;
+                        //     $q->title = $post->title;
+                        //     $q->tags = $post->tags;
+                        //     $q->content_license = $post->content_license;
+                        //     $q->body = $post->body;
+                        //     $q->favorite_count = $post->favorite_count;
+                        //     $q->community_owned_date = $post->community_owned_date;
+                        //     $q->closed_date = $post->closed_date;
+                        //     $q->last_edit_date = $post->last_edit_date;
+                        //     $q->last_activity_date = $post->last_activity_date;
+                        //     $q->created_at = $post->created_at;
+                        //     $q->id = $post->id;
+                        //     $q->updated_at = $post->updated_at;
+                        //     $q->save();
+                        // }
 
                         $post->delete();
                     }
