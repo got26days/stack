@@ -48,7 +48,7 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-                if (count($tags) <= 1) {
+                if (count($tags) <= 2) {
 
                     foreach ($tags as $tag) {
 
