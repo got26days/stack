@@ -61,7 +61,7 @@ class PostController extends Controller
                         });
                     }
                 } else {
-                    ini_set('memory_limit', '6000M');
+                    ini_set('memory_limit', '10000M');
 
                     $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                     $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
