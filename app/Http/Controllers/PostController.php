@@ -48,32 +48,46 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-                ini_set('memory_limit', '10000M');
+                if (count($tags) <= 1) {
 
-                $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-                $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
-                $postTag = array_unique(array_merge($postTag, $postTagSecond));
-                foreach ($tags as $key => $tag) {
-                    if ($key > 0) {
-                        $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
-                        $pts = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
+                    foreach ($tags as $tag) {
 
-                        $pt = array_unique(array_merge($pt, $pts));
-
-                        $postTag = array_intersect($postTag, $pt);
+                        $posts->where(function ($query) use ($tag) {
+                            $query->whereHas('tagsRelationship', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag->id);
+                            })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag->id);
+                            });
+                        });
                     }
-                }
+                } else {
+                    ini_set('memory_limit', '6000M');
 
+                    $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                    $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
+                    $postTag = array_unique(array_merge($postTag, $postTagSecond));
+                    foreach ($tags as $key => $tag) {
+                        if ($key > 0) {
+                            $pt = PostTag::where('tag_id', $tag->id)->pluck('post_id')->toArray();
+                            $pts = PostTagSecond::where('tag_id', $tag->id)->pluck('post_id')->toArray();
 
-                $posts = $posts->where(function ($query) use ($postTag) {
-                    foreach ($postTag  as $s => $i) {
-                        if ($s == 0) {
-                            $query->where('id', $i);
-                        } else {
-                            $query->orWhere('id',  $i);
+                            $pt = array_unique(array_merge($pt, $pts));
+
+                            $postTag = array_intersect($postTag, $pt);
                         }
                     }
-                });
+
+
+                    $posts = $posts->where(function ($query) use ($postTag) {
+                        foreach ($postTag  as $s => $i) {
+                            if ($s == 0) {
+                                $query->where('id', $i);
+                            } else {
+                                $query->orWhere('id',  $i);
+                            }
+                        }
+                    });
+                }
             }
 
             if ($tab == 'newest') {
