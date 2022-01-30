@@ -9,8 +9,6 @@ CREATE INDEX title_index ON questions (title);
 CREATE INDEX tags_index ON questions (tags);
 
 
-
-
 CREATE INDEX post_type_id_index on posts(post_type_id);
 
 ALTER TABLE table ADD FULLTEXT INDEX index_table_on_tags (tags);
@@ -48,3 +46,9 @@ ALTER TABLE questions MODIFY view_count INTEGER(4);
 ALTER TABLE questions MODIFY answer_count INTEGER(4);
 ALTER TABLE questions MODIFY comment_count INTEGER(4);
 ALTER TABLE questions MODIFY favorite_count INTEGER(4);
+
+
+CREATE INDEX reputation_index ON users (reputation);
+CREATE INDEX up_votes_index ON users (up_votes);
+CREATE INDEX down_votes_index ON users (down_votes);
+CREATE INDEX created_at_index ON users (created_at);
