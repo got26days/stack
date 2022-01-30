@@ -102,7 +102,7 @@ class CachePosts extends Command
             ->where('id', '!=', 237745)
             ->where('id', '!=', 237748)
             ->where('id', '!=', 237757)
-            ->where('id', '>', 337757)
+            ->where('id', '>', 537757)
             ->chunkById(
                 10000,
                 function ($posts) {
