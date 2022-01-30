@@ -52,3 +52,5 @@ CREATE INDEX reputation_index ON users (reputation);
 CREATE INDEX up_votes_index ON users (up_votes);
 CREATE INDEX down_votes_index ON users (down_votes);
 CREATE INDEX created_at_index ON users (created_at);
+
+ALTER TABLE answers MODIFY score INTEGER(5);
