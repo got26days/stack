@@ -102,7 +102,8 @@ class CachePosts extends Command
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
 
-                        $a = Question::where('id', $post->id)->first();
+                        $a = Question::where('id', $post->id)
+                            ->where('id', '!=', 237725)->first();
                         if (!$a) {
                             $q = new Question();
                             // $q->post_type_id = $post->post_type_id;
