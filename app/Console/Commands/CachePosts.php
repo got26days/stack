@@ -96,7 +96,8 @@ class CachePosts extends Command
         // });
 
         $pts = AnotherPost::where('post_type_id', 1)
-            ->where('id', '<', 1537757)
+            ->where('id', '>', 1537757)
+            ->where('id', '<', 2000000)
             ->chunkById(
                 10000,
                 function ($posts) {
@@ -104,7 +105,9 @@ class CachePosts extends Command
                     foreach ($posts as $post) {
 
                         if ($post->last_edit_date != null) {
-                            $this->line($post->last_edit_date);
+                            if (strlen($post->last_edit_date) < 15) {
+                                $this->line($post->last_edit_date);
+                            }
                         }
                     }
                 }
