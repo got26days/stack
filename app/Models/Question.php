@@ -12,11 +12,11 @@ class Question extends Model
     protected $dateFormat = 'd.m.Y';
 
     protected $casts = [
-        'created_at' => 'datetime:d.m.Y',
-        'closed_date' => 'datetime',
-        'last_edit_date' => 'datetime',
-        'last_activity_date' => 'datetime',
-        'community_owned_date' => 'datetime',
+        // 'created_at' => 'datetime:d.m.Y',
+        // 'closed_date' => 'datetime',
+        // 'last_edit_date' => 'datetime',
+        // 'last_activity_date' => 'datetime',
+        // 'community_owned_date' => 'datetime',
     ];
 
     public function user()

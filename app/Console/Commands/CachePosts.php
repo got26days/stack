@@ -114,15 +114,15 @@ class CachePosts extends Command
         //     );
 
         $pts = AnotherPost::where('post_type_id', 1)
-            ->where('id', '!=', 237725)
-            ->where('id', '!=', 237731)
-            ->where('id', '!=', 237733)
-            ->where('id', '!=', 237745)
-            ->where('id', '!=', 237748)
-            ->where('id', '!=', 237757)
-            ->where('id', '!=', 1537759)
-            ->where('id', '!=', 237763)
-            ->where('id', '!=', 237786)
+            // ->where('id', '!=', 237725)
+            // ->where('id', '!=', 237731)
+            // ->where('id', '!=', 237733)
+            // ->where('id', '!=', 237745)
+            // ->where('id', '!=', 237748)
+            // ->where('id', '!=', 237757)
+            // ->where('id', '!=', 1537759)
+            // ->where('id', '!=', 237763)
+            // ->where('id', '!=', 237786)
             ->chunkById(
                 10000,
                 function ($posts) {
