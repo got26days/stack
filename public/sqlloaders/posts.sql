@@ -1,4 +1,4 @@
-LOAD XML LOCAL INFILE 'C://Users/notepc/Sites/stack/public/database/Posts.xml' 
+LOAD XML LOCAL INFILE '/home/admin/web/askninja.com/public_html/public/database/Posts.xml' 
 INTO TABLE another_posts
  ROWS IDENTIFIED BY '<row>'
  (
