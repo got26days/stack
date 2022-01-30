@@ -103,7 +103,7 @@ class CachePosts extends Command
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
 
-                        $this->line(gettype($post->last_edit_date));
+                        $this->line($post->last_edit_date);
                     }
                 }
             );
