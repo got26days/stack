@@ -102,8 +102,8 @@ class CachePosts extends Command
                 function ($posts) {
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
-                        if (gettype($posts->last_edit_date) == 'string') {
-                            $this->line($posts->last_edit_date);
+                        if (gettype($post->last_edit_date) == 'string') {
+                            $this->line($post->last_edit_date);
                         }
                     }
                 }
