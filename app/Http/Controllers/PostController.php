@@ -48,7 +48,7 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-                if (count($tags) <= 2) {
+                if (count($tags) <= 3) {
 
                     foreach ($tags as $tag) {
 
@@ -61,7 +61,7 @@ class PostController extends Controller
                         });
                     }
                 } else {
-                    ini_set('memory_limit', '128000M');
+                    ini_set('memory_limit', '12000M');
 
                     $postTag = PostTag::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
                     $postTagSecond = PostTagSecond::where('tag_id', $tags[0]->id)->pluck('post_id')->toArray();
