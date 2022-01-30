@@ -52,7 +52,7 @@ class PostController extends Controller
                 $searchTags = $tags;
                 usort($searchTags, fn ($a, $b) => -strcmp($a->count, $b->count));
 
-                if (count($searchTags) <= 1) {
+                if (count($searchTags) <= 3) {
 
                     foreach ($searchTags as $tag) {
 
