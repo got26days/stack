@@ -103,7 +103,9 @@ class CachePosts extends Command
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
 
-                        $this->line($post->last_edit_date);
+                        if ($post->last_edit_date != null) {
+                            $this->line($post->last_edit_date);
+                        }
                     }
                 }
             );
