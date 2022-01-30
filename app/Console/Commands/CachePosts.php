@@ -97,7 +97,7 @@ class CachePosts extends Command
 
         $pts = AnotherPost::where('post_type_id', 2)
             ->chunkById(
-                30000,
+                10000,
                 function ($posts) {
                     $this->line($posts[0]->id);
                     foreach ($posts as $post) {
