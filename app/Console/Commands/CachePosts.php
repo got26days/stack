@@ -97,6 +97,7 @@ class CachePosts extends Command
         $pts = Post::where('id', '>', 0)
             ->where('parent_id', '!=', null)
             ->where('post_type_id', 2)
+            ->orderBy('id')
             ->chunk(
                 30000,
                 function ($posts) {
