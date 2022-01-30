@@ -54,3 +54,7 @@ CREATE INDEX down_votes_index ON users (down_votes);
 CREATE INDEX created_at_index ON users (created_at);
 
 ALTER TABLE answers MODIFY score INTEGER(5);
+
+TRUNCATE another_posts;
+
+SET GLOBAL local_infile = 1;
