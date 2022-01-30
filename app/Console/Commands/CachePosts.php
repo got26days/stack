@@ -105,7 +105,7 @@ class CachePosts extends Command
                     foreach ($posts as $post) {
 
                         if ($post->last_edit_date != null) {
-                            if (strlen($post->last_edit_date) < 15) {
+                            if (strlen($post->last_edit_date) < 22) {
                                 $this->line($post->last_edit_date);
                             }
                         }
