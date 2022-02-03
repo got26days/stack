@@ -5559,7 +5559,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.showresults = this.results.data;
+    this.showresults = this.results;
     this.currentTab = this.tab;
   }
 });

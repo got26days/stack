@@ -100,7 +100,7 @@ export default {
         };
     },
     mounted() {
-        this.showresults = this.results.data;
+        this.showresults = this.results;
         this.currentTab = this.tab;
     },
 };
