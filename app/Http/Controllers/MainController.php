@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\PostHistory;
 use App\Models\PostLink;
+use App\Models\Question;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vote;
@@ -21,6 +22,36 @@ class MainController extends Controller
     public function index(Request $request)
     {
         return 'test';
+    }
+
+    public function search(Request $request)
+    {
+
+        $questions = Question::where('title', 'LIKE', '%' . $request['search'] . '%');
+
+        $tab = 'relevance';
+
+        if ($request['tab']) {
+            $tab = $request['tab'];
+        }
+
+        if ($tab == 'relevance') {
+            // $questions->where("closed_date", "!=", null);
+        }
+
+        if ($tab == 'voters') {
+            $questions->orderBy("score", 'desc');
+        }
+
+        if ($tab == 'newest') {
+            $questions = $questions->latest();
+        }
+
+        $search = $request['search'];
+
+        $results = $questions->paginate(10);
+
+        return view('pages.search', compact('results', 'tab', 'search'));
     }
 
     public function test()

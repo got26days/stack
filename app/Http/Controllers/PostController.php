@@ -48,7 +48,7 @@ class PostController extends Controller
             }
 
             if (count($tags) > 0) {
-
+                ini_set('memory_limit', '16000M');
                 $searchTags = $tags;
                 usort($searchTags, fn ($a, $b) => -strcmp($a->count, $b->count));
 
@@ -65,7 +65,7 @@ class PostController extends Controller
                         });
                     }
                 } else {
-                    ini_set('memory_limit', '16000M');
+
 
                     $postTag = PostTag::where('tag_id', $searchTags[0]->id)->pluck('post_id')->toArray();
                     $postTagSecond = PostTagSecond::where('tag_id', $searchTags[0]->id)->pluck('post_id')->toArray();
