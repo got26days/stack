@@ -54,3 +54,10 @@ ALTER TABLE answers MODIFY score INTEGER(5);
 TRUNCATE another_posts;
 
 SET GLOBAL local_infile = 1;
+
+ALTER TABLE questions MODIFY answer_count INTEGER(4);
+
+CREATE INDEX title_index on questions(title);
+
+ALTER TABLE questions  
+ADD FULLTEXT(title);

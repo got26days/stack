@@ -49,7 +49,7 @@ class MainController extends Controller
 
         $search = $request['search'];
 
-        $results = $questions->paginate(10);
+        $results = $questions->limit(10)->get();
 
         return view('pages.search', compact('results', 'tab', 'search'));
     }
