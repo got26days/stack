@@ -29,6 +29,7 @@ Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/users/{user}/{name}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
 Route::get('/cpu', [MainController::class, 'total_ram_cpu_usage'])->name('cpu');
+Route::get('/search', [MainController::class, 'search'])->name('search');
 
 Route::get('/questions', [PostController::class, 'index'])->name('questions');
 
