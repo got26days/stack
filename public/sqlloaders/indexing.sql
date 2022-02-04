@@ -61,3 +61,14 @@ CREATE INDEX title_index on questions(title);
 
 ALTER TABLE questions  
 ADD FULLTEXT(title);
+
+CREATE INDEX answer_count_index on questions(answer_count);
+CREATE INDEX owner_user_id_index on questions(owner_user_id);
+CREATE INDEX accepted_answer_id_index on questions(accepted_answer_id);
+CREATE INDEX display_name_index on users(display_name);
+
+
+CREATE INDEX title_index on questions(title);
+CREATE INDEX title_index on questions(title);
+CREATE INDEX title_index on questions(title);
+CREATE INDEX title_index on questions(title);
