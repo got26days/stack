@@ -20,6 +20,10 @@ class Question extends Model
         'community_owned_date' => 'datetime',
     ];
 
+    protected $fillable = [
+        'view_count',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'owner_user_id', 'id');

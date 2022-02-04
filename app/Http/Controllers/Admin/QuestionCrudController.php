@@ -59,6 +59,18 @@ class QuestionCrudController extends CrudController
         CRUD::column('score');
 
         CRUD::column('title');
+
+        CRUD::addColumn([
+            // any type of relationship
+            'name'         => 'user', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'User Name', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'display_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+        ],);
+
         CRUD::column('tags');
         CRUD::column('created_at');
         // CRUD::column('updated_at');
@@ -80,29 +92,70 @@ class QuestionCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(QuestionRequest::class);
+        // CRUD::field('id');
+        CRUD::field('title');
+        CRUD::field('body');
+
+        CRUD::field('view_count');
+        CRUD::field('score');
+        CRUD::field('tags');
 
         CRUD::field('accepted_answer_id');
         CRUD::field('answer_count');
-        CRUD::field('body');
-        CRUD::field('closed_date');
         CRUD::field('comment_count');
-        CRUD::field('community_owned_date');
-        CRUD::field('content_license');
-        CRUD::field('created_at');
         CRUD::field('favorite_count');
-        CRUD::field('id');
+
+        CRUD::field('closed_date');
+        CRUD::field('community_owned_date');
         CRUD::field('last_activity_date');
-        CRUD::field('last_edit_date');
-        CRUD::field('last_editor_display_name');
-        CRUD::field('last_editor_user_id');
-        CRUD::field('owner_display_name');
-        CRUD::field('owner_user_id');
-        CRUD::field('parent_id');
-        CRUD::field('score');
-        CRUD::field('tags');
-        CRUD::field('title');
         CRUD::field('updated_at');
-        CRUD::field('view_count');
+        CRUD::field('created_at');
+        // CRUD::field('last_edit_date');
+
+
+        CRUD::field('content_license');
+
+
+        // CRUD::field('last_editor_display_name');
+        // CRUD::field('last_editor_user_id');
+        // CRUD::field('owner_display_name');
+        // CRUD::field('owner_user_id');
+        // CRUD::field('parent_id');
+
+
+
+        CRUD::addField([
+            // any type of relationship
+            'name'         => 'user', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'User Name', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'display_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+        ],);
+
+        CRUD::addField([
+            // any type of relationship
+            'name'         => 'tagsRelationship', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'Tags', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'tag_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+        ],);
+
+        CRUD::addField([
+            // any type of relationship
+            'name'         => 'tagsRelationshipSecond', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'Tags', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'tag_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+        ],);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
