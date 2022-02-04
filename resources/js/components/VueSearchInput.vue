@@ -7,7 +7,7 @@
             placeholder="Search"
             aria-label="Search"
             autocomplete="off"
-            :value="oldvalue"
+            v-model="search"
             @focus="openPopup = true"
             @blur="openPopup = false"
         />
@@ -63,9 +63,13 @@ export default {
     data() {
         return {
             openPopup: false,
+            search: "",
         };
     },
     mounted() {
+        if (this.oldvalue) {
+            this.search = this.oldvalue;
+        }
         console.log("Component mounted.");
     },
 };

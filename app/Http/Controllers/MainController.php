@@ -86,75 +86,83 @@ class MainController extends Controller
             }
         }
 
-        $questions = Question::with('user');
-
-        if ($search_str) {
-            $search_str = str_replace('"', '', $search_str);
-            $search_str = trim($search_str);
-            if (!$phase) {
-                $questions = $questions->where('title', 'LIKE', '%' . $search_str . '%');
-            } else {
-                $questions = $questions->where('title', $search_str);
-            }
-        }
-
-        if ($username) {
-            $questions = $questions->whereHas('user', function ($q) use ($username) {
-                $q->where('display_name', 'LIKE', '%' .  $username . '%');
-            });
-        }
-
-        if ($answers) {
-            $questions = $questions->where('answer_count', '>=', $answers);
-        }
-
-        if ($score) {
-            $questions->where("score", ">=", $score);
-        }
-
-        if ($isaccepted) {
-            $questions->where('accepted_answer_id', '!=', null);
-        }
-
-        if (count($tagIds) > 0) {
-
-            foreach ($tagIds as $tag) {
-
-                $questions->where(function ($query) use ($tag) {
-                    $query->whereHas('tagsRelationship', function ($q) use ($tag) {
-                        $q->where('tag_id', $tag);
-                    })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
-                        $q->where('tag_id', $tag);
-                    });
-                });
-            }
-        }
-
         $tab = 'relevance';
 
         if ($request['tab']) {
             $tab = $request['tab'];
         }
 
-        if ($tab == 'relevance') {
-            // $questions->where("closed_date", "!=", null);
-        }
+        $results = cache()->remember(
+            request()->getRequestUri(),
+            60 * 60 * 24,
+            function () use ($tab, $search_str, $username, $answers, $score, $isaccepted, $tagIds, $phase) {
+                $questions = Question::with('user');
 
-        if ($tab == 'voters') {
-            $questions->orderBy("score", 'desc');
-        }
+                if ($search_str) {
+                    $search_str = str_replace('"', '', $search_str);
+                    $search_str = trim($search_str);
+                    if (!$phase) {
+                        $questions = $questions->where('title', 'LIKE', '%' . $search_str . '%');
+                    } else {
+                        $questions = $questions->where('title', $search_str);
+                    }
+                }
 
-        if ($tab == 'newest') {
-            $questions = $questions->latest();
-        }
+                if ($username) {
+                    $questions = $questions->whereHas('user', function ($q) use ($username) {
+                        $q->where('display_name', 'LIKE', '%' .  $username . '%');
+                    });
+                }
 
-        $search = $request['search'];
+                if ($answers) {
+                    $questions = $questions->where('answer_count', '>=', $answers);
+                }
 
-        $results = $questions->limit(10)->get();
+                if ($score) {
+                    $questions->where("score", ">=", $score);
+                }
+
+                if ($isaccepted) {
+                    $questions->where('accepted_answer_id', '!=', null);
+                }
+
+                if (count($tagIds) > 0) {
+
+                    foreach ($tagIds as $tag) {
+
+                        $questions->where(function ($query) use ($tag) {
+                            $query->whereHas('tagsRelationship', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag);
+                            })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag);
+                            });
+                        });
+                    }
+                }
+
+
+                if ($tab == 'relevance') {
+                    // $questions->where("closed_date", "!=", null);
+                }
+
+                if ($tab == 'voters') {
+                    $questions->orderBy("score", 'desc');
+                }
+
+                if ($tab == 'newest') {
+                    $questions = $questions->latest();
+                }
+
+                return $questions->limit(10)->get();
+            }
+        );
+
 
         foreach ($results as $post) {
             $post->slug = Str::slug($post->title, '-');
         }
+
+        $search = $request['search'];
 
         return view('pages.search', compact('results', 'tab', 'search'));
     }

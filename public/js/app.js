@@ -5640,10 +5640,15 @@ __webpack_require__.r(__webpack_exports__);
   props: ["oldvalue"],
   data: function data() {
     return {
-      openPopup: false
+      openPopup: false,
+      search: ""
     };
   },
   mounted: function mounted() {
+    if (this.oldvalue) {
+      this.search = this.oldvalue;
+    }
+
     console.log("Component mounted.");
   }
 });
@@ -30702,6 +30707,14 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.search,
+          expression: "search",
+        },
+      ],
       staticClass: "form-control me-2",
       attrs: {
         type: "search",
@@ -30710,13 +30723,19 @@ var render = function () {
         "aria-label": "Search",
         autocomplete: "off",
       },
-      domProps: { value: _vm.oldvalue },
+      domProps: { value: _vm.search },
       on: {
         focus: function ($event) {
           _vm.openPopup = true
         },
         blur: function ($event) {
           _vm.openPopup = false
+        },
+        input: function ($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.search = $event.target.value
         },
       },
     }),
