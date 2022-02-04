@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
     protected $dateFormat = 'd.m.Y';
@@ -19,6 +20,10 @@ class Question extends Model
         'community_owned_date' => 'datetime',
     ];
 
+    protected $fillable = [
+        'view_count',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'owner_user_id', 'id');
@@ -27,6 +32,11 @@ class Question extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'post_id', 'id')->orderBy('created_at');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'parent_id', 'id');
     }
 
 

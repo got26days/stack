@@ -24,10 +24,67 @@ class MainController extends Controller
         return 'test';
     }
 
+    function getBetween($string, $start = "", $end = "")
+    {
+        return preg_replace('/(.*)' . $start . '(.*)' . $end . '(.*)/s', '\2', $string);
+    }
+
     public function search(Request $request)
     {
 
-        $questions = Question::where('title', 'LIKE', '%' . $request['search'] . '%');
+        $search_str = '';
+        $score = null;
+        $username = null;
+        $answers = null;
+        $isaccepted = null;
+        $phase = false;
+        $tagIds = [];
+
+        $str_array = explode(" ", $request['search']);
+
+        foreach ($str_array as $str) {
+
+            if (str_contains($str, 'user:')) {
+                $username = $this->getBetween($str, 'user:', '');
+                continue;
+            }
+
+            if (str_contains($str, 'score:')) {
+                $score = $this->getBetween($str, 'score:', '');
+                continue;
+            }
+
+            if (str_contains($str, 'answers:')) {
+                $answers = $this->getBetween($str, 'answers:', '');
+                continue;
+            }
+
+            if (str_contains($str, 'isaccepted:')) {
+                $isaccepted = $this->getBetween($str, 'isaccepted:', '');
+                continue;
+            }
+
+            if (strlen($str) >= 3) {
+                if ($str[0] == '[' && $str[strlen($str) - 1] == ']') {
+                    $str = str_replace('[', '', $str);
+                    $str = str_replace(']', '', $str);
+
+                    $tag = Tag::where('tag_name', $str)->first();
+                    if ($tag) {
+                        $tagIds[] = $tag->id;
+                    }
+                    continue;
+                }
+            }
+
+            $search_str =  $search_str . ' ' . trim($str);
+            $search_str = trim($search_str);
+            if (strlen($search_str) >= 3) {
+                if ($search_str[0] == '"' && $search_str[strlen($search_str) - 1] == '"') {
+                    $phase = true;
+                }
+            }
+        }
 
         $tab = 'relevance';
 
@@ -35,21 +92,77 @@ class MainController extends Controller
             $tab = $request['tab'];
         }
 
-        if ($tab == 'relevance') {
-            // $questions->where("closed_date", "!=", null);
-        }
+        $results = cache()->remember(
+            request()->getRequestUri(),
+            60 * 60 * 24,
+            function () use ($tab, $search_str, $username, $answers, $score, $isaccepted, $tagIds, $phase) {
+                $questions = Question::with('user');
 
-        if ($tab == 'voters') {
-            $questions->orderBy("score", 'desc');
-        }
+                if ($search_str) {
+                    $search_str = str_replace('"', '', $search_str);
+                    $search_str = trim($search_str);
+                    if (!$phase) {
+                        $questions = $questions->where('title', 'LIKE', '%' . $search_str . '%');
+                    } else {
+                        $questions = $questions->where('title', $search_str);
+                    }
+                }
 
-        if ($tab == 'newest') {
-            $questions = $questions->latest();
+                if ($username) {
+                    $questions = $questions->whereHas('user', function ($q) use ($username) {
+                        $q->where('display_name', 'LIKE', '%' .  $username . '%');
+                    });
+                }
+
+                if ($answers) {
+                    $questions = $questions->where('answer_count', '>=', $answers);
+                }
+
+                if ($score) {
+                    $questions->where("score", ">=", $score);
+                }
+
+                if ($isaccepted) {
+                    $questions->where('accepted_answer_id', '!=', null);
+                }
+
+                if (count($tagIds) > 0) {
+
+                    foreach ($tagIds as $tag) {
+
+                        $questions->where(function ($query) use ($tag) {
+                            $query->whereHas('tagsRelationship', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag);
+                            })->orWhereHas('tagsRelationshipSecond', function ($q) use ($tag) {
+                                $q->where('tag_id', $tag);
+                            });
+                        });
+                    }
+                }
+
+
+                if ($tab == 'relevance') {
+                    // $questions->where("closed_date", "!=", null);
+                }
+
+                if ($tab == 'voters') {
+                    $questions->orderBy("score", 'desc');
+                }
+
+                if ($tab == 'newest') {
+                    $questions = $questions->latest();
+                }
+
+                return $questions->limit(10)->get();
+            }
+        );
+
+
+        foreach ($results as $post) {
+            $post->slug = Str::slug($post->title, '-');
         }
 
         $search = $request['search'];
-
-        $results = $questions->limit(10)->get();
 
         return view('pages.search', compact('results', 'tab', 'search'));
     }

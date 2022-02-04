@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', [MainController::class, 'test']);
 
-Route::get('/', [PostController::class, 'index']);
+Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('/questions/tagged/{tags?}', [PostController::class, 'tagged'])->name('tagged_questions');
 Route::get('/tags', [TagController::class, 'index'])->name('tags');
@@ -35,6 +35,4 @@ Route::get('/questions', [PostController::class, 'index'])->name('questions');
 
 Route::get('/questions/{question}/{slug}', [PostController::class, 'show'])->name('question');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'login' => false]);

@@ -11330,3 +11330,9 @@ textarea.form-control-lg {
   width: 48px;
   height: 48px;
 }
+
+.card-search {
+  position: absolute;
+  width: 600px;
+  z-index: 10;
+}

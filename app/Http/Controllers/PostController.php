@@ -153,6 +153,10 @@ class PostController extends Controller
             $tab = $request['tab'];
         }
 
+        $question->view_count = $question->view_count + 1;
+        $question->save();
+
+
         $answers = Answer::where('parent_id', $question->id);
 
         if ($tab == 'active') {
