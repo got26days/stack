@@ -10,10 +10,10 @@ class Question extends Model
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
-    protected $dateFormat = 'd.m.Y';
+    // protected $dateFormat = 'd.m.Y';
 
     protected $casts = [
-        'created_at' => 'datetime:d.m.Y',
+        // 'created_at' => 'datetime:d.m.Y',
         'closed_date' => 'datetime',
         'last_edit_date' => 'datetime',
         'last_activity_date' => 'datetime',
