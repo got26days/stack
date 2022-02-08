@@ -52,6 +52,15 @@ class TagCrudController extends CrudController
         CRUD::column('excerpt_post_id');
         CRUD::column('wiki_post_id');
 
+        $this->crud->addColumn([
+            'name' => "questions",
+            'label' => "Questions",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->posts()->count();
+            }
+        ]);
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
