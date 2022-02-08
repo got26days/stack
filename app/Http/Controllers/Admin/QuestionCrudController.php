@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\QuestionRequest;
+use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-
+use Illuminate\Http\Request;
 
 /**
  * Class QuestionCrudController
@@ -309,9 +310,20 @@ class QuestionCrudController extends CrudController
         return $this->fetch(\App\Models\Tag::class);
     }
 
-    public function fetchUser()
+    public function fetchUser(Request $request)
     {
         return $this->fetch(\App\Models\User::class);
+
+        $users = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
+            $users = User::where('display_name', 'LIKE', "%{$request['q']}%")
+                ->where('display_name', '!=', null);
+
+            $users = $users->paginate(4)->get();
+
+            return $users;
+        });
+
+        return $users;
     }
 
     /**
