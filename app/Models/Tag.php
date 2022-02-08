@@ -39,11 +39,6 @@ class Tag extends Model
 
     public function tagsRelationshipAnswer()
     {
-        return $this->belongsToMany(Answer::class, 'post_tag', 'tag_id', 'post_id');
-    }
-
-    public function tagsRelationshipSecondAnswer()
-    {
-        return $this->belongsToMany(Answer::class, 'post_tag_seconds', 'tag_id', 'post_id');
+        return $this->belongsToMany(Answer::class, 'post_tag_answer', 'tag_id', 'post_id');
     }
 }
