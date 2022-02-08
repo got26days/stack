@@ -61,6 +61,16 @@ class TagCrudController extends CrudController
             }
         ]);
 
+
+        $this->crud->addColumn([
+            'name' => "answers",
+            'label' => "Answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationshipAnswer()->count() + $entry->tagsRelationshipSecondAnswer()->count();
+            }
+        ]);
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
