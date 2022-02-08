@@ -31,6 +31,27 @@ class UserCrudController extends CrudController
         CRUD::setEntityNameStrings('user', 'users');
     }
 
+    protected function setupShowOperation()
+    {
+        $this->crud->addColumn([
+            'name' => "questions",
+            'label' => "Questions",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->questions()->count();
+            }
+        ]);
+
+        $this->crud->addColumn([
+            'name' => "comments",
+            'label' => "Comments",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->comments()->count();
+            }
+        ]);
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -39,26 +60,6 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-        $this->crud->addColumn([
-            // run a function on the CRUD model and show its return value
-            'name' => "questions",
-            'label' => "Questions", // Table column heading
-            'type' => 'closure',
-            'function' => function ($entry) {
-                return $entry->questions()->count();
-            }
-        ]);
-
-        $this->crud->addColumn([
-            // run a function on the CRUD model and show its return value
-            'name' => "comments",
-            'label' => "Comments", // Table column heading
-            'type' => 'closure',
-            'function' => function ($entry) {
-                return $entry->comments()->count();
-            }
-        ]);
 
 
         CRUD::column('email');
