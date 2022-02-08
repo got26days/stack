@@ -81,14 +81,14 @@ class UserCrudController extends CrudController
             }
         ]);
 
-        // $this->crud->addColumn([
-        //     'name' => "answers",
-        //     'label' => "Answers",
-        //     'type' => 'closure',
-        //     'function' => function ($entry) {
-        //         return $entry->answers()->count();
-        //     }
-        // ]);
+        $this->crud->addColumn([
+            'name' => "answers",
+            'label' => "Answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->answers()->count();
+            }
+        ]);
 
         // $this->crud->addColumn([
         //     'name' => "comments",
