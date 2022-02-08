@@ -234,6 +234,7 @@ class QuestionCrudController extends CrudController
             'attribute' => 'tag_name', // foreign key attribute that is shown to user
             // 'model'     => App\Models\User::class, // foreign key model
             'ajax' => true,
+            'data_source' => url("fetch/tag"),
         ],);
 
         CRUD::addField([
@@ -246,6 +247,7 @@ class QuestionCrudController extends CrudController
             'attribute' => 'tag_name', // foreign key attribute that is shown to user
             // 'model'     => App\Models\User::class, // foreign key model
             'ajax' => true,
+            'data_source' => url("fetch/tag"),
         ],);
 
         CRUD::field('accepted_answer_id');
@@ -297,6 +299,11 @@ class QuestionCrudController extends CrudController
          * - CRUD::field('price')->type('number');
          * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
          */
+    }
+
+    public function fetchTag()
+    {
+        return $this->fetch(\App\Models\Tag::class);
     }
 
     /**
