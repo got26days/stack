@@ -77,15 +77,9 @@ class CachePosts extends Command
         $posts = Answer::whereHas('parent')
             ->chunkById(30000, function ($posts) {
                 foreach ($posts as $post) {
-                    $parent = $post->parent();
-                    if (count($parent->tagsArray) > 0) {
-                        foreach ($parent->tagsArray as $tag_name) {
-
-                            $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
-                                return Tag::where('tag_name', $tag_name)->first();
-                            });
-
-
+                    $parent = $post->parent;
+                    if (count($parent->tagsRelationship) > 0) {
+                        foreach ($parent->tagsRelationship as $tag) {
                             if ($tag) {
                                 $post->tagsRelationship()->attach($tag->id);
                             }
