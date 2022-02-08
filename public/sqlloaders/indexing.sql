@@ -72,3 +72,5 @@ CREATE INDEX title_index on questions(title);
 CREATE INDEX title_index on questions(title);
 CREATE INDEX title_index on questions(title);
 CREATE INDEX title_index on questions(title);
+
+CREATE INDEX user_id_index on comments(user_id);
