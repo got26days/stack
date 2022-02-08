@@ -23,7 +23,7 @@ class Answer extends Model
 
     public function tagsRelationship()
     {
-        return $this->belongsToMany(Tag::class, 'post_tag_answer', 'post_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'post_tag_ansers', 'post_id', 'tag_id');
     }
 
     public function getTagsArrayAttribute()
