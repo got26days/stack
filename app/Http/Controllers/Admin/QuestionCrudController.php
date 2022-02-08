@@ -312,7 +312,7 @@ class QuestionCrudController extends CrudController
 
     public function fetchUser(Request $request)
     {
-        return $this->fetch(\App\Models\User::class);
+        // return $this->fetch(\App\Models\User::class);
 
         $users = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
             $users = User::where('display_name', 'LIKE', "%{$request['q']}%")
