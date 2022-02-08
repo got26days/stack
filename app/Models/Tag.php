@@ -29,11 +29,11 @@ class Tag extends Model
 
     public function tagsRelationship()
     {
-        return $this->belongsToMany(Question::class, 'post_tag', 'post_id', 'tag_id');
+        return $this->belongsToMany(Question::class, 'post_tag', 'tag_id', 'post_id');
     }
 
     public function tagsRelationshipSecond()
     {
-        return $this->belongsToMany(Question::class, 'post_tag_seconds', 'post_id', 'tag_id');
+        return $this->belongsToMany(Question::class, 'post_tag_seconds', 'tag_id', 'post_id');
     }
 }
