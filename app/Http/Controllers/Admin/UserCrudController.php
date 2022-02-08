@@ -44,20 +44,20 @@ class UserCrudController extends CrudController
             // run a function on the CRUD model and show its return value
             'name' => "questions",
             'label' => "Questions", // Table column heading
-            'type' => "model_function",
-            'function_name' => 'getQuestionsCount', // the method in your Model
-            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
-            // 'limit' => 100, // Limit the number of characters shown
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->questions()->count();
+            }
         ]);
 
         $this->crud->addColumn([
             // run a function on the CRUD model and show its return value
             'name' => "comments",
             'label' => "Comments", // Table column heading
-            'type' => "model_function",
-            'function_name' => 'getCommentsCount', // the method in your Model
-            // 'function_parameters' => [$one, $two], // pass one/more parameters to that method
-            // 'limit' => 100, // Limit the number of characters shown
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->comments()->count();
+            }
         ]);
 
 
