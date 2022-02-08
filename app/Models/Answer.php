@@ -23,7 +23,7 @@ class Answer extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Question::class, 'parent_id', 'id');
+        return $this->hasOne(Question::class, 'parent_id', 'id');
     }
 
     // public function tagsRelationship()
