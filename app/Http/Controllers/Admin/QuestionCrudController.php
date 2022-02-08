@@ -263,6 +263,7 @@ class QuestionCrudController extends CrudController
             // 'entity'    => 'tags', // the method that defines the relationship in your Model
             'attribute' => 'display_name', // foreign key attribute that is shown to user
             // 'model'     => App\Models\User::class, // foreign key model
+            'ajax' => true,
         ],);
 
         // CRUD::addField([
