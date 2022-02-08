@@ -314,7 +314,7 @@ class QuestionCrudController extends CrudController
     {
         // return $this->fetch(\App\Models\User::class);
 
-        $users = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
+        $users = cache()->remember(request()->getRequestUri() . $request['q'], 60 * 60 * 24, function () use ($request) {
             $users = User::where('display_name', 'LIKE', "%{$request['q']}%")
                 ->where('display_name', '!=', null);
 
@@ -322,6 +322,7 @@ class QuestionCrudController extends CrudController
 
             return $users;
         });
+
 
         return $users;
     }
