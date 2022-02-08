@@ -49,21 +49,12 @@ class User extends Authenticatable
 
     public function questions()
     {
-        return $this->hasMany(Question::class, 'id', 'user_id');
+        return $this->hasMany(Question::class, 'owner_user_id', 'id');
     }
 
-    public function getQuestionsCount()
-    {
-        return $this->questions()->count();
-    }
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'id', 'user_id');
-    }
-
-    public function getCommentsCount()
-    {
-        return $this->questions()->count();
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 }
