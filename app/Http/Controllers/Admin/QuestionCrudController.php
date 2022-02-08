@@ -310,12 +310,12 @@ class QuestionCrudController extends CrudController
         return $this->fetch(\App\Models\Tag::class);
     }
 
-    public function getuser()
+    public function fetchUser(Request $request)
     {
         // return $this->fetch(\App\Models\User::class);
 
-        $users = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () {
-            $users = User::where('display_name', 'LIKE', "%{" . request()->q . "}%")
+        $users = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
+            $users = User::where('display_name', 'LIKE', "%{$request['q']}%")
                 ->where('display_name', '!=', null);
 
             $users = $users->paginate(4);
