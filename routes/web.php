@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', [MainController::class, 'test']);
+Route::get('/test', [MainController::class, 'index']);
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 

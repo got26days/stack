@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Badge;
 use App\Models\Comment;
 use App\Models\Post;
@@ -21,7 +22,19 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-        return 'test';
+        $posts = Answer::whereHas('parent')->get();
+        foreach ($posts as $post) {
+            $parent = $post->parent;
+            // if (count($parent->tagsRelationship) > 0) {
+            //     foreach ($parent->tagsRelationship as $tag) {
+            //         if ($tag) {
+            //             $post->tagsRelationship()->attach($tag->id);
+            //         }
+            //     }
+            // }
+        }
+
+        return $posts;
     }
 
     function getBetween($string, $start = "", $end = "")
