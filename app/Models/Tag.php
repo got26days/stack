@@ -27,8 +27,13 @@ class Tag extends Model
         return null;
     }
 
-    public function posts()
+    public function tagsRelationship()
     {
         return $this->belongsToMany(Question::class, 'post_tag', 'tag_id', 'post_id');
+    }
+
+    public function tagsRelationshipSecond()
+    {
+        return $this->belongsToMany(Question::class, 'post_tag_seconds', 'tag_id', 'post_id');
     }
 }
