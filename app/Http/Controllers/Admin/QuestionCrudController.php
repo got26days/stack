@@ -124,16 +124,16 @@ class QuestionCrudController extends CrudController
 
 
 
-        // CRUD::addField([
-        //     // any type of relationship
-        //     'name'         => 'user', // name of relationship method in the model
-        //     'type'         => 'relationship',
-        //     'label'        => 'User Name', // Table column heading
-        //     // OPTIONAL
-        //     // 'entity'    => 'tags', // the method that defines the relationship in your Model
-        //     'attribute' => 'display_name', // foreign key attribute that is shown to user
-        //     // 'model'     => App\Models\User::class, // foreign key model
-        // ],);
+        CRUD::addField([
+            // any type of relationship
+            'name'         => 'user', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'User Name', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'display_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+        ],);
 
         // CRUD::addField([
         //     // any type of relationship
