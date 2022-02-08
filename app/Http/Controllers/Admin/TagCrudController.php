@@ -57,7 +57,7 @@ class TagCrudController extends CrudController
             'label' => "Questions",
             'type' => 'closure',
             'function' => function ($entry) {
-                return $entry->tagsRelationship()->count();
+                return $entry->tagsRelationship()->count() + $entry->tagsRelationshipSecond()->count();
             }
         ]);
 
