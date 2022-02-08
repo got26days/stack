@@ -6,6 +6,7 @@ use App\Http\Requests\QuestionRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
+
 /**
  * Class QuestionCrudController
  * @package App\Http\Controllers\Admin
@@ -18,6 +19,7 @@ class QuestionCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\FetchOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -290,6 +292,7 @@ class QuestionCrudController extends CrudController
             'attribute' => 'display_name', // foreign key attribute that is shown to user
             // 'model'     => App\Models\User::class, // foreign key model
             'ajax' => true,
+            'data_source' => url("fetch/user"),
         ],);
 
 
@@ -304,6 +307,11 @@ class QuestionCrudController extends CrudController
     public function fetchTag()
     {
         return $this->fetch(\App\Models\Tag::class);
+    }
+
+    public function fetchUser()
+    {
+        return $this->fetch(\App\Models\User::class);
     }
 
     /**

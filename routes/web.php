@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\QuestionCrudController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -36,3 +37,6 @@ Route::get('/questions', [PostController::class, 'index'])->name('questions');
 Route::get('/questions/{question}/{slug}', [PostController::class, 'show'])->name('question');
 
 // Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'login' => false]);
+
+Route::post('/fetch/tag', [QuestionCrudController::class, 'fetchTag']);
+Route::post('/fetch/user', [QuestionCrudController::class, 'fetchUser']);
