@@ -102,7 +102,8 @@ class Question extends Model
 
     public function getDesriptionAttribute()
     {
-        $string = strip_tags($this->body);
+        $string = $this->body;
+        $string = strip_tags($string);
         $string = mb_strimwidth($string, 0, 240, '...');
         return $string;
     }
