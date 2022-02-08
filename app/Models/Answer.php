@@ -26,7 +26,7 @@ class Answer extends Model
         return $this->hasOne(Question::class, 'id', 'parent_id');
     }
 
-    public function tagsRelationshipSecond()
+    public function tagsRelationship()
     {
         return $this->belongsToMany(Tag::class, 'post_tag_ansers', 'post_id', 'tag_id');
     }
