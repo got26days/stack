@@ -90,14 +90,14 @@ class UserCrudController extends CrudController
             }
         ]);
 
-        // $this->crud->addColumn([
-        //     'name' => "comments",
-        //     'label' => "Comments",
-        //     'type' => 'closure',
-        //     'function' => function ($entry) {
-        //         return $entry->comments()->count();
-        //     }
-        // ]);
+        $this->crud->addColumn([
+            'name' => "comments",
+            'label' => "Comments",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->comments()->count();
+            }
+        ]);
 
 
         CRUD::column('email');
