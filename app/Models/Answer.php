@@ -21,26 +21,26 @@ class Answer extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
-    public function tagsRelationship()
-    {
-        return $this->belongsToMany(Tag::class, 'post_tag_ansers', 'post_id', 'tag_id');
-    }
+    // public function tagsRelationship()
+    // {
+    //     return $this->belongsToMany(Tag::class, 'post_tag_ansers', 'post_id', 'tag_id');
+    // }
 
-    public function getTagsArrayAttribute()
-    {
+    // public function getTagsArrayAttribute()
+    // {
 
-        $tagsArray = [];
+    //     $tagsArray = [];
 
 
-        if ($this->tags) {
-            $array = explode('>', $this->tags);
+    //     if ($this->tags) {
+    //         $array = explode('>', $this->tags);
 
-            foreach ($array as $item) {
-                if ($item != '') {
-                    $tagsArray[] = str_replace("<", "", $item);
-                }
-            }
-        }
-        return $tagsArray;
-    }
+    //         foreach ($array as $item) {
+    //             if ($item != '') {
+    //                 $tagsArray[] = str_replace("<", "", $item);
+    //             }
+    //         }
+    //     }
+    //     return $tagsArray;
+    // }
 }
