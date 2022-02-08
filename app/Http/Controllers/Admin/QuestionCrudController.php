@@ -266,27 +266,29 @@ class QuestionCrudController extends CrudController
             'ajax' => true,
         ],);
 
-        // CRUD::addField([
-        //     // any type of relationship
-        //     'name'         => 'tagsRelationship', // name of relationship method in the model
-        //     'type'         => 'relationship',
-        //     'label'        => 'Tags', // Table column heading
-        //     // OPTIONAL
-        //     // 'entity'    => 'tags', // the method that defines the relationship in your Model
-        //     'attribute' => 'tag_name', // foreign key attribute that is shown to user
-        //     // 'model'     => App\Models\User::class, // foreign key model
-        // ],);
+        CRUD::addField([
+            // any type of relationship
+            'name'         => 'tagsRelationship', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'Tags', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'tag_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+            'ajax' => true,
+        ],);
 
-        // CRUD::addField([
-        //     // any type of relationship
-        //     'name'         => 'tagsRelationshipSecond', // name of relationship method in the model
-        //     'type'         => 'relationship',
-        //     'label'        => 'Tags', // Table column heading
-        //     // OPTIONAL
-        //     // 'entity'    => 'tags', // the method that defines the relationship in your Model
-        //     'attribute' => 'tag_name', // foreign key attribute that is shown to user
-        //     // 'model'     => App\Models\User::class, // foreign key model
-        // ],);
+        CRUD::addField([
+            // any type of relationship
+            'name'         => 'tagsRelationshipSecond', // name of relationship method in the model
+            'type'         => 'relationship',
+            'label'        => 'Tags', // Table column heading
+            // OPTIONAL
+            // 'entity'    => 'tags', // the method that defines the relationship in your Model
+            'attribute' => 'tag_name', // foreign key attribute that is shown to user
+            // 'model'     => App\Models\User::class, // foreign key model
+            'ajax' => true,
+        ],);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
