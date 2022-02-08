@@ -39,4 +39,4 @@ Route::get('/questions/{question}/{slug}', [PostController::class, 'show'])->nam
 // Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'login' => false]);
 
 Route::post('/fetch/tag', [QuestionCrudController::class, 'fetchTag']);
-Route::post('/fetch/user', [QuestionCrudController::class, 'fetchUser']);
+Route::post('/fetch/user', [QuestionCrudController::class, 'getuser']);
