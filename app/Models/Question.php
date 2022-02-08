@@ -39,6 +39,11 @@ class Question extends Model
         return $this->hasMany(Answer::class, 'parent_id', 'id');
     }
 
+    public function answer()
+    {
+        return $this->hasMany(Answer::class, 'id', 'accepted_answer_id');
+    }
+
 
     public function tagsRelationship()
     {
