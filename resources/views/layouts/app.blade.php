@@ -8,8 +8,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $seo_title ?? 'Seo Title' }}</title>
 
+    <meta name="description" value="{{ $seo_description ?? 'Seo Description' }}">
+    <meta name="keywords" content="{{ $seo_keywords ?? 'Seo Keywords' }}" />
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 

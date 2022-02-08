@@ -176,7 +176,11 @@ class PostController extends Controller
 
         $question->slug = Str::slug($question->title, '-');
 
+        $seo_title = $question->seo_title ? $question->seo_title : $question->title;
 
-        return view('pages.question', compact('question', 'answers', 'tab'));
+        $seo_description = $question->seo_description ? $question->seo_description : $question->desription;
+        $seo_keywords = $question->seo_keywords ? $question->seo_keywords : $question->tagsString;
+
+        return view('pages.question', compact('question', 'answers', 'tab', 'seo_title', 'seo_description', 'seo_keywords'));
     }
 }

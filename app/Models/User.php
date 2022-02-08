@@ -46,4 +46,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'last_access_date' => 'datetime',
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'id', 'user_id');
+    }
+
+    public function getQuestionsCount()
+    {
+        return $this->questions()->count();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'id', 'user_id');
+    }
+
+    public function getCommentsCount()
+    {
+        return $this->questions()->count();
+    }
 }
