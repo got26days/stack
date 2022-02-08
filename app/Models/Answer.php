@@ -21,6 +21,11 @@ class Answer extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
+    public function parent()
+    {
+        return $this->hasMany(Question::class, 'parent_id', 'id');
+    }
+
     // public function tagsRelationship()
     // {
     //     return $this->belongsToMany(Tag::class, 'post_tag_ansers', 'post_id', 'tag_id');

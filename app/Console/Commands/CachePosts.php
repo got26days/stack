@@ -74,26 +74,27 @@ class CachePosts extends Command
         //     }
         // );
 
-        $posts = Answer::chunkById(30000, function ($posts) {
-            foreach ($posts as $post) {
+        $posts = Answer::whereHas('parent')
+            ->chunkById(30000, function ($posts) {
+                foreach ($posts as $post) {
 
-                if (count($post->tagsArray) > 0) {
-                    foreach ($post->tagsArray as $tag_name) {
+                    if (count($post->parent->tagsArray) > 0) {
+                        foreach ($post->parent->tagsArray as $tag_name) {
 
-                        $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
-                            return Tag::where('tag_name', $tag_name)->first();
-                        });
+                            $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
+                                return Tag::where('tag_name', $tag_name)->first();
+                            });
 
 
-                        if ($tag) {
-                            $post->tagsRelationship()->attach($tag->id);
+                            if ($tag) {
+                                $post->tagsRelationship()->attach($tag->id);
+                            }
                         }
                     }
                 }
-            }
 
-            $this->line($posts[0]->id);
-        });
+                $this->line($posts[0]->id);
+            });
 
         // $pts = AnotherPost::where('post_type_id', 1)
         //     ->where('id', '>', 1537757)
