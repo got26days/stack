@@ -78,8 +78,8 @@ class CachePosts extends Command
             ->chunkById(30000, function ($posts) {
                 foreach ($posts as $post) {
 
-                    if (count($post->parent->tagsArray) > 0) {
-                        foreach ($post->parent->tagsArray as $tag_name) {
+                    if (count($post->parent()->tagsArray) > 0) {
+                        foreach ($post->parent()->tagsArray as $tag_name) {
 
                             $tag = cache()->remember('tag_name' . $tag_name, 60 * 60 * 24, function () use ($tag_name) {
                                 return Tag::where('tag_name', $tag_name)->first();
