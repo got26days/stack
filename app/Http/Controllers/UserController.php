@@ -76,7 +76,10 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        $seo_title = $user->seo_title ? $user->seo_title : $user->display_name;
+        $seo_description = $user->seo_description ? $user->seo_description : $user->display_name;
+        $seo_keywords = $user->seo_keywords ? $user->seo_keywords : $user->display_name;
 
-        return view('pages.user', compact('user'));
+        return view('pages.user', compact('user', 'seo_title', 'seo_description', 'seo_keywords'));
     }
 }

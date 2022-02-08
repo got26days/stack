@@ -24,6 +24,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'location',
+        'about_me',
+        'last_access_date',
+        'website_url',
+        'profile_image_url',
+        'views', 'seo_title', 'seo_description', 'seo_keywords'
     ];
 
     /**
@@ -50,6 +56,11 @@ class User extends Authenticatable
     public function questions()
     {
         return $this->hasMany(Question::class, 'owner_user_id', 'id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'owner_user_id', 'id');
     }
 
 
