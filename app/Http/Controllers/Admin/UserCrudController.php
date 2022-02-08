@@ -42,14 +42,14 @@ class UserCrudController extends CrudController
             }
         ]);
 
-        // $this->crud->addColumn([
-        //     'name' => "comments",
-        //     'label' => "Comments",
-        //     'type' => 'closure',
-        //     'function' => function ($entry) {
-        //         return $entry->comments()->count();
-        //     }
-        // ]);
+        $this->crud->addColumn([
+            'name' => "comments",
+            'label' => "Comments",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->comments()->count();
+            }
+        ]);
     }
 
     /**
@@ -60,6 +60,24 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+        $this->crud->addColumn([
+            'name' => "questions",
+            'label' => "Questions",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->questions()->count();
+            }
+        ]);
+
+        $this->crud->addColumn([
+            'name' => "comments",
+            'label' => "Comments",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->comments()->count();
+            }
+        ]);
 
 
         CRUD::column('email');
