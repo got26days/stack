@@ -75,7 +75,7 @@ class CachePosts extends Command
         // );
 
         $posts = Answer::whereHas('parent')
-            ->where('id', '>=', 21616787)
+            // ->where('id', '>=', 21616787)
             ->chunkById(30000, function ($posts) {
                 foreach ($posts as $post) {
                     $parent = $post->parent;

@@ -43,6 +43,15 @@ class UserCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => "answers",
+            'label' => "Answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->answers()->count();
+            }
+        ]);
+
+        $this->crud->addColumn([
             'name' => "comments",
             'label' => "Comments",
             'type' => 'closure',
@@ -50,6 +59,8 @@ class UserCrudController extends CrudController
                 return $entry->comments()->count();
             }
         ]);
+
+        CRUD::column('location');
     }
 
     /**
@@ -71,6 +82,15 @@ class UserCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => "answers",
+            'label' => "Answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->answers()->count();
+            }
+        ]);
+
+        $this->crud->addColumn([
             'name' => "comments",
             'label' => "Comments",
             'type' => 'closure',
@@ -83,6 +103,7 @@ class UserCrudController extends CrudController
         CRUD::column('email');
         CRUD::column('display_name');
         CRUD::column('reputation');
+
         // CRUD::column('name');
 
         // CRUD::column('password');
@@ -107,7 +128,17 @@ class UserCrudController extends CrudController
         CRUD::field('email');
         CRUD::field('display_name');
         CRUD::field('reputation');
-        // CRUD::field('name');
+
+
+        CRUD::field('website_url');
+        CRUD::field('about_me');
+        CRUD::field('profile_image_url');
+        CRUD::field('views');
+        CRUD::field('last_access_date');
+
+        CRUD::field('seo_title');
+        CRUD::field('seo_description');
+        CRUD::field('seo_keywords');
 
         // CRUD::field('password');
 

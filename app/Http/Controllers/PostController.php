@@ -177,7 +177,6 @@ class PostController extends Controller
         $question->slug = Str::slug($question->title, '-');
 
         $seo_title = $question->seo_title ? $question->seo_title : $question->title;
-
         $seo_description = $question->seo_description ? $question->seo_description : $question->desription;
         $seo_keywords = $question->seo_keywords ? $question->seo_keywords : $question->tagsString;
 

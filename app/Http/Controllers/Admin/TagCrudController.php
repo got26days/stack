@@ -31,6 +31,63 @@ class TagCrudController extends CrudController
         CRUD::setEntityNameStrings('tag', 'tags');
     }
 
+    protected function setupShowOperation()
+    {
+        CRUD::column('id');
+
+        CRUD::column('count');
+
+
+        CRUD::column('tag_name');
+
+        CRUD::column('updated_at');
+        CRUD::column('created_at');
+
+        CRUD::column('excerpt_post_id');
+        CRUD::column('wiki_post_id');
+
+        $this->crud->addColumn([
+            'name' => "questions",
+            'label' => "Questions",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationship()->count() + $entry->tagsRelationshipSecond()->count();
+            }
+        ]);
+
+
+        $this->crud->addColumn([
+            'name' => "answers",
+            'label' => "Answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationshipAnswer()->count();
+            }
+        ]);
+
+
+        $this->crud->addColumn([
+            'name' => "questions_without_answer",
+            'label' => "Without answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationship()->where('answer_count', 0)->count()
+                    + $entry->tagsRelationshipSecond()->where('answer_count', 0)->count();
+            }
+        ]);
+
+        $this->crud->addColumn([
+            'name' => "views",
+            'label' => "View count",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationship()->sum('view_count')
+                    + $entry->tagsRelationshipSecond()->sum('view_count') +
+                    $entry->tagsRelationshipAnswer()->sum('view_count');
+            }
+        ]);
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -67,7 +124,29 @@ class TagCrudController extends CrudController
             'label' => "Answers",
             'type' => 'closure',
             'function' => function ($entry) {
-                return ($entry->tagsRelationship()->count() * 2 + $entry->tagsRelationshipSecond()->count() * 2);
+                return $entry->tagsRelationshipAnswer()->count();
+            }
+        ]);
+
+
+        $this->crud->addColumn([
+            'name' => "questions_without_answer",
+            'label' => "Without answers",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationship()->where('answer_count', 0)->count()
+                    + $entry->tagsRelationshipSecond()->where('answer_count', 0)->count();
+            }
+        ]);
+
+        $this->crud->addColumn([
+            'name' => "views",
+            'label' => "View count",
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->tagsRelationship()->sum('view_count')
+                    + $entry->tagsRelationshipSecond()->sum('view_count') +
+                    $entry->tagsRelationshipAnswer()->sum('view_count');
             }
         ]);
 
