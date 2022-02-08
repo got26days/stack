@@ -101,6 +101,10 @@ class QuestionCrudController extends CrudController
 
         $this->crud->addColumn('body');
 
+        $this->crud->addColumn([
+            'name'         => 'last_activity_date',
+            'label'        => 'Дата последнего ответа',
+        ]);
 
         $this->crud->addColumn('closed_date');
         $this->crud->addColumn('updated_at');
@@ -228,12 +232,18 @@ class QuestionCrudController extends CrudController
         CRUD::field('closed_date');
         CRUD::field('community_owned_date');
         CRUD::field('last_activity_date');
+
         CRUD::field('updated_at');
         CRUD::field('created_at');
         // CRUD::field('last_edit_date');
 
 
-        CRUD::field('content_license');
+        // CRUD::field('content_license');
+
+
+        CRUD::field('seo_title');
+        CRUD::field('seo_description');
+        CRUD::field('seo_keywords');
 
 
         // CRUD::field('last_editor_display_name');

@@ -21,7 +21,10 @@ class Question extends Model
     ];
 
     protected $fillable = [
-        'view_count',
+        'title', 'body', 'score', 'tags', 'accepted_answer', 'answer_count',
+        'comment_count', 'favorite_count', 'closed_date', 'community_owned_date',
+        'last_activity_date', 'updated_at', 'created_at',
+        'view_count', 'seo_title', 'seo_description', 'seo_keywords'
     ];
 
     public function user()
@@ -55,7 +58,7 @@ class Question extends Model
         return $this->belongsToMany(Tag::class, 'post_tag_seconds', 'post_id', 'tag_id');
     }
 
-    protected $appends = ['tagsArray'];
+    protected $appends = ['tagsArray', 'tagsString', 'desription'];
 
     public function getTagsArrayAttribute()
     {
@@ -73,5 +76,34 @@ class Question extends Model
             }
         }
         return $tagsArray;
+    }
+
+    public function getTagsStringAttribute()
+    {
+
+        $tagsArray = '';
+
+
+        if ($this->tags) {
+            $array = explode('>', $this->tags);
+
+            foreach ($array as $key => $item) {
+                if ($item != '') {
+                    $sep = '';
+                    if ($key != 0) {
+                        $sep = ', ';
+                    }
+                    $tagsArray .= $sep . str_replace("<", "", $item);
+                }
+            }
+        }
+        return $tagsArray;
+    }
+
+    public function getDesriptionAttribute()
+    {
+        $string = strip_tags($this->body);
+        $string = mb_strimwidth($string, 0, 240, '...');
+        return $string;
     }
 }
