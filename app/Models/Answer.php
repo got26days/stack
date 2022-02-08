@@ -9,7 +9,7 @@ class Answer extends Model
 {
     use HasFactory;
 
-    protected $appends = ['tagsArray'];
+    protected $appends = [];
 
     public function user()
     {
@@ -23,29 +23,6 @@ class Answer extends Model
 
     public function parent()
     {
-        return $this->hasOne(Question::class, 'parent_id', 'id');
+        return $this->hasOne(Question::class, 'id', 'parent_id');
     }
-
-    // public function tagsRelationship()
-    // {
-    //     return $this->belongsToMany(Tag::class, 'post_tag_ansers', 'post_id', 'tag_id');
-    // }
-
-    // public function getTagsArrayAttribute()
-    // {
-
-    //     $tagsArray = [];
-
-
-    //     if ($this->tags) {
-    //         $array = explode('>', $this->tags);
-
-    //         foreach ($array as $item) {
-    //             if ($item != '') {
-    //                 $tagsArray[] = str_replace("<", "", $item);
-    //             }
-    //         }
-    //     }
-    //     return $tagsArray;
-    // }
 }

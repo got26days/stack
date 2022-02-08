@@ -78,10 +78,14 @@ class CachePosts extends Command
             ->chunkById(30000, function ($posts) {
                 foreach ($posts as $post) {
                     $parent = $post->parent;
-                    if (count($parent->tagsRelationship) > 0) {
-                        foreach ($parent->tagsRelationship as $tag) {
-                            if ($tag) {
-                                $post->tagsRelationship()->attach($tag->id);
+
+                    $p = Question::where('id', $parent->id)->first();
+                    if ($p) {
+                        if (count($p->tagsRelationship) > 0) {
+                            foreach ($p->tagsRelationship as $tag) {
+                                if ($tag) {
+                                    $post->tagsRelationship()->attach($tag->id);
+                                }
                             }
                         }
                     }
