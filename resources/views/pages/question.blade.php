@@ -69,14 +69,7 @@
 	</div>
 
 	<div>
-		@foreach ($answers as $post)
-		@include('layouts.post', ['post' => $post, 'accepted_answer_id'=> $question->accepted_answer_id])
 
-		<div style="padding-left: 30px;">
-			@foreach ($post->comments as $comment)
-			@include('layouts.comment', ['comment' => $comment])
-			@endforeach
-		</div>
 
 		@endforeach
 
