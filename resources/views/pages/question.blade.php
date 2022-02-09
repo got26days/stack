@@ -71,7 +71,7 @@
 	<div>
 
 
-		@endforeach
+
 
 		<div class="pt-2">
 			{{ $answers->withQueryString()->links() }}
