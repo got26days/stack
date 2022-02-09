@@ -129,6 +129,15 @@ class QuestionCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+
+        $this->crud->addColumn([
+            'name'        => 'slug_or_title',
+            'label'       => 'Title',
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('title', 'like', '%' . $searchTerm . '%');
+            }
+        ]);
+
         // CRUD::column('accepted_answer_id');
         // CRUD::column('answer_count');
         // CRUD::column('body');
