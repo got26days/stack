@@ -7,9 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
     protected $appends = [];
+
+    protected $fillable = [
+        'body', 'score',
+        'comment_count',
+        'last_activity_date', 'updated_at', 'created_at',
+        'seo_title', 'seo_description', 'seo_keywords', 'parent_id',
+        'owner_user_id'
+    ];
 
     public function user()
     {
