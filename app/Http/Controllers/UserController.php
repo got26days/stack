@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +50,17 @@ class UserController extends Controller
             }
         }
 
-        return view('pages.users', compact('users', 'tab'));
+        $seo = Seo::where("page", "users")->first();
+        $seo_title = '';
+        $seo_description = '';
+        $seo_keywords = '';
+        if ($seo) {
+            $seo_title = $seo->seo_title;
+            $seo_description = $seo->desription;
+            $seo_keywords = $seo->seo_keywords;
+        }
+
+        return view('pages.users', compact('users', 'tab', 'seo_title', 'seo_description', 'seo_keywords'));
     }
 
 
