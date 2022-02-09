@@ -185,10 +185,12 @@ class PostController extends Controller
 
         $answers = $answers->paginate(5);
 
-        return $answers;
+
         foreach ($answers as $answer) {
             $answer->body = str_replace("<code>", "<code v-pre>", $answer->body);
         }
+
+        return $answers;
 
 
         $question->slug = Str::slug($question->title, '-');
