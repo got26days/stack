@@ -166,6 +166,8 @@ class PostController extends Controller
         $question->view_count = $question->view_count + 1;
         $question->save();
 
+        $question->body = str_replace("<code>", "<code v-pre>", $question->body);
+
 
         $answers = Answer::where('parent_id', $question->id);
 
