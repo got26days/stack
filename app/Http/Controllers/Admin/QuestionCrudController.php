@@ -130,39 +130,30 @@ class QuestionCrudController extends CrudController
     protected function setupListOperation()
     {
 
-        $this->crud->addColumn([
-            'name'        => 'slug_or_title',
-            'label'       => 'Title',
-            'searchLogic' => function ($query, $column, $searchTerm) {
-                $query->orWhere('title', 'like', '%' . $searchTerm . '%');
-            }
+        CRUD::addColumn([
+            'name'        => 'id',
+            'label'       => 'ID',
+            'searchLogic' => true
         ]);
 
-        // CRUD::column('accepted_answer_id');
-        // CRUD::column('answer_count');
-        // CRUD::column('body');
-        // CRUD::column('closed_date');
-        // CRUD::column('comment_count');
-        // CRUD::column('community_owned_date');
-        // CRUD::column('content_license');
+        CRUD::addColumn([
+            'name'        => 'scores',
+            'label'       => 'Score',
+            'searchLogic' => false
+        ]);
 
-        // CRUD::column('favorite_count');
-        CRUD::column('id');
-        // CRUD::column('last_activity_date');
-        // CRUD::column('last_edit_date');
-        // CRUD::column('last_editor_display_name');
-        // CRUD::column('last_editor_user_id');
-        // CRUD::column('owner_display_name');
-        // CRUD::column('owner_user_id');
-        // CRUD::column('parent_id');
-        CRUD::column('score');
+        CRUD::addColumn([
+            'name'        => 'title',
+            'label'       => 'Title',
+            'searchLogic' => true
+        ]);
 
-        CRUD::column('title');
 
         CRUD::addColumn([
             // any type of relationship
             'name'         => 'user', // name of relationship method in the model
             'type'         => 'relationship',
+            'searchLogic' => false,
             'label'        => 'User Name', // Table column heading
             // OPTIONAL
             // 'entity'    => 'tags', // the method that defines the relationship in your Model
@@ -170,10 +161,26 @@ class QuestionCrudController extends CrudController
             // 'model'     => App\Models\User::class, // foreign key model
         ],);
 
-        CRUD::column('tags');
-        CRUD::column('created_at');
-        // CRUD::column('updated_at');
-        CRUD::column('view_count');
+        CRUD::addColumn([
+            'name'        => 'tags',
+            'label'       => 'Tag',
+            'searchLogic' => false
+        ]);
+
+        CRUD::addColumn([
+            'name'        => 'created_at',
+            'label'       => 'Created',
+            'searchLogic' => false
+        ]);
+
+
+
+        CRUD::addColumn([
+            'name'        => 'view_count',
+            'label'       => 'Views',
+            'searchLogic' => false
+        ]);
+
 
         CRUD::addFilter(
             [
