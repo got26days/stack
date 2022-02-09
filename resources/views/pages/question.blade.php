@@ -39,11 +39,15 @@
 	@endif
 	<div>
 		<p>
-			{!! $question->body !!}
+			{{ $question->body }}
 		</p>
 	</div>
 
-
+	<div style="padding-left: 30px;">
+		@foreach ($question->comments as $comment)
+		@include('layouts.comment', ['comment' => $comment])
+		@endforeach
+	</div>
 
 	<hr>
 
@@ -65,9 +69,16 @@
 	</div>
 
 	<div>
+		@foreach ($answers as $post)
+		@include('layouts.post', ['post' => $post, 'accepted_answer_id'=> $question->accepted_answer_id])
 
+		<div style="padding-left: 30px;">
+			@foreach ($post->comments as $comment)
+			@include('layouts.comment', ['comment' => $comment])
+			@endforeach
+		</div>
 
-
+		@endforeach
 
 		<div class="pt-2">
 			{{ $answers->withQueryString()->links() }}
