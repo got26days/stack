@@ -39,7 +39,7 @@
 	@endif
 	<div>
 		<p>
-
+			{!! $question->body !!}
 		</p>
 	</div>
 
