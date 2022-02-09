@@ -190,7 +190,6 @@ class PostController extends Controller
             $answer->body = str_replace("<code>", "<code v-pre>", $answer->body);
         }
 
-        return $answers;
 
 
         $question->slug = Str::slug($question->title, '-');
