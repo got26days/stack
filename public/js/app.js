@@ -6041,7 +6041,8 @@ Vue.component("search-input", (__webpack_require__(/*! ./components/VueSearchInp
  */
 
 var app = new Vue({
-  el: "#app"
+  el: "#app",
+  delimiters: ["{%", "%}"]
 });
 
 /***/ }),

@@ -43,7 +43,11 @@
 		</p>
 	</div>
 
-
+	<div style="padding-left: 30px;">
+		@foreach ($question->comments as $comment)
+		@include('layouts.comment', ['comment' => $comment])
+		@endforeach
+	</div>
 
 	<hr>
 
