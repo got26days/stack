@@ -24,7 +24,7 @@ class Question extends Model
         'title', 'body', 'score', 'tags', 'accepted_answer', 'answer_count',
         'comment_count', 'favorite_count', 'closed_date', 'community_owned_date',
         'last_activity_date', 'updated_at', 'created_at',
-        'view_count', 'seo_title', 'seo_description', 'seo_keywords'
+        'view_count', 'seo_title', 'seo_description', 'seo_keywords', 'owner_user_id', 'parent_id'
     ];
 
     public function user()
