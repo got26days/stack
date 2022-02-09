@@ -9,6 +9,7 @@ use App\Models\Answer;
 use App\Models\PostTag;
 use App\Models\PostTagSecond;
 use App\Models\Question;
+use App\Models\Seo;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use DataTables;
@@ -109,8 +110,17 @@ class PostController extends Controller
             $post->slug = Str::slug($post->title, '-');
         }
 
+        $seo = Seo::where("page", "questions")->first();
+        $seo_title = '';
+        $seo_description = '';
+        $seo_keywords = '';
+        if ($seo) {
+            $seo_title = $seo->seo_title;
+            $seo_description = $seo->desription;
+            $seo_keywords = $seo->seo_keywords;
+        }
 
-        return view('pages.posts', compact('posts', 'tab', 'tags'));
+        return view('pages.posts', compact('posts', 'tab', 'tags', 'seo_title', 'seo_description', 'seo_keywords'));
     }
 
     public function tagged(Request $request, $tags = null)

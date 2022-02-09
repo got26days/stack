@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\PostHistory;
 use App\Models\PostLink;
 use App\Models\Question;
+use App\Models\Seo;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Vote;
@@ -177,7 +178,17 @@ class MainController extends Controller
 
         $search = $request['search'];
 
-        return view('pages.search', compact('results', 'tab', 'search'));
+        $seo = Seo::where("page", "search")->first();
+        $seo_title = '';
+        $seo_description = '';
+        $seo_keywords = '';
+        if ($seo) {
+            $seo_title = $seo->seo_title;
+            $seo_description = $seo->desription;
+            $seo_keywords = $seo->seo_keywords;
+        }
+
+        return view('pages.search', compact('results', 'tab', 'search', 'seo_title', 'seo_description', 'seo_keywords'));
     }
 
     public function test()

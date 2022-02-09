@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+use App\Models\Seo;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -51,13 +52,21 @@ class TagController extends Controller
             }
         );
 
-        return view('pages.tags', compact('tags', 'tab'));
+        $seo = Seo::where("page", "tags")->first();
+        $seo_title = '';
+        $seo_description = '';
+        $seo_keywords = '';
+        if ($seo) {
+            $seo_title = $seo->seo_title;
+            $seo_description = $seo->desription;
+            $seo_keywords = $seo->seo_keywords;
+        }
+
+        return view('pages.tags', compact('tags', 'tab', 'seo_title', 'seo_description', 'seo_keywords'));
     }
 
     public function search(Request $request)
     {
-
-
         $tags = cache()->remember(request()->getRequestUri(), 60 * 60 * 24, function () use ($request) {
             $tags = Tag::where('tag_name', 'LIKE', "%{$request['tag']}%")
                 ->where('tag_name', '!=', null);
