@@ -21,4 +21,5 @@ Route::group([
     Route::crud('tag', 'TagCrudController');
     Route::crud('seo', 'SeoCrudController');
     Route::crud('answer', 'AnswerCrudController');
+    Route::crud('comment', 'CommentCrudController');
 }); // this should be the absolute last line of this file
