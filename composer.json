@@ -15,6 +15,7 @@
         "laravel/ui": "^3.4",
         "predis/predis": "^1.1",
         "prewk/xml-string-streamer": "^1.2",
+        "spatie/laravel-sitemap": "^6.1",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
