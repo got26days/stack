@@ -69,7 +69,7 @@ class SitemapCommand extends Command
                 $sm->add('/questions/' . $row->id . '/' . Str::slug($row->title, '-'));
             }
             $number = count($sitemaps) + 1;
-            $path = 'sitemaps/sitemam_' . $number . '.xml';
+            $path = 'sitemaps/sitemap_' . $number . '.xml';
             $sm->writeToFile(public_path($path));
             $sitemaps[] = $path;
         });
@@ -80,7 +80,7 @@ class SitemapCommand extends Command
                 $sm->add('/questions/tagged/' . $row->tag_name);
             }
             $number = count($sitemaps) + 1;
-            $path = 'sitemaps/sitemam_' . $number . '.xml';
+            $path = 'sitemaps/sitemap_' . $number . '.xml';
             $sm->writeToFile(public_path($path));
             $sitemaps[] = $path;
         });
@@ -91,7 +91,7 @@ class SitemapCommand extends Command
                 $sm->add('/users/' . $row->id. '/' . $row->display_name);
             }
             $number = count($sitemaps) + 1;
-            $path = 'sitemaps/sitemam_' . $number . '.xml';
+            $path = 'sitemaps/sitemap_' . $number . '.xml';
             $sm->writeToFile(public_path($path));
             $sitemaps[] = $path;
         });
