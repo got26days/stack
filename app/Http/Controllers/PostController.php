@@ -193,7 +193,7 @@ class PostController extends Controller
         if (!$question->seo_title) {
             $seo_title = '';
             if ($question->title != null) {
-                $seo_title .= Str::limit($question->title, 20, ' ...');
+                $seo_title .= Str::limit($question->title, 80, ' ...');
             }
             if (count($question->tagsArray) > 0) {
                 $seo_title .= ' - ' . $question->tagsArray[0];
