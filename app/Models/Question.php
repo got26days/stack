@@ -44,7 +44,7 @@ class Question extends Model
 
     public function answer()
     {
-        return $this->hasMany(Answer::class, 'id', 'accepted_answer_id');
+        return $this->hasOne(Answer::class, 'id', 'accepted_answer_id');
     }
 
 
@@ -62,7 +62,6 @@ class Question extends Model
 
     public function getTagsArrayAttribute()
     {
-
         $tagsArray = [];
 
 
@@ -80,7 +79,6 @@ class Question extends Model
 
     public function getTagsStringAttribute()
     {
-
         $tagsArray = '';
 
 

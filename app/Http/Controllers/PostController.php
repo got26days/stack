@@ -25,7 +25,6 @@ class PostController extends Controller
      */
     public function index(Request $request, $tags = [])
     {
-
         $tab = 'newest';
 
         if ($request['tab']) {
@@ -54,9 +53,7 @@ class PostController extends Controller
                 usort($searchTags, fn ($a, $b) => -strcmp($a->count, $b->count));
 
                 if (count($searchTags) <= 3) {
-
                     foreach ($searchTags as $tag) {
-
                         $posts->where(function ($query) use ($tag) {
                             $query->whereHas('tagsRelationship', function ($q) use ($tag) {
                                 $q->where('tag_id', $tag->id);
@@ -66,8 +63,6 @@ class PostController extends Controller
                         });
                     }
                 } else {
-
-
                     $postTag = PostTag::where('tag_id', $searchTags[0]->id)->pluck('post_id')->toArray();
                     $postTagSecond = PostTagSecond::where('tag_id', $searchTags[0]->id)->pluck('post_id')->toArray();
                     $postTag = array_unique(array_merge($postTag, $postTagSecond));
@@ -88,7 +83,7 @@ class PostController extends Controller
                             if ($s == 0) {
                                 $query->where('id', $i);
                             } else {
-                                $query->orWhere('id',  $i);
+                                $query->orWhere('id', $i);
                             }
                         }
                     });
@@ -125,7 +120,6 @@ class PostController extends Controller
 
     public function tagged(Request $request, $tags = null)
     {
-
         if ($tags == null) {
             return $this->index($request);
         }
@@ -156,7 +150,6 @@ class PostController extends Controller
      */
     public function show(Question $question, Request $request)
     {
-
         $tab = 'active';
 
         if ($request['tab']) {
@@ -194,10 +187,43 @@ class PostController extends Controller
 
         $question->slug = Str::slug($question->title, '-');
 
-        $seo_title = $question->seo_title ? $question->seo_title : $question->title;
-        $seo_description = $question->seo_description ? $question->seo_description : $question->desription;
+
+
+        $seo_title = $question->seo_title;
+        if (!$question->seo_title) {
+            $seo_title = '';
+            if ($question->title != null) {
+                $seo_title .= Str::limit($question->title, 20, ' ...');
+            }
+            if (count($question->tagsArray) > 0) {
+                $seo_title .= ' - ' . $question->tagsArray[0];
+            }
+            $seo_title .= ' - ninjaask.com';
+        }
+        $seo_description = $question->seo_description;
+        if (!$question->seo_description) {
+            $seo_description = '';
+
+            if ($question->answer) {
+                $seo_description .= strip_tags(Str::limit($question->answer->body, 20, ' ...'));
+            }
+
+            $seo_description .=  ' ' . $question->answers->count() . ' - ' .
+             Str::limit($question->title, 20, ' ..') . '.';
+            if ($question->answer) {
+                $seo_description .= strip_tags(Str::limit($question->answer->body, 120, ' ...'));
+            }
+        }
+
         $seo_keywords = $question->seo_keywords ? $question->seo_keywords : $question->tagsString;
 
-        return view('pages.question', compact('question', 'answers', 'tab', 'seo_title', 'seo_description', 'seo_keywords'));
+        return view('pages.question', compact(
+            'question',
+            'answers',
+            'tab',
+            'seo_title',
+            'seo_description',
+            'seo_keywords'
+        ));
     }
 }
