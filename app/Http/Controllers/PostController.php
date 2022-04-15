@@ -205,7 +205,7 @@ class PostController extends Controller
             $seo_description = '';
 
             if ($question->answer) {
-                $seo_description .= strip_tags(Str::limit($question->answer->body, 20, ' ...'));
+                $seo_description .= strip_tags(Str::limit($question->answer->body, 40, ' ...'));
             }
 
             $seo_description .=  ' ' . $question->answers->count() . ' - ' .
